@@ -1,0 +1,24 @@
+CREATE EXTENSION IF NOT EXISTS pgtap;
+
+BEGIN;
+SELECT plan(7);
+
+SELECT has_table( 'climbs', 'Has climb table' );
+
+SELECT has_column( 'climbs', 'id', 'Climb table has id column' );
+SELECT col_is_pk( 'climbs', 'id', 'Climb table id column is primary key' );
+SELECT col_not_null( 'climbs', 'id', 'Climb table id column is not null' );
+
+SELECT has_column( 'climbs', 'name', 'Climb table has name column' );
+SELECT col_has_check( 'climbs', 'name', 'Climb table name column has check constraint' );
+
+PREPARE insert_climb_with_empty_name AS INSERT INTO climbs (name) VALUES ('');
+SELECT throws_ok(
+    'insert_climb_with_empty_name',
+    '23514',
+    'new row for relation "climbs" violates check constraint "climbs_name_check"',
+    'Cannot insert climb with empty name'
+);
+
+SELECT * FROM finish();
+ROLLBACK;
