@@ -1,13 +1,13 @@
 BEGIN;
 SELECT plan(6);
 
-SELECT has_table( 'areas', 'Has area table' );
+SELECT has_table( 'areas' );
 
-SELECT has_column( 'areas', 'id', 'Area table has id column' );
-SELECT col_is_pk( 'areas', 'id', 'Area table id column is primary key' );
+SELECT has_column( 'areas', 'id' );
+SELECT col_is_pk( 'areas', 'id' );
 
-SELECT has_column( 'areas', 'name', 'Area table has name column' );
-SELECT col_has_check( 'areas', 'name', 'Area table name column has check constraint' );
+SELECT has_column( 'areas', 'name' );
+SELECT col_has_check( 'areas', 'name' );
 
 PREPARE insert_area_with_empty_name AS INSERT INTO areas (name) VALUES ('');
 SELECT throws_ok(
