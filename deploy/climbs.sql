@@ -3,7 +3,7 @@
 BEGIN;
 
 CREATE TABLE climbs(
-    id SERIAL NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name TEXT CHECK (name IS NULL OR name <> '')
 );
 
