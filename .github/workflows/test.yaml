@@ -9,22 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:latest
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: climb-pg_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     env:
       PGUSER: postgres
       PGPASSWORD: postgres
@@ -36,13 +20,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup test containers
+        run: docker compose up -d
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pgtap sqitch
 
       - name: Load pgTAP
-        run: psql -d climb-pg_test -f `pg_config --sharedir`/extension/pgtap.sql
+        run: psql -d climb-pg_test -c "CREATE EXTENSION pgtap;"
 
       - name: Deploy database schema using Sqitch
         run: sqitch deploy
