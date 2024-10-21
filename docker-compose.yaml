@@ -1,0 +1,16 @@
+services:
+  postgres:
+    build:
+      target: with-pgtap
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: climb-pg_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: pg_isready
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
