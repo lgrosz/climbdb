@@ -4,7 +4,7 @@
 BEGIN;
 
 CREATE TABLE formations(
-    id SERIAL NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name TEXT CHECK (name IS NULL OR name <> ''),
     location geometry(POINT, 4326)
 );

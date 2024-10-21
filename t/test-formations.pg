@@ -1,11 +1,10 @@
 BEGIN;
-SELECT plan(8);
+SELECT plan(7);
 
 SELECT has_table( 'formations', 'Has formation table' );
 
 SELECT has_column( 'formations', 'id', 'Formation table has id column' );
 SELECT col_is_pk( 'formations', 'id', 'Formation table id column is primary key' );
-SELECT col_not_null( 'formations', 'id', 'Formation table id column is not null' );
 
 SELECT has_column( 'formations', 'name', 'Formation table has name column' );
 SELECT col_has_check( 'formations', 'name', 'Formation table name column has check constraint' );

@@ -1,11 +1,10 @@
 BEGIN;
-SELECT plan(7);
+SELECT plan(6);
 
 SELECT has_table( 'areas', 'Has area table' );
 
 SELECT has_column( 'areas', 'id', 'Area table has id column' );
 SELECT col_is_pk( 'areas', 'id', 'Area table id column is primary key' );
-SELECT col_not_null( 'areas', 'id', 'Area table id column is not null' );
 
 SELECT has_column( 'areas', 'name', 'Area table has name column' );
 SELECT col_has_check( 'areas', 'name', 'Area table name column has check constraint' );
