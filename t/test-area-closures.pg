@@ -1,0 +1,105 @@
+BEGIN;
+SELECT plan(14);
+
+SELECT has_table( 'area_closures' );
+
+SELECT has_column( 'area_closures', 'area_id' );
+SELECT col_is_pk( 'area_closures', 'area_id' );
+SELECT col_is_fk( 'area_closures', 'area_id' );
+
+SELECT has_column( 'area_closures', 'super_area_id' );
+SELECT col_is_fk( 'area_closures', 'super_area_id' );
+SELECT col_not_null( 'area_closures', 'super_area_id');
+
+SELECT has_function( 'check_area_closures_cycle' );
+
+SELECT has_trigger( 'area_closures', 'prevent_area_closures_cycle' );
+
+PREPARE get_closure AS SELECT * FROM area_closures WHERE area_id = $1;
+
+PREPARE insert_closure AS
+    INSERT INTO area_closures ( area_id, super_area_id )
+    VALUES ( $1, $2 );
+
+CREATE FUNCTION test_area_id_cascade_on_delete()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    area_a areas%ROWTYPE;
+    area_b areas%ROWTYPE;
+BEGIN
+
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_a;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
+
+    EXECUTE format('EXECUTE insert_closure(%s, %s)', area_a.id, area_b.id);
+
+    RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', area_a.id),
+        'Area closure record exists before cascade deletion');
+
+    DELETE FROM areas WHERE id = area_a.id;
+
+    RETURN NEXT is_empty(format('EXECUTE get_closure(%s)', area_a.id),
+        'Area closure exists before cascade deletion');
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM test_area_id_cascade_on_delete();
+
+CREATE FUNCTION test_super_area_id_restrict_on_delete()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    area_a areas%ROWTYPE;
+    area_b areas%ROWTYPE;
+BEGIN
+
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_a;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
+
+    EXECUTE format('EXECUTE insert_closure(%s, %s)', area_a.id, area_b.id);
+
+    RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', area_a.id),
+        'Area closure record exists before restrict deletion');
+
+    PREPARE delete_area AS DELETE FROM areas WHERE id = $1;
+
+    RETURN NEXT throws_ok(format('EXECUTE delete_area(%s)', area_b.id),
+        '23503',
+        'update or delete on table "areas" violates foreign key constraint "area_closures_super_area_id_fkey" on table "area_closures"',
+        'Restrict super-area deletion when closure present');
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM test_super_area_id_restrict_on_delete();
+
+CREATE FUNCTION test_prevent_area_closures_cycle()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    area_a areas%ROWTYPE;
+    area_b areas%ROWTYPE;
+BEGIN
+
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_a;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
+
+    EXECUTE format('EXECUTE insert_closure(%s, %s)', area_a.id, area_b.id);
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_closure(%s, %s)', area_b.id, area_a.id),
+        'P0001',
+        'Area closure cycle detected',
+        'Restrict insertion when record would create a cycle'
+        );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM test_prevent_area_closures_cycle();
+
+SELECT * FROM finish();
+ROLLBACK;
+
