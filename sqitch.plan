@@ -3,3 +3,4 @@
 %uri=https://github.com/lgrosz/climb-pg/
 
 climbs 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbs table
+postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # feat: add postgis extension
