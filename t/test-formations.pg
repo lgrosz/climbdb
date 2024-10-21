@@ -1,13 +1,15 @@
 BEGIN;
 SELECT plan(7);
 
-SELECT has_table( 'formations', 'Has formation table' );
+SELECT has_table( 'formations' );
 
-SELECT has_column( 'formations', 'id', 'Formation table has id column' );
-SELECT col_is_pk( 'formations', 'id', 'Formation table id column is primary key' );
+SELECT has_column( 'formations', 'id' );
+SELECT col_is_pk( 'formations', 'id' );
 
-SELECT has_column( 'formations', 'name', 'Formation table has name column' );
-SELECT col_has_check( 'formations', 'name', 'Formation table name column has check constraint' );
+SELECT has_column( 'formations', 'name' );
+SELECT col_has_check( 'formations', 'name' );
+
+SELECT has_column( 'formations', 'location' );
 
 PREPARE insert_formation_with_empty_name AS INSERT INTO formations (name) VALUES ('');
 SELECT throws_ok(
@@ -16,8 +18,6 @@ SELECT throws_ok(
     'new row for relation "formations" violates check constraint "formations_name_check"',
     'Cannot insert formation with empty name'
 );
-
-SELECT has_column( 'formations', 'location', 'Formation table has location column' );
 
 SELECT * FROM finish();
 ROLLBACK;

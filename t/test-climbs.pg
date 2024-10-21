@@ -1,13 +1,13 @@
 BEGIN;
 SELECT plan(6);
 
-SELECT has_table( 'climbs', 'Has climb table' );
+SELECT has_table( 'climbs' );
 
-SELECT has_column( 'climbs', 'id', 'Climb table has id column' );
-SELECT col_is_pk( 'climbs', 'id', 'Climb table id column is primary key' );
+SELECT has_column( 'climbs', 'id' );
+SELECT col_is_pk( 'climbs', 'id' );
 
-SELECT has_column( 'climbs', 'name', 'Climb table has name column' );
-SELECT col_has_check( 'climbs', 'name', 'Climb table name column has check constraint' );
+SELECT has_column( 'climbs', 'name' );
+SELECT col_has_check( 'climbs', 'name' );
 
 PREPARE insert_climb_with_empty_name AS INSERT INTO climbs (name) VALUES ('');
 SELECT throws_ok(

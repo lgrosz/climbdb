@@ -1,7 +1,7 @@
 BEGIN;
 SELECT plan(1);
 
-SELECT has_extension( 'postgis', 'Has PostGIS extension loaded' );
+SELECT has_extension( 'postgis' );
 
 SELECT * FROM finish();
 ROLLBACK;
