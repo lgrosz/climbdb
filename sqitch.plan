@@ -7,3 +7,4 @@ postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # feat: add pos
 formations [postgis] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # feat: add formations table
 areas 2024-10-21T05:19:35Z Logan Grosz <logan.grosz@gmail.com> # feat: add areas table
 area-closures [areas] 2024-10-21T16:06:37Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for area closures
+formation-closures [formations areas] 2024-10-25T01:00:54Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for formation closures
