@@ -44,7 +44,7 @@ BEGIN
     DELETE FROM climbs WHERE id = climb_a.id;
 
     RETURN NEXT is_empty(format('EXECUTE get_closure(%s)', climb_a.id),
-        'Climb closure exists before cascade deletion');
+        'Climb closure record does not exist after cascade deletion');
 
 END;
 $$ LANGUAGE plpgsql;

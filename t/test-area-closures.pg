@@ -40,7 +40,7 @@ BEGIN
     DELETE FROM areas WHERE id = area_a.id;
 
     RETURN NEXT is_empty(format('EXECUTE get_closure(%s)', area_a.id),
-        'Area closure exists before cascade deletion');
+        'Area closure record does not exist after cascade deletion');
 
 END;
 $$ LANGUAGE plpgsql;
