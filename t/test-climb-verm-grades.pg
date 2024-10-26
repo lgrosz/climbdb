@@ -1,0 +1,72 @@
+BEGIN;
+SELECT plan(13);
+
+SELECT has_table( 'climb_verm_grades' );
+
+SELECT has_column( 'climb_verm_grades', 'id' );
+SELECT col_is_pk( 'climb_verm_grades', 'id' );
+
+SELECT has_column( 'climb_verm_grades', 'climb_id' );
+SELECT col_not_null( 'climb_verm_grades', 'climb_id' );
+SELECT has_fk( 'climb_verm_grades', 'climb_id' );
+
+SELECT has_column( 'climb_verm_grades', 'value' );
+SELECT col_not_null( 'climb_verm_grades', 'value' );
+SELECT col_has_check( 'climb_verm_grades', 'value' );
+
+SELECT col_is_unique( 'climb_verm_grades',  ARRAY['climb_id', 'value'] );
+
+PREPARE get_climb_grade AS SELECT * FROM climb_verm_grades WHERE climb_id = $1;
+
+PREPARE insert_climb_grade AS
+    INSERT INTO climb_verm_grades ( climb_id, value )
+    VALUES ( $1, $2 );
+
+CREATE FUNCTION test_climb_id_cascade_on_delete()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    EXECUTE format( 'EXECUTE insert_climb_grade(%s, %s)', climb.id, 0 );
+
+    RETURN NEXT isnt_empty(format('EXECUTE get_climb_grade(%s)', climb.id),
+        'Climb grade record exists before cascade deletion');
+
+    DELETE FROM climbs WHERE id = climb.id;
+
+    RETURN NEXT is_empty(format('EXECUTE get_climb_grade(%s)', climb.id),
+        'Climb grade record does not exist after cascade deletion');
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_climb_id_cascade_on_delete();
+
+CREATE FUNCTION test_value_check()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s)', climb.id, -1),
+        '23514',
+        'new row for relation "climb_verm_grades" violates check constraint "climb_verm_grades_value_check"',
+        'Cannot insert grade with negative value'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_value_check();
+
+SELECT * FROM finish();
+ROLLBACK;
+
