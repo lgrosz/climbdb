@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(19);
+SELECT plan(16);
 
 SELECT has_table( 'climb_closures' );
 
@@ -7,22 +7,18 @@ SELECT has_column( 'climb_closures', 'climb_id' );
 SELECT col_is_pk( 'climb_closures', 'climb_id' );
 SELECT col_is_fk( 'climb_closures', 'climb_id' );
 
-SELECT has_column( 'climb_closures', 'super_climb_id' );
-SELECT col_is_fk( 'climb_closures', 'super_climb_id' );
+SELECT has_column( 'climb_closures', 'super_area_id' );
+SELECT col_is_fk( 'climb_closures', 'super_area_id' );
 
 SELECT has_column( 'climb_closures', 'super_formation_id' );
 SELECT col_is_fk( 'climb_closures', 'super_formation_id' );
 
 SELECT has_check('climb_closures');
 
-SELECT has_function( 'check_climb_closures_cycle' );
-
-SELECT has_trigger( 'climb_closures', 'prevent_climb_closures_cycle' );
-
 PREPARE get_closure AS SELECT * FROM climb_closures WHERE climb_id = $1;
 
 PREPARE insert_closure AS
-    INSERT INTO climb_closures ( climb_id, super_climb_id, super_formation_id )
+    INSERT INTO climb_closures ( climb_id, super_area_id, super_formation_id )
     VALUES ( $1, $2, $3 );
 
 CREATE FUNCTION test_climb_id_cascade_on_delete()
@@ -30,13 +26,13 @@ RETURNS SETOF TEXT
 AS $$
 DECLARE
     climb_a climbs%ROWTYPE;
-    climb_b climbs%ROWTYPE;
+    area_b areas%ROWTYPE;
 BEGIN
 
     INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
-    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_b;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
 
-    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, climb_b.id, 'NULL');
+    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, area_b.id, 'NULL');
 
     RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', climb_a.id),
         'Climb closure record exists before cascade deletion');
@@ -51,33 +47,33 @@ $$ LANGUAGE plpgsql;
 
 SELECT * FROM test_climb_id_cascade_on_delete();
 
-CREATE FUNCTION test_super_climb_id_restrict_on_delete()
+CREATE FUNCTION test_super_area_id_restrict_on_delete()
 RETURNS SETOF TEXT
 AS $$
 DECLARE
     climb_a climbs%ROWTYPE;
-    climb_b climbs%ROWTYPE;
+    area_b areas%ROWTYPE;
 BEGIN
 
     INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
-    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_b;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
 
-    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, climb_b.id, 'NULL');
+    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, area_b.id, 'NULL');
 
     RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', climb_a.id),
         'Climb closure record exists before restrict deletion');
 
-    PREPARE delete_climb AS DELETE FROM climbs WHERE id = $1;
+    PREPARE delete_area AS DELETE FROM areas WHERE id = $1;
 
-    RETURN NEXT throws_ok(format('EXECUTE delete_climb(%s)', climb_b.id),
+    RETURN NEXT throws_ok(format('EXECUTE delete_area(%s)', area_b.id),
         '23503',
-        'update or delete on table "climbs" violates foreign key constraint "climb_closures_super_climb_id_fkey" on table "climb_closures"',
-        'Restrict super-climb deletion when closure present');
+        'update or delete on table "areas" violates foreign key constraint "climb_closures_super_area_id_fkey" on table "climb_closures"',
+        'Restrict super-area deletion when closure present');
 
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM test_super_climb_id_restrict_on_delete();
+SELECT * FROM test_super_area_id_restrict_on_delete();
 
 CREATE FUNCTION test_super_formation_id_restrict_on_delete()
 RETURNS SETOF TEXT
@@ -124,38 +120,13 @@ BEGIN
         format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, climb_b.id, formation_c.id),
         '23514',
         'new row for relation "climb_closures" violates check constraint "climb_closures_check"',
-        'super_climb_id and super_formation_id are mutually exclusive'
+        'super_area_id and super_formation_id are mutually exclusive'
     );
 
 END;
 $$ LANGUAGE plpgsql;
 
 SELECT * FROM test_super_xor_check();
-
-CREATE FUNCTION test_prevent_climb_closures_cycle()
-RETURNS SETOF TEXT
-AS $$
-DECLARE
-    climb_a climbs%ROWTYPE;
-    climb_b climbs%ROWTYPE;
-BEGIN
-
-    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
-    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_b;
-
-    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, climb_b.id, 'NULL');
-
-    RETURN NEXT throws_ok(
-        format('EXECUTE insert_closure(%s, %s, %s)', climb_b.id, climb_a.id, 'NULL'),
-        'P0001',
-        'Climb closure cycle detected',
-        'Restrict insertion when record would create a cycle'
-        );
-
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT * FROM test_prevent_climb_closures_cycle();
 
 SELECT * FROM finish();
 ROLLBACK;
