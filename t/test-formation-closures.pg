@@ -44,7 +44,7 @@ BEGIN
     DELETE FROM formations WHERE id = formation_a.id;
 
     RETURN NEXT is_empty(format('EXECUTE get_closure(%s)', formation_a.id),
-        'Formation closure exists before cascade deletion');
+        'Formation closure record does not exist after cascade deletion');
 
 END;
 $$ LANGUAGE plpgsql;
