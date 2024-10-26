@@ -1,0 +1,119 @@
+BEGIN;
+SELECT plan(18);
+
+SELECT has_table( 'climb_font_grades' );
+
+SELECT has_column( 'climb_font_grades', 'id' );
+SELECT col_is_pk( 'climb_font_grades', 'id' );
+
+SELECT has_column( 'climb_font_grades', 'climb_id' );
+SELECT col_not_null( 'climb_font_grades', 'climb_id' );
+SELECT col_is_fk( 'climb_font_grades', 'climb_id' );
+
+SELECT has_column( 'climb_font_grades', 'value' );
+SELECT col_not_null( 'climb_font_grades', 'value' );
+SELECT col_has_check( 'climb_font_grades', 'value' );
+
+SELECT has_column( 'climb_font_grades', 'plus' );
+SELECT col_not_null( 'climb_font_grades', 'plus' );
+
+SELECT has_column( 'climb_font_grades', 'letter' );
+
+SELECT col_is_unique( 'climb_font_grades',  ARRAY['climb_id', 'value', 'plus', 'letter'] );
+
+PREPARE get_climb_grade AS SELECT * FROM climb_font_grades WHERE climb_id = $1;
+
+PREPARE insert_climb_grade AS
+    INSERT INTO climb_font_grades ( climb_id, value, letter, plus )
+    VALUES ( $1, $2, $3, $4 );
+
+CREATE FUNCTION test_climb_id_cascade_on_delete()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    EXECUTE format( 'EXECUTE insert_climb_grade(%s, %s, %s, %s)', climb.id, 1, 'NULL', 'FALSE' );
+
+    RETURN NEXT isnt_empty(format('EXECUTE get_climb_grade(%s)', climb.id),
+        'Climb grade record exists before cascade deletion');
+
+    DELETE FROM climbs WHERE id = climb.id;
+
+    RETURN NEXT is_empty(format('EXECUTE get_climb_grade(%s)', climb.id),
+        'Climb grade record does not exist after cascade deletion');
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_climb_id_cascade_on_delete();
+
+CREATE FUNCTION test_value_check()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s, %s, %s)', climb.id, 0, 'NULL', 'FALSE'),
+        '23514',
+        'new row for relation "climb_font_grades" violates check constraint "climb_font_grades_value_check"',
+        'Cannot insert grade with negative value'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_value_check();
+
+CREATE FUNCTION test_enforce_letter_constraint_1()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s, %s, %s)', climb.id, 6, 'NULL', 'FALSE'),
+        'P0001',
+        'all grades >F5 must have a letter',
+        'Cannot insert grade with null letter when value greater than 5'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_enforce_letter_constraint_1();
+
+CREATE FUNCTION test_enforce_letter_constraint_2()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s, %L, %s)', climb.id, 5, 'A', 'FALSE'),
+        'P0001',
+        'all grades <F6A must not have a letter',
+        'Cannot insert grade with non-null letter when value less than 6'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_enforce_letter_constraint_2();
+
+SELECT * FROM finish();
+ROLLBACK;
+
