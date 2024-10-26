@@ -1,51 +1,78 @@
 BEGIN;
-SELECT plan(16);
+SELECT plan(22);
 
-SELECT has_table( 'climb_closures' );
+SELECT has_table('climb_super_area_closures');
+SELECT has_table('climb_super_formation_closures');
 
-SELECT has_column( 'climb_closures', 'climb_id' );
-SELECT col_is_pk( 'climb_closures', 'climb_id' );
-SELECT col_is_fk( 'climb_closures', 'climb_id' );
+SELECT has_column('climb_super_area_closures', 'climb_id');
+SELECT col_is_pk('climb_super_area_closures', 'climb_id');
+SELECT col_is_fk('climb_super_area_closures', 'climb_id');
+SELECT has_column('climb_super_area_closures', 'super_area_id');
+SELECT col_is_fk('climb_super_area_closures', 'super_area_id');
 
-SELECT has_column( 'climb_closures', 'super_area_id' );
-SELECT col_is_fk( 'climb_closures', 'super_area_id' );
+SELECT has_column('climb_super_formation_closures', 'climb_id');
+SELECT col_is_pk('climb_super_formation_closures', 'climb_id');
+SELECT col_is_fk('climb_super_formation_closures', 'climb_id');
+SELECT has_column('climb_super_formation_closures', 'super_formation_id');
+SELECT col_is_fk('climb_super_formation_closures', 'super_formation_id');
 
-SELECT has_column( 'climb_closures', 'super_formation_id' );
-SELECT col_is_fk( 'climb_closures', 'super_formation_id' );
-
-SELECT has_check('climb_closures');
-
-PREPARE get_closure AS SELECT * FROM climb_closures WHERE climb_id = $1;
-
-PREPARE insert_closure AS
-    INSERT INTO climb_closures ( climb_id, super_area_id, super_formation_id )
-    VALUES ( $1, $2, $3 );
-
-CREATE FUNCTION test_climb_id_cascade_on_delete()
+CREATE FUNCTION test_climb_area_cascade_on_delete()
 RETURNS SETOF TEXT
 AS $$
 DECLARE
     climb_a climbs%ROWTYPE;
     area_b areas%ROWTYPE;
 BEGIN
-
     INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
     INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
 
-    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, area_b.id, 'NULL');
+    INSERT INTO climb_super_area_closures (climb_id, super_area_id)
+    VALUES (climb_a.id, area_b.id);
 
-    RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', climb_a.id),
-        'Climb closure record exists before cascade deletion');
+    RETURN NEXT isnt_empty(
+        format('SELECT * FROM climb_super_area_closures WHERE climb_id = %s', climb_a.id),
+        'Climb super area closure exists before cascade deletion'
+    );
 
     DELETE FROM climbs WHERE id = climb_a.id;
 
-    RETURN NEXT is_empty(format('EXECUTE get_closure(%s)', climb_a.id),
-        'Climb closure record does not exist after cascade deletion');
-
+    RETURN NEXT is_empty(
+        format('SELECT * FROM climb_super_area_closures WHERE climb_id = %s', climb_a.id),
+        'Climb super area closure does not exist after cascade deletion'
+    );
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM test_climb_id_cascade_on_delete();
+SELECT * FROM test_climb_area_cascade_on_delete();
+
+CREATE FUNCTION test_climb_formation_cascade_on_delete()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb_a climbs%ROWTYPE;
+    formation_b formations%ROWTYPE;
+BEGIN
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
+    INSERT INTO formations DEFAULT VALUES RETURNING * INTO formation_b;
+
+    INSERT INTO climb_super_formation_closures (climb_id, super_formation_id)
+    VALUES (climb_a.id, formation_b.id);
+
+    RETURN NEXT isnt_empty(
+        format('SELECT * FROM climb_super_formation_closures WHERE climb_id = %s', climb_a.id),
+        'Climb super formation closure exists before cascade deletion'
+    );
+
+    DELETE FROM climbs WHERE id = climb_a.id;
+
+    RETURN NEXT is_empty(
+        format('SELECT * FROM climb_super_formation_closures WHERE climb_id = %s', climb_a.id),
+        'Climb super formation closure does not exist after cascade deletion'
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM test_climb_formation_cascade_on_delete();
 
 CREATE FUNCTION test_super_area_id_restrict_on_delete()
 RETURNS SETOF TEXT
@@ -54,22 +81,25 @@ DECLARE
     climb_a climbs%ROWTYPE;
     area_b areas%ROWTYPE;
 BEGIN
-
     INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
     INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
 
-    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, area_b.id, 'NULL');
+    INSERT INTO climb_super_area_closures (climb_id, super_area_id)
+    VALUES (climb_a.id, area_b.id);
 
-    RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', climb_a.id),
-        'Climb closure record exists before restrict deletion');
+    RETURN NEXT isnt_empty(
+        format('SELECT * FROM climb_super_area_closures WHERE climb_id = %s', climb_a.id),
+        'Climb super area closure exists before restrict deletion'
+    );
 
     PREPARE delete_area AS DELETE FROM areas WHERE id = $1;
 
-    RETURN NEXT throws_ok(format('EXECUTE delete_area(%s)', area_b.id),
+    RETURN NEXT throws_ok(
+        format('EXECUTE delete_area(%s)', area_b.id),
         '23503',
-        'update or delete on table "areas" violates foreign key constraint "climb_closures_super_area_id_fkey" on table "climb_closures"',
-        'Restrict super-area deletion when closure present');
-
+        'update or delete on table "areas" violates foreign key constraint "climb_super_area_closures_super_area_id_fkey" on table "climb_super_area_closures"',
+        'Restrict super-area deletion when closure present'
+    );
 END;
 $$ LANGUAGE plpgsql;
 
@@ -82,52 +112,57 @@ DECLARE
     climb_a climbs%ROWTYPE;
     formation_b formations%ROWTYPE;
 BEGIN
-
     INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
     INSERT INTO formations DEFAULT VALUES RETURNING * INTO formation_b;
 
-    EXECUTE format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, 'NULL', formation_b.id);
+    INSERT INTO climb_super_formation_closures (climb_id, super_formation_id)
+    VALUES (climb_a.id, formation_b.id);
 
-    RETURN NEXT isnt_empty(format('EXECUTE get_closure(%s)', climb_a.id),
-        'Climb closure record exists before restrict deletion');
+    RETURN NEXT isnt_empty(
+        format('SELECT * FROM climb_super_formation_closures WHERE climb_id = %s', climb_a.id),
+        'Climb super formation closure exists before restrict deletion'
+    );
 
     PREPARE delete_formation AS DELETE FROM formations WHERE id = $1;
 
-    RETURN NEXT throws_ok(format('EXECUTE delete_formation(%s)', formation_b.id),
+    RETURN NEXT throws_ok(
+        format('EXECUTE delete_formation(%s)', formation_b.id),
         '23503',
-        'update or delete on table "formations" violates foreign key constraint "climb_closures_super_formation_id_fkey" on table "climb_closures"',
-        'Restrict super-formation deletion when closure present');
-
+        'update or delete on table "formations" violates foreign key constraint "climb_super_formation_closures_super_formation_id_fkey" on table "climb_super_formation_closures"',
+        'Restrict super-formation deletion when closure present'
+    );
 END;
 $$ LANGUAGE plpgsql;
 
 SELECT * FROM test_super_formation_id_restrict_on_delete();
 
-CREATE FUNCTION test_super_xor_check()
+CREATE FUNCTION test_climb_closure_mutual_exclusivity()
 RETURNS SETOF TEXT
 AS $$
 DECLARE
     climb_a climbs%ROWTYPE;
-    climb_b climbs%ROWTYPE;
+    area_b areas%ROWTYPE;
     formation_c formations%ROWTYPE;
 BEGIN
-
     INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
-    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_b;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_b;
     INSERT INTO formations DEFAULT VALUES RETURNING * INTO formation_c;
 
-    RETURN NEXT throws_ok(
-        format('EXECUTE insert_closure(%s, %s, %s)', climb_a.id, climb_b.id, formation_c.id),
-        '23514',
-        'new row for relation "climb_closures" violates check constraint "climb_closures_check"',
-        'super_area_id and super_formation_id are mutually exclusive'
+    RETURN NEXT lives_ok(
+        format('INSERT INTO climb_super_area_closures (climb_id, super_area_id) VALUES (%s, %s)', climb_a.id, area_b.id),
+        'No exception should occur when inserting into climb_super_area_closures'
     );
 
+    RETURN NEXT throws_ok(
+        format('INSERT INTO climb_super_formation_closures (climb_id, super_formation_id) VALUES (%s, %s)', climb_a.id, formation_c.id),
+        'P0001',
+        'this climb already belongs to an area',
+        'Mutual exclusivity enforced between super_area and super_formation'
+    );
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM test_super_xor_check();
+SELECT * FROM test_climb_closure_mutual_exclusivity();
 
 SELECT * FROM finish();
 ROLLBACK;
-
