@@ -10,3 +10,4 @@ area-closures [areas] 2024-10-21T16:06:37Z Logan Grosz <logan.grosz@gmail.com> #
 formation-closures [formations areas] 2024-10-25T01:00:54Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for formation closures
 climb-closures [climbs formations] 2024-10-25T01:53:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for climb closures
 climb-verm-grades [climbs] 2024-10-25T03:57:35Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-verm-grades table
+font-letter-enum [climbs] 2024-10-26T06:02:17Z Logan Grosz <logan.grosz@gmail.com> # feat: add font-letter enum
