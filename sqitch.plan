@@ -12,3 +12,5 @@ climb-closures [climbs formations] 2024-10-25T01:53:14Z Logan Grosz <logan.grosz
 climb-verm-grades [climbs] 2024-10-25T03:57:35Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-verm-grades table
 font-letter-enum [climbs] 2024-10-26T06:02:17Z Logan Grosz <logan.grosz@gmail.com> # feat: add font-letter enum
 climb-font-grades [climbs font-letter-enum] 2024-10-26T05:57:17Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-font-grades table
+yds-letter-enum 2024-10-27T17:28:20Z Logan Grosz <logan.grosz@gmail.com> # feat: add yds-letter enum
+climb-yds-grades [climbs yds-letter-enum] 2024-10-27T17:30:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-yds-grades table
