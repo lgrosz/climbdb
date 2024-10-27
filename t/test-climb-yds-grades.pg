@@ -1,0 +1,116 @@
+BEGIN;
+SELECT plan(16);
+
+SELECT has_table( 'climb_yds_grades' );
+
+SELECT has_column( 'climb_yds_grades', 'id' );
+SELECT col_is_pk( 'climb_yds_grades', 'id' );
+
+SELECT has_column( 'climb_yds_grades', 'climb_id' );
+SELECT col_not_null( 'climb_yds_grades', 'climb_id' );
+SELECT col_is_fk( 'climb_yds_grades', 'climb_id' );
+
+SELECT has_column( 'climb_yds_grades', 'value' );
+SELECT col_not_null( 'climb_yds_grades', 'value' );
+SELECT col_has_check( 'climb_yds_grades', 'value' );
+
+SELECT has_column( 'climb_yds_grades', 'letter' );
+
+SELECT col_is_unique( 'climb_yds_grades',  ARRAY['climb_id', 'value', 'letter'] );
+
+PREPARE get_climb_grade AS SELECT * FROM climb_yds_grades WHERE climb_id = $1;
+
+PREPARE insert_climb_grade AS
+    INSERT INTO climb_yds_grades ( climb_id, value, letter )
+    VALUES ( $1, $2, $3 );
+
+CREATE FUNCTION test_climb_id_cascade_on_delete()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    EXECUTE format( 'EXECUTE insert_climb_grade(%s, %s, %s)', climb.id, 1, 'NULL' );
+
+    RETURN NEXT isnt_empty(format('EXECUTE get_climb_grade(%s)', climb.id),
+        'Climb grade record exists before cascade deletion');
+
+    DELETE FROM climbs WHERE id = climb.id;
+
+    RETURN NEXT is_empty(format('EXECUTE get_climb_grade(%s)', climb.id),
+        'Climb grade record does not exist after cascade deletion');
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_climb_id_cascade_on_delete();
+
+CREATE FUNCTION test_value_check()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s, %s )', climb.id, 0, 'NULL'),
+        '23514',
+        'new row for relation "climb_yds_grades" violates check constraint "climb_yds_grades_value_check"',
+        'Cannot insert grade with negative value'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_value_check();
+
+CREATE FUNCTION test_enforce_letter_constraint_1()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s, %s)', climb.id, 10, 'NULL'),
+        'P0001',
+        'all grades >5.9 must have a letter',
+        'Cannot insert grade with null letter when value greater than 10'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_enforce_letter_constraint_1();
+
+CREATE FUNCTION test_enforce_letter_constraint_2()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb climbs%ROWTYPE;
+BEGIN
+
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb;
+
+    RETURN NEXT throws_ok(
+        format('EXECUTE insert_climb_grade(%s, %s, %L)', climb.id, 9, 'd'),
+        'P0001',
+        'all grades <5.10a must not have a letter',
+        'Cannot insert grade with non-null letter when value less than 10'
+    );
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * from test_enforce_letter_constraint_2();
+
+SELECT * FROM finish();
+ROLLBACK;
+
