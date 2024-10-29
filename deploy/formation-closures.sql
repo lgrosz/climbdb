@@ -4,18 +4,32 @@
 
 BEGIN;
 
-CREATE TABLE formation_closures (
+CREATE TABLE formation_super_area_closures (
     formation_id INTEGER PRIMARY KEY REFERENCES formations(id) ON DELETE CASCADE,
-    super_formation_id INTEGER REFERENCES formations(id) ON DELETE RESTRICT,
-    super_area_id INTEGER REFERENCES areas(id) ON DELETE RESTRICT,
-
-    CHECK (
-        (super_formation_id IS NOT NULL AND super_area_id IS NULL) OR
-        (super_formation_id IS NULL AND super_area_id IS NOT NULL)
-    )
+    super_area_id INTEGER NOT NULL REFERENCES areas(id) ON DELETE RESTRICT
 );
 
-CREATE FUNCTION check_formation_closures_cycle() RETURNS trigger AS $$
+CREATE TABLE formation_super_formation_closures (
+    formation_id INTEGER PRIMARY KEY REFERENCES formations(id) ON DELETE CASCADE,
+    super_formation_id INTEGER NOT NULL REFERENCES formations(id) ON DELETE RESTRICT
+);
+
+CREATE FUNCTION check_formation_closure_mutual_exclusivity()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM formation_super_area_closures WHERE formation_id = NEW.formation_id) THEN
+        RAISE EXCEPTION 'this formation already belongs to an area';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM formation_super_formation_closures WHERE formation_id = NEW.formation_id) THEN
+        RAISE EXCEPTION 'this formation already belongs to a formation';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE FUNCTION check_formation_super_formation_closures_cycle() RETURNS trigger AS $$
 DECLARE
     v_parent_id INTEGER;
 BEGIN
@@ -26,7 +40,7 @@ BEGIN
             RAISE EXCEPTION 'Formation closure cycle detected';
         END IF;
         SELECT super_formation_id INTO v_parent_id
-            FROM formation_closures
+            FROM formation_super_formation_closures
             WHERE formation_id = v_parent_id;
     END LOOP;
 
@@ -34,8 +48,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER prevent_formation_closures_cycle
-    BEFORE INSERT OR UPDATE ON formation_closures
-    FOR EACH ROW EXECUTE FUNCTION check_formation_closures_cycle();
+CREATE TRIGGER enforce_formation_super_area_closure_mutual_exclusivity
+    BEFORE INSERT ON formation_super_area_closures
+    FOR EACH ROW EXECUTE FUNCTION check_formation_closure_mutual_exclusivity();
+
+CREATE TRIGGER enforce_formation_super_formation_closure_mutual_exclusivity
+    BEFORE INSERT ON formation_super_formation_closures
+    FOR EACH ROW EXECUTE FUNCTION check_formation_closure_mutual_exclusivity();
+
+CREATE TRIGGER prevent_formation_super_formation_closures_cycle
+    BEFORE INSERT OR UPDATE ON formation_super_formation_closures
+    FOR EACH ROW EXECUTE FUNCTION check_formation_super_formation_closures_cycle();
+
 
 COMMIT;
