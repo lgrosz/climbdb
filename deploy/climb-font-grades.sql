@@ -5,7 +5,7 @@
 BEGIN;
 
 CREATE TABLE climb_font_grades (
-    id SERIAL PRIMARY KEY,
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     climb_id INTEGER NOT NULL REFERENCES climbs(id) ON DELETE cascade,
     value INTEGER NOT NULL CHECK (value >= 1),
     plus BOOLEAN NOT NULL,
