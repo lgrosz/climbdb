@@ -15,3 +15,4 @@ climb-font-grades [climbs font-letter-enum] 2024-10-26T05:57:17Z Logan Grosz <lo
 yds-letter-enum 2024-10-27T17:28:20Z Logan Grosz <logan.grosz@gmail.com> # feat: add yds-letter enum
 climb-yds-grades [climbs yds-letter-enum] 2024-10-27T17:30:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-yds-grades table
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
+ascents [climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
