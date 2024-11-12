@@ -16,3 +16,4 @@ yds-letter-enum 2024-10-27T17:28:20Z Logan Grosz <logan.grosz@gmail.com> # feat:
 climb-yds-grades [climbs yds-letter-enum] 2024-10-27T17:30:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-yds-grades table
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
 ascents [climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
+ascent-party-members [climbers ascents] 2024-11-12T17:34:29Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascent-party-members table
