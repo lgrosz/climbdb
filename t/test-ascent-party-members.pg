@@ -1,0 +1,15 @@
+BEGIN;
+SELECT plan(6);
+
+SELECT has_table( 'ascent_party_members' );
+
+SELECT has_column( 'ascent_party_members', 'ascent_id' );
+SELECT col_is_fk( 'ascent_party_members', 'ascent_id' );
+
+SELECT has_column( 'ascent_party_members', 'climber_id' );
+SELECT col_is_fk( 'ascent_party_members', 'climber_id' );
+
+SELECT col_is_pk( 'ascent_party_members',  ARRAY['ascent_id', 'climber_id'] );
+
+SELECT * FROM finish();
+ROLLBACK;
