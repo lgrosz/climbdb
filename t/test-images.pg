@@ -1,0 +1,12 @@
+BEGIN;
+SELECT plan(4);
+
+SELECT has_table( 'images' );
+
+SELECT has_column( 'images', 'id' );
+SELECT col_is_pk( 'images', 'id' );
+SELECT col_type_is( 'images', 'id', 'integer' );
+
+SELECT * FROM finish();
+ROLLBACK;
+
