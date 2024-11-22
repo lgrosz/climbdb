@@ -1,0 +1,19 @@
+BEGIN;
+SELECT plan(8);
+
+SELECT has_table( 'topos' );
+
+SELECT has_column( 'topos', 'id' );
+SELECT col_is_pk( 'topos', 'id' );
+SELECT col_type_is( 'topos', 'id', 'integer' );
+
+SELECT has_column( 'topos', 'image_id' );
+SELECT col_not_null( 'topos', 'image_id' );
+SELECT col_type_is( 'topos', 'image_id', 'integer' );
+SELECT col_is_fk( 'topos', 'image_id' );
+
+-- TODO Test cascade deletion
+
+SELECT * FROM finish();
+ROLLBACK;
+

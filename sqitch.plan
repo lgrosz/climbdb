@@ -20,3 +20,4 @@ ascent-party-members [climbers ascents] 2024-11-12T17:34:29Z Logan Grosz <logan.
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
 s3-image-sources [images] 2024-11-28T22:46:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add s3-image-sources table
 crop-type 2024-11-24T03:03:08Z Logan Grosz <logan.grosz@gmail.com> # feat: crop type
+topos [images crop-type] 2024-11-22T02:47:48Z Logan Grosz <logan.grosz@gmail.com> # feat: topos table
