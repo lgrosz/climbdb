@@ -1,0 +1,24 @@
+BEGIN;
+SELECT plan(10);
+
+SELECT has_table( 'climb_topo_splines' );
+
+SELECT has_column( 'climb_topo_splines', 'climb_id' );
+SELECT col_is_fk( 'climb_topo_splines', 'climb_id' );
+SELECT col_type_is( 'climb_topo_splines', 'climb_id', 'integer' );
+
+SELECT has_column( 'climb_topo_splines', 'topo_id' );
+SELECT col_is_fk( 'climb_topo_splines', 'topo_id' );
+SELECT col_type_is( 'climb_topo_splines', 'topo_id', 'integer' );
+
+SELECT col_is_pk( 'climb_topo_splines',  ARRAY['climb_id', 'topo_id'] );
+
+SELECT has_column( 'climb_topo_splines', 'splines' );
+SELECT col_type_is( 'climb_topo_splines', 'splines', 'jsonb' );
+
+-- TODO Test cascade deletion on climb_id
+-- TODO Test cascade deletion on topo_id
+
+SELECT * FROM finish();
+ROLLBACK;
+

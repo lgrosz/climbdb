@@ -21,3 +21,4 @@ images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add imag
 s3-image-sources [images] 2024-11-28T22:46:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add s3-image-sources table
 crop-type 2024-11-24T03:03:08Z Logan Grosz <logan.grosz@gmail.com> # feat: crop type
 topos [images crop-type] 2024-11-22T02:47:48Z Logan Grosz <logan.grosz@gmail.com> # feat: topos table
+climb-topo-splines [climbs topos] 2024-11-23T20:07:11Z Logan Grosz <logan.grosz@gmail.com> # feat: climb-topo-splines table
