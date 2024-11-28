@@ -1,0 +1,24 @@
+BEGIN;
+SELECT plan(12);
+
+SELECT has_table( 's3_image_sources' );
+
+SELECT has_column( 's3_image_sources', 'id' );
+SELECT col_is_pk( 's3_image_sources', 'id' );
+SELECT col_type_is( 's3_image_sources', 'id', 'integer' );
+
+SELECT has_column( 's3_image_sources', 'bucket' );
+SELECT col_type_is( 's3_image_sources', 'bucket', 'text' );
+
+SELECT has_column( 's3_image_sources', 'object' );
+SELECT col_type_is( 's3_image_sources', 'object', 'text' );
+
+SELECT has_column( 's3_image_sources', 'image_id' );
+SELECT col_type_is( 's3_image_sources', 'image_id', 'integer' );
+SELECT col_is_fk( 's3_image_sources', 'image_id' );
+
+SELECT col_is_unique( 's3_image_sources',  ARRAY['bucket', 'object'] );
+
+SELECT * FROM finish();
+ROLLBACK;
+
