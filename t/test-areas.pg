@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(6);
+SELECT plan(8);
 
 SELECT has_table( 'areas' );
 
@@ -8,6 +8,9 @@ SELECT col_is_pk( 'areas', 'id' );
 
 SELECT has_column( 'areas', 'name' );
 SELECT col_has_check( 'areas', 'name' );
+
+SELECT has_column( 'areas', 'description' );
+SELECT col_type_is( 'areas', 'description', 'text' );
 
 PREPARE insert_area_with_empty_name AS INSERT INTO areas (name) VALUES ('');
 SELECT throws_ok(

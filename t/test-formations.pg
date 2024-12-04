@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(7);
+SELECT plan(9);
 
 SELECT has_table( 'formations' );
 
@@ -10,6 +10,9 @@ SELECT has_column( 'formations', 'name' );
 SELECT col_has_check( 'formations', 'name' );
 
 SELECT has_column( 'formations', 'location' );
+
+SELECT has_column( 'areas', 'description' );
+SELECT col_type_is( 'areas', 'description', 'text' );
 
 PREPARE insert_formation_with_empty_name AS INSERT INTO formations (name) VALUES ('');
 SELECT throws_ok(

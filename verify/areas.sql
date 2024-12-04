@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, name
+SELECT id, name, description
     FROM areas
     WHERE FALSE;
 
