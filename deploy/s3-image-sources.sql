@@ -5,8 +5,8 @@ BEGIN;
 
 CREATE TABLE s3_image_sources(
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    bucket TEXT,
-    object TEXT,
+    bucket TEXT NOT NULL,
+    object TEXT NOT NULL,
     image_id INTEGER REFERENCES images(id) ON DELETE restrict,
     UNIQUE (bucket, object)
 );
