@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(22);
+SELECT plan(24);
 
 SELECT has_table('climb_super_area_closures');
 SELECT has_table('climb_super_formation_closures');
@@ -136,7 +136,7 @@ $$ LANGUAGE plpgsql;
 
 SELECT * FROM test_super_formation_id_restrict_on_delete();
 
-CREATE FUNCTION test_climb_closure_mutual_exclusivity()
+CREATE FUNCTION test_area_to_formation_closure()
 RETURNS SETOF TEXT
 AS $$
 DECLARE
@@ -156,13 +156,41 @@ BEGIN
     RETURN NEXT throws_ok(
         format('INSERT INTO climb_super_formation_closures (climb_id, super_formation_id) VALUES (%s, %s)', climb_a.id, formation_c.id),
         'P0001',
-        'this climb already belongs to an area',
+        'super area closure exists',
         'Mutual exclusivity enforced between super_area and super_formation'
     );
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM test_climb_closure_mutual_exclusivity();
+SELECT * FROM test_area_to_formation_closure();
+
+CREATE FUNCTION test_formation_to_area_closure()
+RETURNS SETOF TEXT
+AS $$
+DECLARE
+    climb_a climbs%ROWTYPE;
+    formation_b formations%ROWTYPE;
+    area_c areas%ROWTYPE;
+BEGIN
+    INSERT INTO climbs DEFAULT VALUES RETURNING * INTO climb_a;
+    INSERT INTO formations DEFAULT VALUES RETURNING * INTO formation_b;
+    INSERT INTO areas DEFAULT VALUES RETURNING * INTO area_c;
+
+    RETURN NEXT lives_ok(
+        format('INSERT INTO climb_super_formation_closures (climb_id, super_formation_id) VALUES (%s, %s)', climb_a.id, formation_b.id),
+        'No exception should occur when inserting into climb_super_formation_closures'
+    );
+
+    RETURN NEXT throws_ok(
+        format('INSERT INTO climb_super_area_closures (climb_id, super_area_id) VALUES (%s, %s)', climb_a.id, area_c.id),
+        'P0001',
+        'super formation closure exists',
+        'Mutual exclusivity enforced between super_formation and super_area'
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM test_formation_to_area_closure();
 
 SELECT * FROM finish();
 ROLLBACK;

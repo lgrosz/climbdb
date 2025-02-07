@@ -14,15 +14,24 @@ CREATE TABLE formation_super_formation_closures (
     super_formation_id INTEGER NOT NULL REFERENCES formations(id) ON DELETE RESTRICT
 );
 
-CREATE FUNCTION check_formation_closure_mutual_exclusivity()
+-- Raises an exception if there is a super area closure
+CREATE FUNCTION check_no_formation_super_area_closure()
 RETURNS TRIGGER AS $$
 BEGIN
     IF EXISTS (SELECT 1 FROM formation_super_area_closures WHERE formation_id = NEW.formation_id) THEN
-        RAISE EXCEPTION 'this formation already belongs to an area';
+        RAISE EXCEPTION 'super area closure exists';
     END IF;
 
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Raises an exception if there is a super formation closure
+CREATE FUNCTION check_no_formation_super_formation_closure()
+RETURNS TRIGGER AS $$
+BEGIN
     IF EXISTS (SELECT 1 FROM formation_super_formation_closures WHERE formation_id = NEW.formation_id) THEN
-        RAISE EXCEPTION 'this formation already belongs to a formation';
+        RAISE EXCEPTION 'super formation closure exists';
     END IF;
 
     RETURN NEW;
@@ -50,11 +59,11 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER enforce_formation_super_area_closure_mutual_exclusivity
     BEFORE INSERT ON formation_super_area_closures
-    FOR EACH ROW EXECUTE FUNCTION check_formation_closure_mutual_exclusivity();
+    FOR EACH ROW EXECUTE FUNCTION check_no_formation_super_formation_closure();
 
 CREATE TRIGGER enforce_formation_super_formation_closure_mutual_exclusivity
     BEFORE INSERT ON formation_super_formation_closures
-    FOR EACH ROW EXECUTE FUNCTION check_formation_closure_mutual_exclusivity();
+    FOR EACH ROW EXECUTE FUNCTION check_no_formation_super_area_closure();
 
 CREATE TRIGGER prevent_formation_super_formation_closures_cycle
     BEFORE INSERT OR UPDATE ON formation_super_formation_closures
