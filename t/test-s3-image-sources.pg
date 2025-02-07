@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(12);
+SELECT plan(14);
 
 SELECT has_table( 's3_image_sources' );
 
