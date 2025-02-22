@@ -1,20 +1,22 @@
 BEGIN;
-SELECT plan(24);
+SELECT plan(26);
 
 SELECT has_table('climb_super_area_closures');
 SELECT has_table('climb_super_formation_closures');
 
 SELECT has_column('climb_super_area_closures', 'climb_id');
 SELECT col_is_pk('climb_super_area_closures', 'climb_id');
-SELECT col_is_fk('climb_super_area_closures', 'climb_id');
+SELECT fk_ok('climb_super_area_closures', 'climb_id', 'climbs', 'id');
 SELECT has_column('climb_super_area_closures', 'super_area_id');
-SELECT col_is_fk('climb_super_area_closures', 'super_area_id');
+SELECT col_not_null('climb_super_area_closures', 'super_area_id');
+SELECT fk_ok('climb_super_area_closures', 'super_area_id', 'areas', 'id');
 
 SELECT has_column('climb_super_formation_closures', 'climb_id');
 SELECT col_is_pk('climb_super_formation_closures', 'climb_id');
-SELECT col_is_fk('climb_super_formation_closures', 'climb_id');
+SELECT fk_ok('climb_super_formation_closures', 'climb_id', 'climbs', 'id');
 SELECT has_column('climb_super_formation_closures', 'super_formation_id');
-SELECT col_is_fk('climb_super_formation_closures', 'super_formation_id');
+SELECT col_not_null('climb_super_formation_closures', 'super_formation_id');
+SELECT fk_ok('climb_super_formation_closures', 'super_formation_id', 'formations', 'id');
 
 CREATE FUNCTION test_climb_area_cascade_on_delete()
 RETURNS SETOF TEXT

@@ -8,7 +8,7 @@ SELECT col_is_pk( 'climb_font_grades', 'id' );
 
 SELECT has_column( 'climb_font_grades', 'climb_id' );
 SELECT col_not_null( 'climb_font_grades', 'climb_id' );
-SELECT col_is_fk( 'climb_font_grades', 'climb_id' );
+SELECT fk_ok( 'climb_font_grades', 'climb_id', 'climbs', 'id' );
 
 SELECT has_column( 'climb_font_grades', 'value' );
 SELECT col_not_null( 'climb_font_grades', 'value' );

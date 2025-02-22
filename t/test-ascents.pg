@@ -7,8 +7,8 @@ SELECT has_column( 'ascents', 'id' );
 SELECT col_is_pk( 'ascents', 'id' );
 
 SELECT has_column( 'ascents', 'climb_id' );
-SELECT col_is_fk( 'ascents', 'climb_id' );
 SELECT col_not_null( 'ascents', 'climb_id');
+SELECT fk_ok( 'ascents', 'climb_id', 'climbs', 'id' );
 
 SELECT has_column( 'ascents', 'date_window' );
 SELECT col_type_is( 'ascents', 'date_window', 'daterange' );

@@ -17,7 +17,7 @@ SELECT col_not_null( 's3_image_sources', 'object' );
 
 SELECT has_column( 's3_image_sources', 'image_id' );
 SELECT col_type_is( 's3_image_sources', 'image_id', 'integer' );
-SELECT col_is_fk( 's3_image_sources', 'image_id' );
+SELECT fk_ok( 's3_image_sources', 'image_id', 'images', 'id' );
 
 SELECT col_is_unique( 's3_image_sources',  ARRAY['bucket', 'object'] );
 

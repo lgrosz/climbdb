@@ -1,20 +1,22 @@
 BEGIN;
-SELECT plan(26);
+SELECT plan(28);
 
 SELECT has_table('formation_super_area_closures');
 SELECT has_table('formation_super_formation_closures');
 
 SELECT has_column('formation_super_area_closures', 'formation_id');
 SELECT col_is_pk('formation_super_area_closures', 'formation_id');
-SELECT col_is_fk('formation_super_area_closures', 'formation_id');
+SELECT fk_ok('formation_super_area_closures', 'formation_id', 'formations', 'id');
 SELECT has_column('formation_super_area_closures', 'super_area_id');
-SELECT col_is_fk('formation_super_area_closures', 'super_area_id');
+SELECT col_not_null('formation_super_area_closures', 'super_area_id');
+SELECT fk_ok('formation_super_area_closures', 'super_area_id', 'areas', 'id');
 
 SELECT has_column('formation_super_formation_closures', 'formation_id');
 SELECT col_is_pk('formation_super_formation_closures', 'formation_id');
-SELECT col_is_fk('formation_super_formation_closures', 'formation_id');
+SELECT fk_ok('formation_super_formation_closures', 'formation_id', 'formations', 'id');
 SELECT has_column('formation_super_formation_closures', 'super_formation_id');
-SELECT col_is_fk('formation_super_formation_closures', 'super_formation_id');
+SELECT col_not_null('formation_super_formation_closures', 'super_formation_id');
+SELECT fk_ok('formation_super_formation_closures', 'super_formation_id', 'formations', 'id');
 
 CREATE FUNCTION test_formation_area_cascade_on_delete()
 RETURNS SETOF TEXT
