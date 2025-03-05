@@ -10,8 +10,7 @@ area-closures [areas] 2024-10-21T16:06:37Z Logan Grosz <logan.grosz@gmail.com> #
 formation-closures [formations areas] 2024-10-25T01:00:54Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for formation closures
 climb-closures [climbs formations] 2024-10-25T01:53:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for climb closures
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
-ascents [climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
-ascent-party-members [climbers ascents] 2024-11-12T17:34:29Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascent-party-members table
+ascents [climbers climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
 s3-image-sources [images] 2024-11-28T22:46:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add s3-image-sources table
 climb-ext 2025-03-19T03:28:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add pg_climb extension

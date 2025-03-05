@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, climb_id, date_window
+SELECT id, climb_id, climber_id, date_window
     FROM ascents
     WHERE FALSE;
 
