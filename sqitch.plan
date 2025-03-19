@@ -14,3 +14,4 @@ ascents [climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat
 ascent-party-members [climbers ascents] 2024-11-12T17:34:29Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascent-party-members table
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
 s3-image-sources [images] 2024-11-28T22:46:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add s3-image-sources table
+climb-ext 2025-03-19T03:28:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add pg_climb extension
