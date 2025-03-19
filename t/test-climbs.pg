@@ -9,8 +9,8 @@ SELECT col_is_pk( 'climbs', 'id' );
 SELECT has_column( 'climbs', 'name' );
 SELECT col_has_check( 'climbs', 'name' );
 
-SELECT has_column( 'areas', 'description' );
-SELECT col_type_is( 'areas', 'description', 'text' );
+SELECT has_column( 'climbs', 'description' );
+SELECT col_type_is( 'climbs', 'description', 'text' );
 
 PREPARE insert_climb_with_empty_name AS INSERT INTO climbs (name) VALUES ('');
 SELECT throws_ok(
