@@ -11,8 +11,8 @@ SELECT col_has_check( 'formations', 'name' );
 
 SELECT has_column( 'formations', 'location' );
 
-SELECT has_column( 'areas', 'description' );
-SELECT col_type_is( 'areas', 'description', 'text' );
+SELECT has_column( 'formations', 'description' );
+SELECT col_type_is( 'formations', 'description', 'text' );
 
 PREPARE insert_formation_with_empty_name AS INSERT INTO formations (name) VALUES ('');
 SELECT throws_ok(
