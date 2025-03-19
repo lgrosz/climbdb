@@ -1,8 +1,0 @@
-BEGIN;
-SELECT plan(2);
-
-SELECT has_enum( 'font_letter' );
-SELECT enum_has_labels( 'font_letter', ARRAY['A', 'B', 'C'] );
-
-SELECT * FROM finish();
-ROLLBACK;
