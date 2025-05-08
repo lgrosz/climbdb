@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id
+SELECT id, alt
     FROM images
     WHERE FALSE;
 
