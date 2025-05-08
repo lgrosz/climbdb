@@ -1,11 +1,14 @@
 BEGIN;
-SELECT plan(4);
+SELECT plan(6);
 
 SELECT has_table( 'images' );
 
 SELECT has_column( 'images', 'id' );
 SELECT col_is_pk( 'images', 'id' );
 SELECT col_type_is( 'images', 'id', 'integer' );
+
+SELECT has_column( 'images', 'alt' );
+SELECT col_type_is( 'images', 'alt', 'text' );
 
 SELECT * FROM finish();
 ROLLBACK;
