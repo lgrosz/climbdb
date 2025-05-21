@@ -16,3 +16,4 @@ s3-image-sources [images] 2024-11-28T22:46:14Z Logan Grosz <logan.grosz@gmail.co
 climb-ext 2025-03-19T03:28:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add pg_climb extension
 climb-grades [climbs climb-ext] 2025-03-19T16:52:05Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-grades table
 ascent-grades [ascents climb-ext] 2025-03-20T03:17:07Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascent-grades table
+formations-in-image [formations images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
