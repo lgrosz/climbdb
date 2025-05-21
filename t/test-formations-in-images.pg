@@ -1,0 +1,18 @@
+BEGIN;
+SELECT plan(8);
+
+SELECT has_table( 'formations_in_image' );
+
+SELECT has_column( 'formations_in_image', 'image_id' );
+SELECT fk_ok( 'formations_in_image', 'image_id', 'images', 'id' );
+SELECT col_not_null( 'formations_in_image', 'image_id' );
+
+SELECT has_column( 'formations_in_image', 'formation_id' );
+SELECT fk_ok( 'formations_in_image', 'formation_id', 'formations', 'id' );
+SELECT col_not_null( 'formations_in_image', 'formation_id' );
+
+SELECT col_is_pk( 'formations_in_image',  ARRAY['image_id', 'formation_id'] );
+
+SELECT * FROM finish();
+ROLLBACK;
+
