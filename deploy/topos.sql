@@ -1,0 +1,12 @@
+-- Deploy climb-pg:topos to pg
+
+BEGIN;
+
+CREATE TABLE topos(
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title TEXT,
+    width DOUBLE PRECISION NOT NULL,
+    height DOUBLE PRECISION NOT NULL
+);
+
+COMMIT;
