@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(11);
+SELECT plan(38);
 
 SELECT has_table( 'topos' );
 SELECT col_is_pk( 'topos', 'id' );
@@ -16,6 +16,29 @@ SELECT col_not_null( 'topos', 'width' );
 SELECT has_column ( 'topos', 'height' );
 SELECT col_type_is( 'topos', 'height', 'double precision' );
 SELECT col_not_null( 'topos', 'height' );
+
+-- image features
+
+SELECT has_table( 'topo_image_features' );
+
+SELECT has_column( 'topo_image_features', 'id' );
+SELECT col_is_pk( 'topo_image_features', 'id' );
+SELECT col_type_is( 'topo_image_features', 'id', 'integer' );
+
+SELECT has_column( 'topo_image_features', 'source_crop' );
+SELECT col_type_is( 'topo_image_features', 'source_crop', 'box' );
+
+SELECT has_column( 'topo_image_features', 'dest_crop' );
+SELECT col_type_is( 'topo_image_features', 'dest_crop', 'box' );
+SELECT col_not_null( 'topo_image_features', 'dest_crop' );
+
+SELECT has_column( 'topo_image_features', 'image_id' );
+SELECT col_type_is( 'topo_image_features', 'image_id', 'integer' );
+SELECT fk_ok( 'topo_image_features', 'image_id', 'images', 'id' );
+
+SELECT has_column( 'topo_image_features', 'topo_id' );
+SELECT col_type_is( 'topo_image_features', 'topo_id', 'integer' );
+SELECT fk_ok( 'topo_image_features', 'topo_id', 'topos', 'id' );
 
 SELECT * FROM finish();
 
