@@ -1,0 +1,22 @@
+BEGIN;
+
+SELECT plan(11);
+
+SELECT has_table( 'topos' );
+SELECT col_is_pk( 'topos', 'id' );
+SELECT col_type_is( 'topos', 'id', 'integer' );
+
+SELECT has_column ( 'topos', 'title' );
+SELECT col_type_is( 'topos', 'title', 'text' );
+
+SELECT has_column ( 'topos', 'width' );
+SELECT col_type_is( 'topos', 'width', 'double precision' );
+SELECT col_not_null( 'topos', 'width' );
+
+SELECT has_column ( 'topos', 'height' );
+SELECT col_type_is( 'topos', 'height', 'double precision' );
+SELECT col_not_null( 'topos', 'height' );
+
+SELECT * FROM finish();
+
+ROLLBACK;
