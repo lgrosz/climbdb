@@ -19,3 +19,4 @@ ascent-grades [ascents climb-ext] 2025-03-20T03:17:07Z Logan Grosz <logan.grosz@
 formations-in-image [formations images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
 topos 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # feat: add topos table
 topo-image-features [images topos] 2025-06-02T20:50:02Z Logan Grosz <logan.grosz@gmail.com> # feat: add topo-image-features table
+basis-spline 2025-06-03T02:45:34Z Logan Grosz <logan.grosz@gmail.com> # feat: add spline type
