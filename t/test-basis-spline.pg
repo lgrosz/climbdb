@@ -1,0 +1,16 @@
+BEGIN;
+SELECT plan(7);
+
+SELECT has_composite( 'basis_spline' );
+
+SELECT has_column( 'basis_spline', 'degree' );
+SELECT col_type_is( 'basis_spline', 'degree', 'integer' );
+
+SELECT has_column( 'basis_spline', 'knots' );
+SELECT col_type_is( 'basis_spline', 'knots', 'float[]' );
+
+SELECT has_column( 'basis_spline', 'points' );
+SELECT col_type_is( 'basis_spline', 'points', 'point[]' );
+
+SELECT * FROM finish();
+ROLLBACK;
