@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(7);
+SELECT plan(20);
 
 SELECT has_composite( 'basis_spline' );
 
@@ -11,6 +11,78 @@ SELECT col_type_is( 'basis_spline', 'knots', 'float[]' );
 
 SELECT has_column( 'basis_spline', 'points' );
 SELECT col_type_is( 'basis_spline', 'points', 'point[]' );
+
+SELECT has_domain( 'valid_basis_spline' );
+SELECT domain_type_is( 'valid_basis_spline', 'basis_spline' );
+
+SELECT has_function( 'validate_basis_spline', ARRAY['basis_spline'] );
+SELECT function_returns( 'validate_basis_spline', ARRAY['basis_spline'], 'boolean' );
+
+SELECT alike(
+    (SELECT pg_get_constraintdef(c.oid)
+        FROM pg_constraint c
+        JOIN pg_type t ON c.contypid = t.oid
+        WHERE t.typname = 'valid_basis_spline'),
+    '%validate_basis_spline%',
+    'Domain valid_basis_spline should use validate_basis_spline(basis_spline) as check constraint'
+);
+
+SELECT is(
+    validate_basis_spline(ROW(NULL, ARRAY[0.0], ARRAY[POINT(0,0)])::basis_spline),
+    false,
+    'NULL degree is not valid'
+);
+
+SELECT is(
+    validate_basis_spline(ROW(0, ARRAY[0.0], ARRAY[POINT(0,0)])::basis_spline),
+    false,
+    'Degree must be at least 1'
+);
+
+SELECT is(
+    validate_basis_spline(ROW(2, NULL, ARRAY[POINT(0,0)])::basis_spline),
+    false,
+    'Knots array must not be NULL'
+);
+
+-- Control points array is NULL
+SELECT is(
+    validate_basis_spline(ROW(2, ARRAY[0.0], NULL)::basis_spline),
+    false,
+    'Control points array must not be NULL'
+);
+
+SELECT is(
+    validate_basis_spline(
+        ROW(2, ARRAY[0.0, 0.5, 1.0], ARRAY[POINT(0,0), POINT(1,0), POINT(1,1)])::basis_spline
+    ),
+    false,
+    'Incorrect number of knots for degree and control points'
+);
+
+SELECT is(
+    validate_basis_spline(
+        ROW(2, ARRAY[0.0, 0.0, 0.0, 1.0, 1.0, 0.0], ARRAY[POINT(0,0), POINT(1,0), POINT(1,1)])::basis_spline
+    ),
+    false,
+    'Knots must be monotonically increasing'
+);
+
+SELECT is(
+    validate_basis_spline(
+        ROW(2, ARRAY[0,0,0,1,1,1], ARRAY[POINT(0,0), NULL, POINT(1,1)])::basis_spline
+    ),
+    false,
+    'Control points must not contain NULLs'
+);
+
+SELECT is(
+    validate_basis_spline(
+        ROW(2, ARRAY[0,0,0,1,1,1], ARRAY[POINT(0,0), POINT(1,0), POINT(1,1)])::basis_spline
+    ),
+    true,
+    'Valid basis spline passes validation'
+);
 
 SELECT * FROM finish();
 ROLLBACK;
