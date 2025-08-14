@@ -1,0 +1,7 @@
+-- Verify climb-pg:appschema on pg
+
+BEGIN;
+
+SELECT pg_catalog.has_schema_privilege('climb', 'usage');
+
+ROLLBACK;
