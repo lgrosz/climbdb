@@ -1,4 +1,4 @@
--- Revert climb-pg:formations-in-image from pg
+-- Revert climbdb:formations-in-image from pg
 
 BEGIN;
 

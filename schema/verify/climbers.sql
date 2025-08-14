@@ -1,4 +1,4 @@
--- Verify climb-pg:climbers on pg
+-- Verify climbdb:climbers on pg
 
 BEGIN;
 

@@ -1,4 +1,4 @@
--- Revert climb-pg:postgis from pg
+-- Revert climbdb:postgis from pg
 
 BEGIN;
 

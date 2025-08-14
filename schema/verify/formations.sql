@@ -1,4 +1,4 @@
--- Verify climb-pg:formations on pg
+-- Verify climbdb:formations on pg
 
 BEGIN;
 

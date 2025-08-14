@@ -1,4 +1,4 @@
--- Revert climb-pg:appschema from pg
+-- Revert climbdb:appschema from pg
 
 BEGIN;
 

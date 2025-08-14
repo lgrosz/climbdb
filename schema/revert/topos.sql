@@ -1,4 +1,4 @@
--- Revert climb-pg:topos from pg
+-- Revert climbdb:topos from pg
 
 BEGIN;
 

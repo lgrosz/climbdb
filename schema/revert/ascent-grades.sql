@@ -1,4 +1,4 @@
--- Revert climb-pg:ascent-grades from pg
+-- Revert climbdb:ascent-grades from pg
 
 BEGIN;
 

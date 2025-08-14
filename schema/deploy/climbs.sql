@@ -1,4 +1,4 @@
--- Deploy climb-pg:climbs to pg
+-- Deploy climbdb:climbs to pg
 
 BEGIN;
 

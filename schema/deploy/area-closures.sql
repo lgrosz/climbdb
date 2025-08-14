@@ -1,4 +1,4 @@
--- Deploy climb-pg:area-closures to pg
+-- Deploy climbdb:area-closures to pg
 -- requires: areas
 
 BEGIN;

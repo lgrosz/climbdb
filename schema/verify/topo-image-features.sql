@@ -1,4 +1,4 @@
--- Verify climb-pg:topo-image-features on pg
+-- Verify climbdb:topo-image-features on pg
 
 BEGIN;
 

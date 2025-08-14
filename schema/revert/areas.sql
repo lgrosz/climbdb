@@ -1,4 +1,4 @@
--- Revert climb-pg:areas from pg
+-- Revert climbdb:areas from pg
 
 BEGIN;
 

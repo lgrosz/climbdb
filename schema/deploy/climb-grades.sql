@@ -1,4 +1,4 @@
--- Deploy climb-pg:climb-grades to pg
+-- Deploy climbdb:climb-grades to pg
 -- requires: climbs
 -- requires: climb-ext
 

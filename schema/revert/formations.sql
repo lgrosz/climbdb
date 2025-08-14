@@ -1,4 +1,4 @@
--- Revert climb-pg:formations from pg
+-- Revert climbdb:formations from pg
 
 BEGIN;
 

@@ -1,4 +1,4 @@
--- Deploy climb-pg:s3-image-sources to pg
+-- Deploy climbdb:s3-image-sources to pg
 -- requires: images
 
 BEGIN;

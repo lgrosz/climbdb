@@ -1,4 +1,4 @@
--- Deploy climb-pg:postgis to pg
+-- Deploy climbdb:postgis to pg
 
 BEGIN;
 

@@ -1,4 +1,4 @@
--- Verify climb-pg:climb-grades on pg
+-- Verify climbdb:climb-grades on pg
 
 BEGIN;
 

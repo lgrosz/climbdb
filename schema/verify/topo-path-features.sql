@@ -1,4 +1,4 @@
--- Verify climb-pg:topo-path-features on pg
+-- Verify climbdb:topo-path-features on pg
 
 BEGIN;
 

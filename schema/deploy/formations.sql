@@ -1,4 +1,4 @@
--- Deploy climb-pg:formations to pg
+-- Deploy climbdb:formations to pg
 -- requires: postgis
 
 BEGIN;

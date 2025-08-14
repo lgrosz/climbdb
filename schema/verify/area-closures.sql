@@ -1,4 +1,4 @@
--- Verify climb-pg:area-closures on pg
+-- Verify climbdb:area-closures on pg
 
 BEGIN;
 

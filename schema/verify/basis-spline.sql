@@ -1,4 +1,4 @@
--- Verify climb-pg:basis-spline on pg
+-- Verify climbdb:basis-spline on pg
 
 BEGIN;
 

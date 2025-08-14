@@ -1,4 +1,4 @@
--- Verify climb-pg:topos on pg
+-- Verify climbdb:topos on pg
 
 BEGIN;
 

@@ -1,4 +1,4 @@
--- Revert climb-pg:topo-path-features from pg
+-- Revert climbdb:topo-path-features from pg
 
 BEGIN;
 

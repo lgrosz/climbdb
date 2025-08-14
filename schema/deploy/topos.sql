@@ -1,4 +1,4 @@
--- Deploy climb-pg:topos to pg
+-- Deploy climbdb:topos to pg
 
 BEGIN;
 

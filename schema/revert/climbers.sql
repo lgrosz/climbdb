@@ -1,4 +1,4 @@
--- Revert climb-pg:climbers from pg
+-- Revert climbdb:climbers from pg
 
 BEGIN;
 
