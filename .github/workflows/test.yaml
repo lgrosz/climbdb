@@ -32,9 +32,10 @@ jobs:
         run: psql -d climb-pg_test -c "CREATE EXTENSION pgtap;"
 
       - name: Deploy database schema using Sqitch
-        run: sqitch deploy
+        run: sqitch deploy --chdir schema
 
       - name: Run tests with pg_prove
+        working-directory: schema
         run: pg_prove -d climb-pg_test
 
   test-extension-unit:
