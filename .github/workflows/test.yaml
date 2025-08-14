@@ -7,14 +7,21 @@ on:
   pull_request:
 
 jobs:
-  test:
+  verify-deploy:
     runs-on: ubuntu-latest
     env:
+      # variables for docker-compose file
+      POSTGRES_DB: climbdb-ci
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+      # variables for pg_prove
       PGUSER: postgres
       PGPASSWORD: postgres
       PGHOST: 127.0.0.1
+      # port forwarded from docker-compose
       PGPORT: 5432
-      PGDATABASE: climb-pg_test
+      PGDATABASE: climbdb-ci
 
     steps:
       - name: Checkout code
@@ -29,14 +36,14 @@ jobs:
           sudo apt-get install -y pgtap sqitch
 
       - name: Load pgTAP
-        run: psql -d climb-pg_test -c "CREATE EXTENSION pgtap;"
+        run: psql -d ${PGDATABASE} -c "CREATE EXTENSION pgtap;"
 
       - name: Deploy database schema using Sqitch
         run: sqitch deploy --chdir schema
 
       - name: Run tests with pg_prove
         working-directory: schema
-        run: pg_prove -d climb-pg_test
+        run: pg_prove
 
   test-extension-unit:
     runs-on: ubuntu-latest
