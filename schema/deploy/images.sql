@@ -1,4 +1,4 @@
--- Deploy climb-pg:images to pg
+-- Deploy climbdb:images to pg
 
 BEGIN;
 

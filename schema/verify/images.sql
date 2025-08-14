@@ -1,4 +1,4 @@
--- Verify climb-pg:images on pg
+-- Verify climbdb:images on pg
 
 BEGIN;
 

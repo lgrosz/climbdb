@@ -1,4 +1,4 @@
--- Deploy climb-pg:topo-path-features to pg
+-- Deploy climbdb:topo-path-features to pg
 -- requires: topos
 -- requires: basis-spline
 

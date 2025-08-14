@@ -1,4 +1,4 @@
--- Deploy climb-pg:areas to pg
+-- Deploy climbdb:areas to pg
 
 BEGIN;
 

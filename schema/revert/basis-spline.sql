@@ -1,4 +1,4 @@
--- Revert climb-pg:basis-spline from pg
+-- Revert climbdb:basis-spline from pg
 
 BEGIN;
 

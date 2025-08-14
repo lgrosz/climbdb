@@ -1,4 +1,4 @@
--- Revert climb-pg:area-closures from pg
+-- Revert climbdb:area-closures from pg
 
 BEGIN;
 

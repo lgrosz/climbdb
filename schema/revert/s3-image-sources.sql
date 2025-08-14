@@ -1,4 +1,4 @@
--- Revert climb-pg:s3-image-sources from pg
+-- Revert climbdb:s3-image-sources from pg
 
 BEGIN;
 

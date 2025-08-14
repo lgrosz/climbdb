@@ -1,4 +1,4 @@
--- Verify climb-pg:climb-ext on pg
+-- Verify climbdb:climb-ext on pg
 
 BEGIN;
 

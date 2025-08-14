@@ -1,4 +1,4 @@
--- Revert climb-pg:images from pg
+-- Revert climbdb:images from pg
 
 BEGIN;
 

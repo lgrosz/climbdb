@@ -1,4 +1,4 @@
--- Deploy climb-pg:appschema to pg
+-- Deploy climbdb:appschema to pg
 
 BEGIN;
 

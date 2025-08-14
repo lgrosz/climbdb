@@ -1,4 +1,4 @@
--- Deploy climb-pg:formation-closures to pg
+-- Deploy climbdb:formation-closures to pg
 -- requires: formations
 -- requires: areas
 

@@ -1,4 +1,4 @@
--- Deploy climb-pg:topo-image-features to pg
+-- Deploy climbdb:topo-image-features to pg
 -- requires: images
 -- requires: topos
 

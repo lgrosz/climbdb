@@ -1,4 +1,4 @@
--- Deploy climb-pg:ascents to pg
+-- Deploy climbdb:ascents to pg
 -- requires: climbers
 -- requires: climbs
 

@@ -1,4 +1,4 @@
--- Verify climb-pg:areas on pg
+-- Verify climbdb:areas on pg
 
 BEGIN;
 

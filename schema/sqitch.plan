@@ -1,5 +1,5 @@
 %syntax-version=1.0.0
-%project=climb-pg
+%project=climbdb
 %uri=https://github.com/lgrosz/climb-pg/
 
 appschema 2025-08-14T15:49:02Z Logan Grosz <logan.grosz@gmail.com> # Add app schema for all app objects

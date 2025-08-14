@@ -1,4 +1,4 @@
--- Verify climb-pg:appschema on pg
+-- Verify climbdb:appschema on pg
 
 BEGIN;
 

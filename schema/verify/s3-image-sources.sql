@@ -1,4 +1,4 @@
--- Verify climb-pg:s3-image-sources on pg
+-- Verify climbdb:s3-image-sources on pg
 
 BEGIN;
 

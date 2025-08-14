@@ -1,4 +1,4 @@
--- Deploy climb-pg:basis-spline to pg
+-- Deploy climbdb:basis-spline to pg
 
 BEGIN;
 

@@ -1,4 +1,4 @@
--- Verify climb-pg:postgis on pg
+-- Verify climbdb:postgis on pg
 
 BEGIN;
 
