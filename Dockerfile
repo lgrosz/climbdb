@@ -4,12 +4,13 @@ RUN apt-get update \
       && apt-cache showpkg postgresql-$PG_MAJOR-postgis-3 \
       && apt-get install -y  \
            build-essential \
-	   postgresql-server-dev-$PG_MAJOR \
+           git \
+           postgresql-server-dev-$PG_MAJOR \
            postgresql-$PG_MAJOR-postgis-3 \
            postgresql-$PG_MAJOR-postgis-3-scripts \
       && rm -rf /var/lib/apt/lists/*
 
-COPY pg_climb /tmp/pg_climb
+COPY --from=pg_climb / /tmp/pg_climb
 WORKDIR /tmp/pg_climb
 RUN make
 RUN make install

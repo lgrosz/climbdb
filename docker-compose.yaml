@@ -2,6 +2,8 @@ services:
   postgres:
     build:
       target: with-pgtap
+      additional_contexts:
+        pg_climb: https://github.com/lgrosz/pg_climb.git
     ports:
       - "5432:5432"
     environment:
