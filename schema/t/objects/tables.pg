@@ -1,0 +1,15 @@
+BEGIN;
+SELECT * from plan(1);
+
+SELECT tables_are(
+    'climb',
+    ARRAY[
+        'regions',
+        'crags',
+        'sectors'
+    ]
+);
+
+SELECT * from finish();
+ROLLBACK;
+
