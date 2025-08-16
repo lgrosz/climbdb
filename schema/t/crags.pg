@@ -1,0 +1,23 @@
+BEGIN;
+SELECT plan(11);
+
+SET search_path TO climb,public;
+
+SELECT has_table( 'crags' );
+
+SELECT has_column( 'crags', 'id' );
+SELECT col_type_is( 'crags', 'id', 'integer' );
+SELECT col_is_pk( 'crags', 'id' );
+
+SELECT has_column( 'crags', 'name' );
+SELECT col_type_is( 'crags', 'name', 'text' );
+SELECT col_is_null( 'crags', 'name' );
+
+SELECT has_column( 'crags', 'region_id' );
+SELECT col_type_is( 'crags', 'region_id', 'integer' );
+SELECT col_is_null( 'crags', 'region_id' );
+SELECT fk_ok( 'crags', 'region_id', 'regions', 'id' );
+
+SELECT * FROM finish();
+ROLLBACK;
+
