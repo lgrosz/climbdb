@@ -1,0 +1,17 @@
+BEGIN;
+SELECT plan(7);
+
+SET search_path TO climb,public;
+
+SELECT has_table( 'regions' );
+
+SELECT has_column( 'regions', 'id' );
+SELECT col_type_is( 'regions', 'id', 'integer' );
+SELECT col_is_pk( 'regions', 'id' );
+
+SELECT has_column( 'regions', 'name' );
+SELECT col_type_is( 'regions', 'name', 'text' );
+SELECT col_is_null( 'regions', 'name' );
+
+SELECT * FROM finish();
+ROLLBACK;
