@@ -10,9 +10,6 @@ climbs [appschema] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Cr
 postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # Creates PostGIS extension
 formations [appschema postgis] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # Creates table for formations
 areas 2024-10-21T05:19:35Z Logan Grosz <logan.grosz@gmail.com> # feat: add areas table
-area-closures [areas] 2024-10-21T16:06:37Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for area closures
-formation-closures [formations areas] 2024-10-25T01:00:54Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for formation closures
-climb-closures [climbs formations] 2024-10-25T01:53:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add table for climb closures
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
 ascents [climbers climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
