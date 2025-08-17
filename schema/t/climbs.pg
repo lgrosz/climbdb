@@ -1,16 +1,19 @@
 BEGIN;
-SELECT plan(7);
+SELECT plan(10);
 
 SELECT has_table( 'climbs' );
 
 SELECT has_column( 'climbs', 'id' );
+SELECT col_type_is( 'climbs', 'id', 'integer' );
 SELECT col_is_pk( 'climbs', 'id' );
 
 SELECT has_column( 'climbs', 'name' );
-SELECT col_has_check( 'climbs', 'name' );
+SELECT col_type_is( 'climbs', 'name', 'text' );
+SELECT col_is_null( 'climbs', 'name' );
 
 SELECT has_column( 'climbs', 'description' );
 SELECT col_type_is( 'climbs', 'description', 'text' );
+SELECT col_is_null( 'climbs', 'description' );
 
 SELECT * FROM finish();
 ROLLBACK;
