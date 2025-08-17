@@ -1,0 +1,21 @@
+BEGIN;
+SELECT plan(10);
+
+SET search_path TO climb,public;
+
+SELECT has_table( 'climbers' );
+
+SELECT has_column( 'climbers', 'id' );
+SELECT col_type_is( 'climbers', 'id', 'integer' );
+SELECT col_is_pk( 'climbers', 'id' );
+
+SELECT has_column( 'climbers', 'first_name' );
+SELECT col_type_is( 'climbers', 'first_name', 'text' );
+SELECT col_not_null( 'climbers', 'first_name' );
+
+SELECT has_column( 'climbers', 'last_name' );
+SELECT col_type_is( 'climbers', 'last_name', 'text' );
+SELECT col_not_null( 'climbers', 'last_name' );
+
+SELECT * FROM finish();
+ROLLBACK;
