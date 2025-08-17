@@ -1,7 +1,17 @@
 BEGIN;
-SELECT plan(1);
+SELECT plan(2);
 
 SELECT has_extension( 'postgis' );
+
+PREPARE act_postgis_version AS
+    SELECT installed_version COLLATE "C"
+    FROM pg_available_extensions
+    WHERE name = 'postgis';
+
+PREPARE exp_postgis_version AS
+    VALUES ('3.5.3'::text COLLATE "C");
+
+SELECT results_eq('act_postgis_version', 'exp_postgis_version');
 
 SELECT * FROM finish();
 ROLLBACK;
