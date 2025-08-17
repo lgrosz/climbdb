@@ -1,6 +1,8 @@
 BEGIN;
 SELECT plan(13);
 
+SET search_path TO climb,public;
+
 SELECT has_table( 'formations' );
 
 SELECT has_column( 'formations', 'id' );

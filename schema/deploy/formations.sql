@@ -1,9 +1,10 @@
 -- Deploy climbdb:formations to pg
+-- requires: appschema
 -- requires: postgis
 
 BEGIN;
 
-CREATE TABLE formations(
+CREATE TABLE climb.formations (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT,
     description TEXT,

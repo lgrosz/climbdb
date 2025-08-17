@@ -7,6 +7,7 @@ SELECT tables_are(
         'regions',
         'climbs',
         'crags',
+        'formations',
         'sectors'
     ]
 );
