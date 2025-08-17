@@ -5,6 +5,7 @@ SELECT tables_are(
     'climb',
     ARRAY[
         'regions',
+        'climbs',
         'crags',
         'sectors'
     ]

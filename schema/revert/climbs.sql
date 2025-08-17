@@ -2,6 +2,6 @@
 
 BEGIN;
 
-DROP TABLE climbs;
+DROP TABLE climb.climbs;
 
 COMMIT;
