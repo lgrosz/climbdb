@@ -2,6 +2,6 @@
 
 BEGIN;
 
-DROP TABLE formations;
+DROP TABLE climb.formations;
 
 COMMIT;

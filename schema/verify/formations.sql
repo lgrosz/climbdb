@@ -2,8 +2,8 @@
 
 BEGIN;
 
-SELECT id, name, location, description
-    FROM formations
+SELECT id, name, description, location
+    FROM climb.formations
     WHERE FALSE;
 
 ROLLBACK;
