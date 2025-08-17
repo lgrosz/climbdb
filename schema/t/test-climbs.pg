@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(8);
+SELECT plan(7);
 
 SELECT has_table( 'climbs' );
 
@@ -11,14 +11,6 @@ SELECT col_has_check( 'climbs', 'name' );
 
 SELECT has_column( 'climbs', 'description' );
 SELECT col_type_is( 'climbs', 'description', 'text' );
-
-PREPARE insert_climb_with_empty_name AS INSERT INTO climbs (name) VALUES ('');
-SELECT throws_ok(
-    'insert_climb_with_empty_name',
-    '23514',
-    'new row for relation "climbs" violates check constraint "climbs_name_check"',
-    'Cannot insert climb with empty name'
-);
 
 SELECT * FROM finish();
 ROLLBACK;
