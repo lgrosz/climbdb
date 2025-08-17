@@ -1,6 +1,8 @@
 BEGIN;
 SELECT plan(10);
 
+SET search_path TO climb,public;
+
 SELECT has_table( 'climbs' );
 
 SELECT has_column( 'climbs', 'id' );

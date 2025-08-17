@@ -3,7 +3,7 @@
 BEGIN;
 
 SELECT id, name, description
-    FROM climbs
+    FROM climb.climbs
     WHERE FALSE;
 
 ROLLBACK;

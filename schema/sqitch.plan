@@ -6,7 +6,7 @@ appschema 2025-08-14T15:49:02Z Logan Grosz <logan.grosz@gmail.com> # Add app sch
 regions [appschema] 2025-08-15T17:56:32Z Logan Grosz <logan.grosz@gmail.com> # Creates table for regions
 crags [appschema regions] 2025-08-16T04:47:18Z Logan Grosz <logan.grosz@gmail.com> # Creates table for crags
 sectors [appschema crags] 2025-08-16T04:48:33Z Logan Grosz <logan.grosz@gmail.com> # Creates table for sectors
-climbs 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbs table
+climbs [appschema] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
 postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # feat: add postgis extension
 formations [postgis] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # feat: add formations table
 areas 2024-10-21T05:19:35Z Logan Grosz <logan.grosz@gmail.com> # feat: add areas table
