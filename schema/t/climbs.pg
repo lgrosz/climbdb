@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(10);
+SELECT plan(27);
 
 SET search_path TO climb,public;
 
@@ -16,6 +16,29 @@ SELECT col_is_null( 'climbs', 'name' );
 SELECT has_column( 'climbs', 'description' );
 SELECT col_type_is( 'climbs', 'description', 'text' );
 SELECT col_is_null( 'climbs', 'description' );
+
+SELECT has_column( 'climbs', 'region_id' );
+SELECT col_type_is( 'climbs', 'region_id', 'integer' );
+SELECT col_is_null( 'climbs', 'region_id' );
+SELECT fk_ok( 'climbs', 'region_id', 'regions', 'id' );
+
+SELECT has_column( 'climbs', 'crag_id' );
+SELECT col_type_is( 'climbs', 'crag_id', 'integer' );
+SELECT col_is_null( 'climbs', 'crag_id' );
+SELECT fk_ok( 'climbs', 'crag_id', 'crags', 'id' );
+
+SELECT has_column( 'climbs', 'sector_id' );
+SELECT col_type_is( 'climbs', 'sector_id', 'integer' );
+SELECT col_is_null( 'climbs', 'sector_id' );
+SELECT fk_ok( 'climbs', 'sector_id', 'sectors', 'id' );
+
+SELECT has_column( 'climbs', 'formation_id' );
+SELECT col_type_is( 'climbs', 'formation_id', 'integer' );
+SELECT col_is_null( 'climbs', 'formation_id' );
+SELECT fk_ok( 'climbs', 'formation_id', 'formations', 'id' );
+
+-- For the "at_most_one_parent" constraint
+SELECT has_check( 'climbs' );
 
 SELECT * FROM finish();
 ROLLBACK;
