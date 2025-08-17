@@ -18,3 +18,4 @@ topo/topos [topo] 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # Cre
 topo/image-features [media/images topo/topos] 2025-06-02T20:50:02Z Logan Grosz <logan.grosz@gmail.com> # Creates table for topo image features
 basis-spline 2025-06-03T02:45:34Z Logan Grosz <logan.grosz@gmail.com> # Create basis spline type
 topo/path-features [topo/topos basis-spline] 2025-06-04T02:53:49Z Logan Grosz <logan.grosz@gmail.com> # Create table for topo path features
+climbers [appschema] 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbers
