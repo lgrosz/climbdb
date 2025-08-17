@@ -4,7 +4,7 @@ BEGIN;
 
 CREATE TABLE areas(
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name TEXT CHECK (name IS NULL OR name <> ''),
+    name TEXT,
     description TEXT
 );
 

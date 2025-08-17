@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(8);
+SELECT plan(7);
 
 SELECT has_table( 'areas' );
 
@@ -7,18 +7,9 @@ SELECT has_column( 'areas', 'id' );
 SELECT col_is_pk( 'areas', 'id' );
 
 SELECT has_column( 'areas', 'name' );
-SELECT col_has_check( 'areas', 'name' );
 
 SELECT has_column( 'areas', 'description' );
 SELECT col_type_is( 'areas', 'description', 'text' );
-
-PREPARE insert_area_with_empty_name AS INSERT INTO areas (name) VALUES ('');
-SELECT throws_ok(
-    'insert_area_with_empty_name',
-    '23514',
-    'new row for relation "areas" violates check constraint "areas_name_check"',
-    'Cannot insert area with empty name'
-);
 
 SELECT * FROM finish();
 ROLLBACK;
