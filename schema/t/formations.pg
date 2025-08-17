@@ -1,0 +1,23 @@
+BEGIN;
+SELECT plan(13);
+
+SELECT has_table( 'formations' );
+
+SELECT has_column( 'formations', 'id' );
+SELECT col_type_is( 'formations', 'id', 'integer' );
+SELECT col_is_pk( 'formations', 'id' );
+
+SELECT has_column( 'formations', 'name' );
+SELECT col_type_is( 'formations', 'name', 'text' );
+SELECT col_is_null( 'formations', 'name' );
+
+SELECT has_column( 'formations', 'description' );
+SELECT col_type_is( 'formations', 'description', 'text' );
+SELECT col_is_null( 'formations', 'description' );
+
+SELECT has_column( 'formations', 'location' );
+SELECT col_type_is( 'formations', 'location', 'geometry(Point,4326)' );
+SELECT col_is_null( 'formations', 'location' );
+
+SELECT * FROM finish();
+ROLLBACK;
