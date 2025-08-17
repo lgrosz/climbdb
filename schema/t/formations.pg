@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(13);
+SELECT plan(26);
 
 SET search_path TO climb,public;
 
@@ -20,6 +20,24 @@ SELECT col_is_null( 'formations', 'description' );
 SELECT has_column( 'formations', 'location' );
 SELECT col_type_is( 'formations', 'location', 'geometry(Point,4326)' );
 SELECT col_is_null( 'formations', 'location' );
+
+SELECT has_column( 'formations', 'region_id' );
+SELECT col_type_is( 'formations', 'region_id', 'integer' );
+SELECT col_is_null( 'formations', 'region_id' );
+SELECT fk_ok( 'formations', 'region_id', 'regions', 'id' );
+
+SELECT has_column( 'formations', 'crag_id' );
+SELECT col_type_is( 'formations', 'crag_id', 'integer' );
+SELECT col_is_null( 'formations', 'crag_id' );
+SELECT fk_ok( 'formations', 'crag_id', 'crags', 'id' );
+
+SELECT has_column( 'formations', 'sector_id' );
+SELECT col_type_is( 'formations', 'sector_id', 'integer' );
+SELECT col_is_null( 'formations', 'sector_id' );
+SELECT fk_ok( 'formations', 'sector_id', 'sectors', 'id' );
+
+-- For the "at_most_one_parent" constraint
+SELECT has_check( 'formations' );
 
 SELECT * FROM finish();
 ROLLBACK;
