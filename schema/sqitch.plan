@@ -15,7 +15,6 @@ ascents [climbers climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.co
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
 climb-ext 2025-03-19T03:28:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add pg_climb extension
 climb-grades [climbs climb-ext] 2025-03-19T16:52:05Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-grades table
-ascent-grades [ascents climb-ext] 2025-03-20T03:17:07Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascent-grades table
 formations-in-image [formations images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
 topos 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # feat: add topos table
 topo-image-features [images topos] 2025-06-02T20:50:02Z Logan Grosz <logan.grosz@gmail.com> # feat: add topo-image-features table
