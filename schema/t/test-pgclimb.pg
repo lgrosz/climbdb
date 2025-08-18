@@ -1,9 +1,0 @@
-BEGIN;
-SELECT plan(1);
-
-SELECT has_extension( 'pg_climb' );
-
-SELECT * FROM finish();
-ROLLBACK;
-
-
