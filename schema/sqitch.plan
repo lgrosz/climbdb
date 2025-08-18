@@ -20,3 +20,4 @@ basis-spline 2025-06-03T02:45:34Z Logan Grosz <logan.grosz@gmail.com> # Create b
 topo/path-features [topo/topos basis-spline] 2025-06-04T02:53:49Z Logan Grosz <logan.grosz@gmail.com> # Create table for topo path features
 climbers [appschema] 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbers
 ascents [appschema climbs] 2025-08-18T05:09:08Z Logan Grosz <logan.grosz@gmail.com> # Creates table for ascents
+ascent-members [appschema ascents climbers] 2025-08-18T05:10:11Z Logan Grosz <logan.grosz@gmail.com> # Creates table for ascent members
