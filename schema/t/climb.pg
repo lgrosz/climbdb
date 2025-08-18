@@ -6,6 +6,7 @@ SELECT has_schema( 'climb' );
 SELECT tables_are(
     'climb',
     ARRAY[
+        'ascents',
         'regions',
         'climbers',
         'climbs',

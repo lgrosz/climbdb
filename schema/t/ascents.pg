@@ -1,0 +1,26 @@
+BEGIN;
+
+SELECT plan(13);
+
+SET search_path TO climb,public;
+
+SELECT has_table( 'ascents' );
+
+SELECT has_column( 'ascents', 'id' );
+SELECT col_type_is( 'ascents', 'id', 'integer' );
+SELECT col_is_pk( 'ascents', 'id' );
+
+SELECT has_column( 'ascents', 'ascent_window' );
+SELECT col_type_is( 'ascents', 'ascent_window', 'daterange' );
+SELECT col_is_null( 'ascents', 'ascent_window' );
+
+SELECT has_column( 'ascents', 'ascent_duration' );
+SELECT col_type_is( 'ascents', 'ascent_duration', 'interval' );
+SELECT col_is_null( 'ascents', 'ascent_duration' );
+
+SELECT has_column( 'ascents', 'members_incomplete' );
+SELECT col_type_is( 'ascents', 'members_incomplete', 'boolean' );
+SELECT col_not_null( 'ascents', 'members_incomplete' );
+
+SELECT * FROM finish();
+ROLLBACK;
