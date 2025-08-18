@@ -8,6 +8,7 @@ crags [appschema regions] 2025-08-16T04:47:18Z Logan Grosz <logan.grosz@gmail.co
 sectors [appschema crags] 2025-08-16T04:48:33Z Logan Grosz <logan.grosz@gmail.com> # Creates table for sectors
 postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # Creates PostGIS extension
 formations [appschema postgis regions crags sectors] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # Creates table for formations
+pg-climb 2025-08-18T04:08:33Z Logan Grosz <logan.grosz@gmail.com> # Creates pg_climb extension
 climbs [appschema regions crags sectors formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
 ascents [climbers climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
