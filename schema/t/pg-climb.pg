@@ -1,0 +1,18 @@
+BEGIN;
+SELECT plan(2);
+
+SELECT has_extension( 'pg_climb' );
+
+PREPARE act_pg_climb_version AS
+    SELECT installed_version COLLATE "C"
+    FROM pg_available_extensions
+    WHERE name = 'pg_climb';
+
+PREPARE exp_pg_climb_version AS
+    VALUES ('1.0'::text COLLATE "C");
+
+SELECT results_eq('act_pg_climb_version', 'exp_pg_climb_version');
+
+SELECT * FROM finish();
+ROLLBACK;
+
