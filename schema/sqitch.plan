@@ -11,7 +11,6 @@ formations [appschema postgis regions crags sectors] 2024-10-21T03:13:43Z Logan 
 pg-climb 2025-08-18T04:08:33Z Logan Grosz <logan.grosz@gmail.com> # Creates pg_climb extension
 climbs [appschema pg-climb regions crags sectors formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
-ascents [climbers climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
 formations-in-image [formations images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
 topos 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # feat: add topos table
