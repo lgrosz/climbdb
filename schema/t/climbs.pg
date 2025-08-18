@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(27);
+SELECT plan(30);
 
 SET search_path TO climb,public;
 
@@ -16,6 +16,10 @@ SELECT col_is_null( 'climbs', 'name' );
 SELECT has_column( 'climbs', 'description' );
 SELECT col_type_is( 'climbs', 'description', 'text' );
 SELECT col_is_null( 'climbs', 'description' );
+
+SELECT has_column( 'climbs', 'grades' );
+SELECT col_type_is( 'climbs', 'grades', 'grade[]' );
+SELECT col_not_null( 'climbs', 'grades' );
 
 SELECT has_column( 'climbs', 'region_id' );
 SELECT col_type_is( 'climbs', 'region_id', 'integer' );
