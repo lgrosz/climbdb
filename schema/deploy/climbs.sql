@@ -1,5 +1,6 @@
 -- Deploy climbdb:climbs to pg
 -- requires: appschema
+-- requires: pg-climb
 -- requires: regions
 -- requires: crags
 -- requires: sectors
@@ -11,6 +12,7 @@ CREATE TABLE climb.climbs (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT,
     description TEXT,
+    grades grade[] NOT NULL DEFAULT array[]::grade[],
 
     -- possible "parents"
     region_id INTEGER REFERENCES climb.regions(id),
