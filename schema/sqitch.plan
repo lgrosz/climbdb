@@ -13,7 +13,6 @@ climbs [appschema pg-climb regions crags sectors formations] 2024-10-20T13:39:12
 climbers 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # feat: add climbers table
 ascents [climbers climbs] 2024-11-12T17:28:44Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascents table
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
-s3-image-sources [images] 2024-11-28T22:46:14Z Logan Grosz <logan.grosz@gmail.com> # feat: add s3-image-sources table
 climb-ext 2025-03-19T03:28:33Z Logan Grosz <logan.grosz@gmail.com> # feat: add pg_climb extension
 climb-grades [climbs climb-ext] 2025-03-19T16:52:05Z Logan Grosz <logan.grosz@gmail.com> # feat: add climb-grades table
 ascent-grades [ascents climb-ext] 2025-03-20T03:17:07Z Logan Grosz <logan.grosz@gmail.com> # feat: add ascent-grades table
