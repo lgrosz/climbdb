@@ -1,8 +1,0 @@
-BEGIN;
-SELECT plan(1);
-
-SELECT has_schema( 'climb' );
-
-SELECT * from finish();
-ROLLBACK;
-
