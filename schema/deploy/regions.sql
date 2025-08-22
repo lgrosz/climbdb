@@ -1,5 +1,5 @@
 -- Deploy climbdb:regions to pg
--- requires: appschema
+-- requires: climb
 
 BEGIN;
 

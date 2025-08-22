@@ -1,5 +1,5 @@
 -- Deploy climbdb:formations to pg
--- requires: appschema
+-- requires: climb
 -- requires: postgis
 -- requires: regions
 -- requires: crags
