@@ -1,5 +1,5 @@
 -- Deploy climbdb:crags to pg
--- requires: appschema
+-- requires: climb
 -- requires: regions
 
 BEGIN;

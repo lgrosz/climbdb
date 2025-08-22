@@ -1,5 +1,5 @@
 -- Deploy climbdb:climbs to pg
--- requires: appschema
+-- requires: climb
 -- requires: pg-climb
 -- requires: regions
 -- requires: crags

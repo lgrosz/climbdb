@@ -1,5 +1,5 @@
 -- Deploy climbdb:sectors to pg
--- requires: appschema
+-- requires: climb
 -- requires: crags
 
 BEGIN;
