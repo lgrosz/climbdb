@@ -1,7 +1,14 @@
 BEGIN;
-SELECT plan(1);
+SELECT plan(2);
 
 SELECT has_schema( 'media' );
+
+SELECT tables_are(
+    'media',
+    ARRAY[
+        'images'
+    ]
+);
 
 SELECT * from finish();
 ROLLBACK;
