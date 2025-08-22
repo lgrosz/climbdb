@@ -1,9 +1,9 @@
--- Deploy climbdb:formations to pg
+-- Deploy climbdb:climb/formations to pg
 -- requires: climb
 -- requires: postgis
--- requires: regions
--- requires: crags
--- requires: sectors
+-- requires: climb/regions
+-- requires: climb/crags
+-- requires: climb/sectors
 
 BEGIN;
 

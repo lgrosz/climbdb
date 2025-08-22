@@ -1,4 +1,4 @@
--- Verify climbdb:crags on pg
+-- Verify climbdb:climb/crags on pg
 
 BEGIN;
 

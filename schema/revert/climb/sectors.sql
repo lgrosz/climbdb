@@ -1,4 +1,4 @@
--- Revert climbdb:sectors from pg
+-- Revert climbdb:climb/sectors from pg
 
 BEGIN;
 

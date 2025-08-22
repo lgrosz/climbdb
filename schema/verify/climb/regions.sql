@@ -1,4 +1,4 @@
--- Verify climbdb:regions on pg
+-- Verify climbdb:climb/regions on pg
 
 BEGIN;
 

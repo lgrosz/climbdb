@@ -1,10 +1,10 @@
--- Deploy climbdb:climbs to pg
+-- Deploy climbdb:climb/climbs to pg
 -- requires: climb
 -- requires: pg-climb
--- requires: regions
--- requires: crags
--- requires: sectors
--- requires: formations
+-- requires: climb/regions
+-- requires: climb/crags
+-- requires: climb/sectors
+-- requires: climb/formations
 
 BEGIN;
 

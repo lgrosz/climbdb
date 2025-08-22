@@ -1,4 +1,4 @@
--- Revert climbdb:crags from pg
+-- Revert climbdb:climb/crags from pg
 
 BEGIN;
 

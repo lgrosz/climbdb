@@ -1,5 +1,5 @@
 -- Deploy climbdb:formations-in-image to pg
--- requires: formations
+-- requires: climb/formations
 -- requires: images
 
 BEGIN;
