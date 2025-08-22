@@ -1,4 +1,4 @@
--- Deploy climbdb:regions to pg
+-- Deploy climbdb:climb/regions to pg
 -- requires: climb
 
 BEGIN;

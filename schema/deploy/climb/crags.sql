@@ -1,6 +1,6 @@
--- Deploy climbdb:crags to pg
+-- Deploy climbdb:climb/crags to pg
 -- requires: climb
--- requires: regions
+-- requires: climb/regions
 
 BEGIN;
 

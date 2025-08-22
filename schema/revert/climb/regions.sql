@@ -1,4 +1,4 @@
--- Revert climbdb:regions from pg
+-- Revert climbdb:climb/regions from pg
 
 BEGIN;
 

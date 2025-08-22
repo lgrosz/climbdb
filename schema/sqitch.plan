@@ -3,15 +3,15 @@
 %uri=https://github.com/lgrosz/climb-pg/
 
 climb 2025-08-14T15:49:02Z Logan Grosz <logan.grosz@gmail.com> # Add schema for all climb objects
-regions [climb] 2025-08-15T17:56:32Z Logan Grosz <logan.grosz@gmail.com> # Creates table for regions
-crags [climb regions] 2025-08-16T04:47:18Z Logan Grosz <logan.grosz@gmail.com> # Creates table for crags
-sectors [climb crags] 2025-08-16T04:48:33Z Logan Grosz <logan.grosz@gmail.com> # Creates table for sectors
+climb/regions [climb] 2025-08-15T17:56:32Z Logan Grosz <logan.grosz@gmail.com> # Creates table for regions
+climb/crags [climb climb/regions] 2025-08-16T04:47:18Z Logan Grosz <logan.grosz@gmail.com> # Creates table for crags
+climb/sectors [climb climb/crags] 2025-08-16T04:48:33Z Logan Grosz <logan.grosz@gmail.com> # Creates table for sectors
 postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # Creates PostGIS extension
-formations [climb postgis regions crags sectors] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # Creates table for formations
+climb/formations [climb postgis climb/regions climb/crags climb/sectors] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # Creates table for formations
 pg-climb 2025-08-18T04:08:33Z Logan Grosz <logan.grosz@gmail.com> # Creates pg_climb extension
-climbs [climb pg-climb regions crags sectors formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
+climb/climbs [climb pg-climb climb/regions climb/crags climb/sectors climb/formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
 images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
-formations-in-image [formations images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
+formations-in-image [climb/formations images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
 topos 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # feat: add topos table
 topo-image-features [images topos] 2025-06-02T20:50:02Z Logan Grosz <logan.grosz@gmail.com> # feat: add topo-image-features table
 basis-spline 2025-06-03T02:45:34Z Logan Grosz <logan.grosz@gmail.com> # feat: add spline type

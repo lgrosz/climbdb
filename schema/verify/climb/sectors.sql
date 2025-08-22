@@ -1,4 +1,4 @@
--- Verify climbdb:sectors on pg
+-- Verify climbdb:climb/sectors on pg
 
 BEGIN;
 
