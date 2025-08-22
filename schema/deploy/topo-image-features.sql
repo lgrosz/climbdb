@@ -1,5 +1,5 @@
 -- Deploy climbdb:topo-image-features to pg
--- requires: images
+-- requires: media/images
 -- requires: topos
 
 BEGIN;
