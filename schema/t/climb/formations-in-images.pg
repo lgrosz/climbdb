@@ -1,6 +1,8 @@
 BEGIN;
 SELECT plan(8);
 
+SET search_path TO climb,media,public;
+
 SELECT has_table( 'formations_in_image' );
 
 SELECT has_column( 'formations_in_image', 'image_id' );

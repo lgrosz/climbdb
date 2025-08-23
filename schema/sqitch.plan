@@ -12,7 +12,7 @@ pg-climb 2025-08-18T04:08:33Z Logan Grosz <logan.grosz@gmail.com> # Creates pg_c
 climb/climbs [climb pg-climb climb/regions climb/crags climb/sectors climb/formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
 media 2025-08-22T03:17:49Z Logan Grosz <logan.grosz@gmail.com> # Add schema for all media objects
 media/images 2024-11-16T03:59:46Z Logan Grosz <logan.grosz@gmail.com> # feat: add images table
-formations-in-image [climb/formations media/images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
+climb/formations-in-image [climb/formations media/images] 2025-05-25T19:19:22Z Logan Grosz <logan.grosz@gmail.com> # feat: add table to represent formations present in an image
 topos 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # feat: add topos table
 topo-image-features [media/images topos] 2025-06-02T20:50:02Z Logan Grosz <logan.grosz@gmail.com> # feat: add topo-image-features table
 basis-spline 2025-06-03T02:45:34Z Logan Grosz <logan.grosz@gmail.com> # feat: add spline type
