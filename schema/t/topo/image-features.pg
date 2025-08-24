@@ -1,0 +1,33 @@
+BEGIN;
+
+SELECT plan(18);
+
+SET search_path TO topo,media,public;
+
+SELECT has_table( 'image_features' );
+
+SELECT has_column( 'image_features', 'id' );
+SELECT col_is_pk( 'image_features', 'id' );
+SELECT col_type_is( 'image_features', 'id', 'integer' );
+
+SELECT has_column( 'image_features', 'source_crop' );
+SELECT col_type_is( 'image_features', 'source_crop', 'box' );
+SELECT col_is_null( 'image_features', 'source_crop' );
+
+SELECT has_column( 'image_features', 'dest_crop' );
+SELECT col_type_is( 'image_features', 'dest_crop', 'box' );
+SELECT col_not_null( 'image_features', 'dest_crop' );
+
+SELECT has_column( 'image_features', 'image_id' );
+SELECT col_type_is( 'image_features', 'image_id', 'integer' );
+SELECT col_not_null( 'image_features', 'image_id' );
+SELECT fk_ok( 'image_features', 'image_id', 'images', 'id' );
+
+SELECT has_column( 'image_features', 'topo_id' );
+SELECT col_type_is( 'image_features', 'topo_id', 'integer' );
+SELECT col_not_null( 'image_features', 'topo_id' );
+SELECT fk_ok( 'image_features', 'topo_id', 'topos', 'id' );
+
+SELECT * FROM finish();
+
+ROLLBACK;
