@@ -6,7 +6,8 @@ SELECT has_schema( 'topo' );
 SELECT tables_are(
     'topo',
     ARRAY[
-        'topos'
+        'topos',
+        'image_features'
     ]
 );
 
