@@ -1,5 +1,5 @@
 -- Deploy climbdb:topo-path-features to pg
--- requires: topos
+-- requires: topo/topos
 -- requires: basis-spline
 
 BEGIN;

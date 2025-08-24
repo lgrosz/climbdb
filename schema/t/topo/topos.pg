@@ -1,0 +1,28 @@
+BEGIN;
+
+SELECT plan(13);
+
+SET search_path TO topo,public;
+
+SELECT has_table( 'topos' );
+
+SELECT has_column ( 'topos', 'id' );
+SELECT col_is_pk( 'topos', 'id' );
+SELECT col_type_is( 'topos', 'id', 'integer' );
+
+SELECT has_column ( 'topos', 'title' );
+SELECT col_type_is( 'topos', 'title', 'text' );
+SELECT col_is_null( 'topos', 'title' );
+
+SELECT has_column ( 'topos', 'width' );
+SELECT col_type_is( 'topos', 'width', 'double precision' );
+SELECT col_not_null( 'topos', 'width' );
+
+SELECT has_column ( 'topos', 'height' );
+SELECT col_type_is( 'topos', 'height', 'double precision' );
+SELECT col_not_null( 'topos', 'height' );
+
+SELECT * FROM finish();
+
+ROLLBACK;
+
