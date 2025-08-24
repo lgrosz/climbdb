@@ -22,4 +22,6 @@ CREATE TABLE climb.formations (
     CONSTRAINT at_most_one_parent CHECK ( num_nonnulls(region_id, crag_id, sector_id) < 2 )
 );
 
+COMMENT ON TABLE climb.formations IS 'Distinct geological formations.';
+
 COMMIT;
