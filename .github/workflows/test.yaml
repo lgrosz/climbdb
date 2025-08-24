@@ -43,5 +43,5 @@ jobs:
 
       - name: Run tests with pg_prove
         working-directory: schema
-        run: pg_prove
+        run: pg_prove --recurse
 
