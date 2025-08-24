@@ -7,4 +7,6 @@ CREATE TABLE media.images(
     alt TEXT
 );
 
+COMMENT ON TABLE media.images IS 'Describes images. These are abstract and there is no opinion on how they are stored.';
+
 COMMIT;
