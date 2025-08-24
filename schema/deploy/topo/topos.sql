@@ -9,4 +9,6 @@ CREATE TABLE topo.topos(
     height DOUBLE PRECISION NOT NULL
 );
 
+COMMENT ON TABLE topo.topos IS 'Describes topos and their dimensions.';
+
 COMMIT;

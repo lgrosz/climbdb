@@ -11,4 +11,6 @@ CREATE TABLE topo.path_features(
     topo_id INTEGER NOT NULL REFERENCES topo.topos(id) ON DELETE CASCADE
 );
 
+COMMENT ON TABLE topo.path_features IS 'Describes paths of climbs on topos.';
+
 COMMIT;
