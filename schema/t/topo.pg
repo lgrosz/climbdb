@@ -1,0 +1,9 @@
+BEGIN;
+SELECT plan(1);
+
+SELECT has_schema( 'topo' );
+
+SELECT * from finish();
+ROLLBACK;
+
+
