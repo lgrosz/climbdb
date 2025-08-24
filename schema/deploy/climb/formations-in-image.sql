@@ -10,4 +10,6 @@ CREATE TABLE climb.formations_in_image (
     PRIMARY KEY (image_id, formation_id)
 );
 
+COMMENT ON TABLE climb.formations_in_image IS 'Associates formations to a particular image.';
+
 COMMIT;
