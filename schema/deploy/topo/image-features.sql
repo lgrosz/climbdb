@@ -12,4 +12,6 @@ CREATE TABLE topo.image_features(
     topo_id INTEGER NOT NULL REFERENCES topo.topos(id) ON DELETE CASCADE
 );
 
+COMMENT ON TABLE topo.image_features IS 'Describes images and how to place them on topos.';
+
 COMMIT;
