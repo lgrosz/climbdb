@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  verify-deploy:
+  test:
     runs-on: ubuntu-latest
     env:
       # variables for docker-compose file
