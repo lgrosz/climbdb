@@ -1,7 +1,14 @@
 BEGIN;
-SELECT plan(1);
+SELECT plan(2);
 
 SELECT has_schema( 'topo' );
+
+SELECT tables_are(
+    'topo',
+    ARRAY[
+        'topos'
+    ]
+);
 
 SELECT * from finish();
 ROLLBACK;

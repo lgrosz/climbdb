@@ -1,8 +1,8 @@
--- Deploy climbdb:topos to pg
+-- Deploy climbdb:topo/topos to pg
 
 BEGIN;
 
-CREATE TABLE topos(
+CREATE TABLE topo.topos(
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title TEXT,
     width DOUBLE PRECISION NOT NULL,

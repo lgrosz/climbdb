@@ -1,9 +1,9 @@
--- Verify climbdb:topos on pg
+-- Verify climbdb:topo/topos on pg
 
 BEGIN;
 
 SELECT id, title, width, height
-    FROM topos
+    FROM topo.topos
     WHERE FALSE;
 
 ROLLBACK;
