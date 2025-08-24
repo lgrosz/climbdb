@@ -1,7 +1,0 @@
-BEGIN;
-SELECT * from plan(1);
-
-
-SELECT * from finish();
-ROLLBACK;
-

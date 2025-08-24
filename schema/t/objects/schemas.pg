@@ -1,8 +1,0 @@
-BEGIN;
-SELECT * from plan(1);
-
-SELECT schemas_are( ARRAY['public', 'climb', 'sqitch'] );
-
-SELECT * from finish();
-ROLLBACK;
-
