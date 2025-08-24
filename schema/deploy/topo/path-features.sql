@@ -1,0 +1,14 @@
+-- Deploy climbdb:topo/path-features to pg
+-- requires: topo/topos
+-- requires: basis-spline
+
+BEGIN;
+
+CREATE TABLE topo.path_features(
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    geometry basis_spline NOT NULL,
+    climb_id INTEGER NOT NULL REFERENCES climb.climbs(id) ON DELETE CASCADE,
+    topo_id INTEGER NOT NULL REFERENCES topo.topos(id) ON DELETE CASCADE
+);
+
+COMMIT;

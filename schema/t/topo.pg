@@ -7,7 +7,8 @@ SELECT tables_are(
     'topo',
     ARRAY[
         'topos',
-        'image_features'
+        'image_features',
+        'path_features'
     ]
 );
 
