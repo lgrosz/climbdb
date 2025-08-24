@@ -17,4 +17,4 @@ topo 2025-08-24T03:24:55Z Logan Grosz <logan.grosz@gmail.com> # Add schema for a
 topo/topos [topo] 2025-06-02T20:38:51Z Logan Grosz <logan.grosz@gmail.com> # Creates table for topos
 topo/image-features [media/images topo/topos] 2025-06-02T20:50:02Z Logan Grosz <logan.grosz@gmail.com> # Creates table for topo image features
 basis-spline 2025-06-03T02:45:34Z Logan Grosz <logan.grosz@gmail.com> # Create basis spline type
-topo-path-features [topo/topos basis-spline] 2025-06-04T02:53:49Z Logan Grosz <logan.grosz@gmail.com> # feat: add topo path features table
+topo/path-features [topo/topos basis-spline] 2025-06-04T02:53:49Z Logan Grosz <logan.grosz@gmail.com> # Create table for topo path features

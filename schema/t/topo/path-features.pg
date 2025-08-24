@@ -1,0 +1,29 @@
+BEGIN;
+
+SELECT plan(15);
+
+SET search_path TO topo,climb,public;
+
+SELECT has_table( 'path_features' );
+
+SELECT has_column( 'path_features', 'id' );
+SELECT col_is_pk( 'path_features', 'id' );
+SELECT col_type_is( 'path_features', 'id', 'integer' );
+
+SELECT has_column( 'path_features', 'geometry' );
+SELECT col_type_is( 'path_features', 'geometry', 'basis_spline' );
+SELECT col_not_null( 'path_features', 'geometry' );
+
+SELECT has_column( 'path_features', 'climb_id' );
+SELECT col_type_is( 'path_features', 'climb_id', 'integer' );
+SELECT col_not_null( 'path_features', 'climb_id' );
+SELECT fk_ok( 'path_features', 'climb_id', 'climbs', 'id' );
+
+SELECT has_column( 'path_features', 'topo_id' );
+SELECT col_type_is( 'path_features', 'topo_id', 'integer' );
+SELECT col_not_null( 'path_features', 'topo_id' );
+SELECT fk_ok( 'path_features', 'topo_id', 'topos', 'id' );
+
+SELECT * FROM finish();
+
+ROLLBACK;
