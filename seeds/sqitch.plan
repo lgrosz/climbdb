@@ -2,3 +2,4 @@
 %project=climbdb-seeds
 
 regions [climbdb:climb/regions] 2025-08-24T19:14:05Z Logan Grosz <logan.grosz@gmail.com> # Create region seed data
+crags [regions climbdb:climb/crags] 2025-08-25T02:33:34Z Logan Grosz <logan.grosz@gmail.com> # Create crag seed data
