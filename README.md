@@ -14,4 +14,5 @@ A database for climbing related data.
 ```
 createdb climbdb-dev
 sqitch deploy --chdir schema
+sqitch deploy --chdir seeds
 ```
