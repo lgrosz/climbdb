@@ -1,2 +1,4 @@
 %syntax-version=1.0.0
 %project=climbdb-seeds
+
+regions [climbdb:climb/regions] 2025-08-24T19:14:05Z Logan Grosz <logan.grosz@gmail.com> # Create region seed data
