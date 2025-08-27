@@ -4,3 +4,4 @@
 regions [climbdb:climb/regions] 2025-08-24T19:14:05Z Logan Grosz <logan.grosz@gmail.com> # Create region seed data
 crags [regions climbdb:climb/crags] 2025-08-25T02:33:34Z Logan Grosz <logan.grosz@gmail.com> # Create crag seed data
 sectors [crags climbdb:climb/sectors] 2025-08-25T03:02:09Z Logan Grosz <logan.grosz@gmail.com> # Create sector seed data
+formations [sectors climbdb:climb/formations] 2025-08-27T04:54:29Z Logan Grosz <logan.grosz@gmail.com> # Create formations seed data
