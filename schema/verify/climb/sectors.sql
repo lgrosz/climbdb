@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, name
+SELECT id, name, description, crag_id
     FROM climb.sectors
     WHERE FALSE;
 

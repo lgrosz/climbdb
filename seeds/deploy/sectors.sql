@@ -17,9 +17,10 @@ RETURNS TABLE(ref TEXT, sector_id INT) LANGUAGE sql STABLE AS $$
 $$;
 
 WITH last_sector AS (
-    INSERT INTO climb.sectors(name, crag_id)
+    INSERT INTO climb.sectors(name, description, crag_id)
     VALUES (
         'Manhattan',
+        'Comprised of the talus field below the main formation and Dire Spire.',
         (SELECT crag_id FROM crag_seed_ref('emancipation'))
     )
     RETURNING id
