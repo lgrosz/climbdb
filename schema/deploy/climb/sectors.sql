@@ -7,6 +7,7 @@ BEGIN;
 CREATE TABLE climb.sectors (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT,
+    description TEXT,
     crag_id INTEGER NOT NULL REFERENCES climb.crags(id)
 );
 
