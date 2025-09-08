@@ -5,7 +5,8 @@ BEGIN;
 
 CREATE TABLE climb.regions (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    description TEXT
 );
 
 COMMENT ON TABLE climb.regions IS 'Large areas, often geographically or administrativly defined. These tend not to be climbing-centric.';
