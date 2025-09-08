@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(7);
+SELECT plan(10);
 
 SET search_path TO climb,public;
 
@@ -12,6 +12,10 @@ SELECT col_is_pk( 'regions', 'id' );
 SELECT has_column( 'regions', 'name' );
 SELECT col_type_is( 'regions', 'name', 'text' );
 SELECT col_is_null( 'regions', 'name' );
+
+SELECT has_column( 'regions', 'description' );
+SELECT col_type_is( 'regions', 'description', 'text' );
+SELECT col_is_null( 'regions', 'description' );
 
 SELECT * FROM finish();
 ROLLBACK;

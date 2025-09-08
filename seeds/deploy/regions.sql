@@ -20,8 +20,14 @@ $$;
 -- does specifically that
 
 WITH last_region AS (
-    INSERT INTO climb.regions(name)
-    VALUES ('Mount Rushmore')
+    INSERT INTO climb.regions(name, description)
+    VALUES (
+        'Mount Rushmore',
+        'Mount Rushmore is located along SD-244 near Keystone. '
+        'The climbing is on fine-grained granite, known for its technical face climbing on small edges and crystals. '
+        'Routes are found on the cliffs and spires surrounding the memorial, many of them close to the road. '
+        'The area lies mostly within Mount Rushmore National Memorial, managed by the National Park Service.'
+    )
     RETURNING id
 )
 INSERT INTO region_seed_refs (ref, region_id)
