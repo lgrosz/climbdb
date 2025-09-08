@@ -17,9 +17,11 @@ RETURNS TABLE(ref TEXT, formation_id INT) LANGUAGE sql STABLE AS $$
 $$;
 
 WITH last_formation AS (
-    INSERT INTO climb.formations(name, sector_id)
+    INSERT INTO climb.formations(name, description, sector_id)
     VALUES (
         'Atomic Boulder',
+        'A generally featured, unsuspecting boulder located near the center of '
+        'the talus field.'
         (SELECT sector_id FROM sector_seed_ref('manhattan'))
     )
     RETURNING id
