@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, name
+SELECT id, name, description, region_id
     FROM climb.crags
     WHERE FALSE;
 

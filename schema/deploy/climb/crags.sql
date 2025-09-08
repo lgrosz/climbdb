@@ -7,6 +7,7 @@ BEGIN;
 CREATE TABLE climb.crags (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT,
+    description TEXT,
     region_id INTEGER REFERENCES climb.regions(id)
 );
 

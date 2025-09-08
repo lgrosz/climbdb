@@ -17,9 +17,11 @@ RETURNS TABLE(ref TEXT, crag_id INT) LANGUAGE sql STABLE AS $$
 $$;
 
 WITH last_crag AS (
-    INSERT INTO climb.crags(name, region_id)
+    INSERT INTO climb.crags(name, description, region_id)
     VALUES (
         'Emancipation Rockphormation',
+        'The valley on the backside of the faces. Extends northeast from the '
+        'road nearly 500 yards.',
         (SELECT region_id FROM region_seed_ref('mount-rushmore'))
     )
     RETURNING id
