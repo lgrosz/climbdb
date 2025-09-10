@@ -1,17 +1,31 @@
 FROM postgres as base
 
 RUN apt-get update \
-      && apt-cache showpkg postgresql-$PG_MAJOR-postgis-3 \
       && apt-get install -y  \
+           autoconf \
+           automake \
            build-essential \
-           git \
+           libgdal-dev \
+           libgeos-dev \
+           libjson-c-dev \
+           libprotobuf-c-dev \
+           libtool \
+           libxml2-dev \
+           pkg-config \
            postgresql-server-dev-$PG_MAJOR \
-           postgresql-$PG_MAJOR-postgis-3 \
-           postgresql-$PG_MAJOR-postgis-3-scripts \
+           proj-bin \
+           protobuf-c-compiler \
       && rm -rf /var/lib/apt/lists/*
 
 COPY --from=pg_climb / /tmp/pg_climb
 WORKDIR /tmp/pg_climb
+RUN make
+RUN make install
+
+COPY --from=postgis / /tmp/postgis
+WORKDIR /tmp/postgis
+RUN ./autogen.sh
+RUN ./configure
 RUN make
 RUN make install
 
