@@ -9,7 +9,7 @@ PREPARE act_postgis_version AS
     WHERE name = 'postgis';
 
 PREPARE exp_postgis_version AS
-    VALUES ('3.5.3'::text COLLATE "C");
+    VALUES ('3.6.0'::text COLLATE "C");
 
 SELECT results_eq('act_postgis_version', 'exp_postgis_version');
 
