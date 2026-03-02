@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, alt
+SELECT id, alt, object_key
     FROM media.images
     WHERE FALSE;
 
