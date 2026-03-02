@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(7);
+SELECT plan(10);
 
 SET search_path TO media,public;
 
@@ -12,6 +12,10 @@ SELECT col_type_is( 'images', 'id', 'integer' );
 SELECT has_column( 'images', 'alt' );
 SELECT col_type_is( 'images', 'alt', 'text' );
 SELECT col_is_null( 'images', 'alt' );
+
+SELECT has_column( 'images', 'object_key' );
+SELECT col_type_is( 'images', 'object_key', 'text' );
+SELECT col_is_null( 'images', 'object_key' );
 
 SELECT * FROM finish();
 ROLLBACK;
