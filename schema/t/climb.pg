@@ -13,7 +13,6 @@ SELECT tables_are(
         'climbs',
         'crags',
         'formations',
-        'formations_in_image',
         'sectors'
     ]
 );
