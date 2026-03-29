@@ -4,7 +4,9 @@ RUN apt-get update \
       && apt-get install -y  \
            autoconf \
            automake \
+           bison \
            build-essential \
+           flex \
            libgdal-dev \
            libgeos-dev \
            libjson-c-dev \
