@@ -21,13 +21,9 @@ WITH last_ascent AS (
         climb_id,
         ascent_window,
         first_ascent,
-        members_complete,
-        verified
     ) VALUES (
         (SELECT climb_id FROM climb_seed_ref('atomic-decay')),
         '[2009-06-01,2009-07-01)'::daterange,
-        true,
-        true,
         true
     ) RETURNING id
 )
