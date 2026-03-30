@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(23);
+SELECT plan(20);
 
 SET search_path TO climb,public;
 
@@ -18,10 +18,6 @@ SELECT fk_ok( 'ascents', 'climb_id', 'climbs', 'id' );
 SELECT has_column( 'ascents', 'ascent_window' );
 SELECT col_type_is( 'ascents', 'ascent_window', 'daterange' );
 SELECT col_is_null( 'ascents', 'ascent_window' );
-
-SELECT has_column( 'ascents', 'ascent_duration' );
-SELECT col_type_is( 'ascents', 'ascent_duration', 'interval' );
-SELECT col_is_null( 'ascents', 'ascent_duration' );
 
 SELECT has_column( 'ascents', 'first_ascent' );
 SELECT col_type_is( 'ascents', 'first_ascent', 'boolean' );

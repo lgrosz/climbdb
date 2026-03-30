@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, climb_id, ascent_window, ascent_duration, first_ascent, members_complete, verified
+SELECT id, climb_id, ascent_window, first_ascent, members_complete, verified
     FROM climb.ascents
     WHERE FALSE;
 
