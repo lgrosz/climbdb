@@ -20,11 +20,11 @@ WITH last_ascent AS (
     INSERT INTO climb.ascents (
         climb_id,
         ascent_window,
-        first_ascent,
+        significance,
     ) VALUES (
         (SELECT climb_id FROM climb_seed_ref('atomic-decay')),
         '[2009-06-01,2009-07-01)'::daterange,
-        true
+        '[fa]'
     ) RETURNING id
 )
 INSERT INTO ascent_seed_refs (ref, ascent_id)
