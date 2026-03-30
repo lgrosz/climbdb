@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT ascent_id, climber_id
+SELECT ascent_id, climber_id, role
     FROM climb.ascent_members
     WHERE FALSE;
 

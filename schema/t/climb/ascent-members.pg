@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(10);
+SELECT plan(13);
 
 SET search_path TO climb,public;
 
@@ -15,6 +15,10 @@ SELECT has_column( 'ascent_members', 'climber_id' );
 SELECT col_type_is( 'ascent_members', 'climber_id', 'integer' );
 SELECT col_not_null( 'ascent_members', 'climber_id' );
 SELECT fk_ok( 'ascent_members', 'climber_id', 'climbers', 'id' );
+
+SELECT has_column( 'ascent_members', 'role' );
+SELECT col_type_is( 'ascent_members', 'role', 'text[]' );
+SELECT col_not_null( 'ascent_members', 'role' );
 
 SELECT col_is_pk( 'ascent_members',  ARRAY['ascent_id', 'climber_id'] );
 
