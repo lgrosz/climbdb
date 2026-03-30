@@ -10,6 +10,7 @@ CREATE TABLE climb.ascents (
     ascent_window DATERANGE,
     first_ascent BOOLEAN NOT NULL,
     members_complete BOOLEAN NOT NULL,
+    notes TEXT,
     verified BOOLEAN NOT NULL
 );
 

@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(20);
+SELECT plan(23);
 
 SET search_path TO climb,public;
 
@@ -26,6 +26,10 @@ SELECT col_not_null( 'ascents', 'first_ascent' );
 SELECT has_column( 'ascents', 'members_complete' );
 SELECT col_type_is( 'ascents', 'members_complete', 'boolean' );
 SELECT col_not_null( 'ascents', 'members_complete' );
+
+SELECT has_column( 'ascents', 'notes' );
+SELECT col_type_is( 'ascents', 'notes', 'text' );
+SELECT col_is_null( 'ascents', 'notes' );
 
 SELECT has_column( 'ascents', 'verified' );
 SELECT col_type_is( 'ascents', 'verified', 'boolean' );
