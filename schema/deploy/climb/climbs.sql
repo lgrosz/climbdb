@@ -12,7 +12,7 @@ CREATE TABLE climb.climbs (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT,
     description TEXT,
-    grades grade[] NOT NULL DEFAULT array[]::grade[],
+    grade TEXT,
 
     -- possible "parents"
     region_id INTEGER REFERENCES climb.regions(id),
