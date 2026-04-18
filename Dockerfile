@@ -19,11 +19,6 @@ RUN apt-get update \
            protobuf-c-compiler \
       && rm -rf /var/lib/apt/lists/*
 
-COPY --from=pg_climb / /tmp/pg_climb
-WORKDIR /tmp/pg_climb
-RUN make
-RUN make install
-
 COPY --from=postgis / /tmp/postgis
 WORKDIR /tmp/postgis
 RUN ./autogen.sh
