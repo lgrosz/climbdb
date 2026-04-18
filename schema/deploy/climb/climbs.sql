@@ -1,6 +1,5 @@
 -- Deploy climbdb:climb/climbs to pg
 -- requires: climb
--- requires: pg-climb
 -- requires: climb/regions
 -- requires: climb/crags
 -- requires: climb/sectors

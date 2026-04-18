@@ -3,7 +3,6 @@ services:
     build:
       target: with-pgtap
       additional_contexts:
-        pg_climb: https://github.com/lgrosz/pg_climb.git
         postgis: https://git.osgeo.org/gitea/postgis/postgis.git#3.6.0
     ports:
       - "5432:5432"

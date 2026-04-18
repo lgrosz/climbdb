@@ -8,8 +8,7 @@ climb/crags [climb climb/regions] 2025-08-16T04:47:18Z Logan Grosz <logan.grosz@
 climb/sectors [climb climb/crags] 2025-08-16T04:48:33Z Logan Grosz <logan.grosz@gmail.com> # Creates table for sectors
 postgis 2024-10-20T23:24:08Z Logan Grosz <logan.grosz@gmail.com> # Creates PostGIS extension
 climb/formations [climb postgis climb/regions climb/crags climb/sectors] 2024-10-21T03:13:43Z Logan Grosz <logan.grosz@gmail.com> # Creates table for formations
-pg-climb 2025-08-18T04:08:33Z Logan Grosz <logan.grosz@gmail.com> # Creates pg_climb extension
-climb/climbs [climb pg-climb climb/regions climb/crags climb/sectors climb/formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
+climb/climbs [climb climb/regions climb/crags climb/sectors climb/formations] 2024-10-20T13:39:12Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbs
 climb/climbers [climb] 2024-11-12T17:27:57Z Logan Grosz <logan.grosz@gmail.com> # Creates table for climbers
 climb/ascents [climb climb/climbs] 2025-08-18T05:09:08Z Logan Grosz <logan.grosz@gmail.com> # Creates table for ascents
 climb/ascent-members [climb climb/ascents climb/climbers] 2025-08-18T05:10:11Z Logan Grosz <logan.grosz@gmail.com> # Creates table for ascent members
