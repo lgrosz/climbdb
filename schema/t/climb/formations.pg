@@ -17,9 +17,9 @@ SELECT has_column( 'formations', 'description' );
 SELECT col_type_is( 'formations', 'description', 'text' );
 SELECT col_is_null( 'formations', 'description' );
 
-SELECT has_column( 'formations', 'location' );
-SELECT col_type_is( 'formations', 'location', 'geometry(Point,4326)' );
-SELECT col_is_null( 'formations', 'location' );
+SELECT has_column( 'formations', 'geom' );
+SELECT col_type_is( 'formations', 'geom', 'geometry(Geometry,4326)' );
+SELECT col_is_null( 'formations', 'geom' );
 
 SELECT has_column( 'formations', 'region_id' );
 SELECT col_type_is( 'formations', 'region_id', 'integer' );

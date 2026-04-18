@@ -11,7 +11,7 @@ CREATE TABLE climb.formations (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT,
     description TEXT,
-    location geometry(POINT, 4326),
+    geom geometry(Geometry, 4326),
 
     -- possible "parents"
     region_id INTEGER REFERENCES climb.regions(id),
