@@ -17,9 +17,9 @@ SELECT has_column( 'climbs', 'description' );
 SELECT col_type_is( 'climbs', 'description', 'text' );
 SELECT col_is_null( 'climbs', 'description' );
 
-SELECT has_column( 'climbs', 'grades' );
-SELECT col_type_is( 'climbs', 'grades', 'grade[]' );
-SELECT col_not_null( 'climbs', 'grades' );
+SELECT has_column( 'climbs', 'grade' );
+SELECT col_type_is( 'climbs', 'grade', 'text' );
+SELECT col_is_null( 'climbs', 'grade' );
 
 SELECT has_column( 'climbs', 'region_id' );
 SELECT col_type_is( 'climbs', 'region_id', 'integer' );

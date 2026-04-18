@@ -17,12 +17,12 @@ RETURNS TABLE(ref TEXT, climb_id INT) LANGUAGE sql STABLE AS $$
 $$;
 
 WITH last_climb AS (
-    INSERT INTO climb.climbs(name, description, grades, formation_id)
+    INSERT INTO climb.climbs(name, description, grade, formation_id)
     VALUES (
         'Atomic Decay',
         'Sit start, matched in the undercling-crack. Follow the rails out the '
         'shelf, then up the arete.',
-        '{"V7"}'::grade[],
+        'V7',
         (SELECT formation_id FROM formation_seed_ref('atomic-boulder'))
     )
     RETURNING id
