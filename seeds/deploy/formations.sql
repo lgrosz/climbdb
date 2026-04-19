@@ -6,11 +6,11 @@ BEGIN;
 
 CREATE TABLE formation_seed_refs (
     ref TEXT PRIMARY KEY,
-    formation_id INT NOT NULL REFERENCES climb.formations(id) ON DELETE CASCADE
+    formation_id UUID NOT NULL REFERENCES climb.formations(id) ON DELETE CASCADE
 );
 
 CREATE FUNCTION formation_seed_ref(p_ref TEXT)
-RETURNS TABLE(ref TEXT, formation_id INT) LANGUAGE sql STABLE AS $$
+RETURNS TABLE(ref TEXT, formation_id UUID) LANGUAGE sql STABLE AS $$
     SELECT ref, formation_id
     FROM formation_seed_refs
     WHERE ref = p_ref;

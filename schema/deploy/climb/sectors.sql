@@ -5,10 +5,10 @@
 BEGIN;
 
 CREATE TABLE climb.sectors (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
     name TEXT,
     description TEXT,
-    crag_id INTEGER NOT NULL REFERENCES climb.crags(id)
+    crag_id UUID NOT NULL REFERENCES climb.crags(id)
 );
 
 COMMENT ON TABLE climb.sectors IS 'Subdivisions of a crag. Generally used for organization purposes to further specify or group formations or climbs.';

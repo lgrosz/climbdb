@@ -5,10 +5,10 @@
 BEGIN;
 
 CREATE TABLE climb.crags (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
     name TEXT,
     description TEXT,
-    region_id INTEGER REFERENCES climb.regions(id)
+    region_id UUID REFERENCES climb.regions(id)
 );
 
 COMMENT ON TABLE climb.crags IS 'Distinct climbing areas with limited scope.';

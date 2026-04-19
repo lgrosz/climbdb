@@ -6,11 +6,11 @@ BEGIN;
 
 CREATE TABLE crag_seed_refs (
     ref TEXT PRIMARY KEY,
-    crag_id INT NOT NULL REFERENCES climb.crags(id) ON DELETE CASCADE
+    crag_id UUID NOT NULL REFERENCES climb.crags(id) ON DELETE CASCADE
 );
 
 CREATE FUNCTION crag_seed_ref(p_ref TEXT)
-RETURNS TABLE(ref TEXT, crag_id INT) LANGUAGE sql STABLE AS $$
+RETURNS TABLE(ref TEXT, crag_id UUID) LANGUAGE sql STABLE AS $$
     SELECT ref, crag_id
     FROM crag_seed_refs
     WHERE ref = p_ref;

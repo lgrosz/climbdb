@@ -4,7 +4,7 @@
 BEGIN;
 
 CREATE TABLE climb.regions (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
     name TEXT,
     description TEXT
 );

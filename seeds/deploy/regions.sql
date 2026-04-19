@@ -5,12 +5,12 @@ BEGIN;
 
 CREATE TABLE region_seed_refs (
     ref TEXT PRIMARY KEY,
-    region_id INT NOT NULL REFERENCES climb.regions(id) ON DELETE CASCADE
+    region_id UUID NOT NULL REFERENCES climb.regions(id) ON DELETE CASCADE
 );
 
 -- TODO I'd like this to return the row of the regions table
 CREATE FUNCTION region_seed_ref(p_ref TEXT)
-RETURNS TABLE(ref TEXT, region_id INT) LANGUAGE sql STABLE AS $$
+RETURNS TABLE(ref TEXT, region_id UUID) LANGUAGE sql STABLE AS $$
     SELECT ref, region_id
     FROM region_seed_refs
     WHERE ref = p_ref;
