@@ -5,6 +5,7 @@ BEGIN;
 
 CREATE TABLE climb.climbers (
     id UUID PRIMARY KEY DEFAULT uuidv7(),
+    slug TEXT UNIQUE,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL
 );

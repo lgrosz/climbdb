@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, name, description, region_id
+SELECT id, slug, name, description, region_id
     FROM climb.crags
     WHERE FALSE;
 
