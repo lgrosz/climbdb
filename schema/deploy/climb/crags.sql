@@ -6,6 +6,7 @@ BEGIN;
 
 CREATE TABLE climb.crags (
     id UUID PRIMARY KEY DEFAULT uuidv7(),
+    slug TEXT UNIQUE,
     name TEXT,
     description TEXT,
     region_id UUID REFERENCES climb.regions(id)

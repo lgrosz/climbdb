@@ -9,6 +9,7 @@ BEGIN;
 
 CREATE TABLE climb.climbs (
     id UUID PRIMARY KEY DEFAULT uuidv7(),
+    slug TEXT UNIQUE,
     name TEXT,
     description TEXT,
     grade TEXT,

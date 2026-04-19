@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, name, description
+SELECT id, slug, name, description
     FROM climb.regions
     WHERE FALSE;
 

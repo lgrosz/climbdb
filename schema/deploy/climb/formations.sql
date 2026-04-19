@@ -9,6 +9,7 @@ BEGIN;
 
 CREATE TABLE climb.formations (
     id UUID PRIMARY KEY DEFAULT uuidv7(),
+    slug TEXT UNIQUE,
     name TEXT,
     description TEXT,
     geom geometry(Geometry, 4326),

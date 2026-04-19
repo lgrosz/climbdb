@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(14);
+SELECT plan(18);
 
 SET search_path TO climb,public;
 
@@ -8,6 +8,11 @@ SELECT has_table( 'crags' );
 SELECT has_column( 'crags', 'id' );
 SELECT col_type_is( 'crags', 'id', 'uuid' );
 SELECT col_is_pk( 'crags', 'id' );
+
+SELECT has_column( 'crags', 'slug' );
+SELECT col_type_is( 'crags', 'slug', 'text' );
+SELECT col_is_null( 'crags', 'slug' );
+SELECT col_is_unique( 'crags', 'slug' );
 
 SELECT has_column( 'crags', 'name' );
 SELECT col_type_is( 'crags', 'name', 'text' );

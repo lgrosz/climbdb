@@ -5,6 +5,7 @@ BEGIN;
 
 CREATE TABLE climb.regions (
     id UUID PRIMARY KEY DEFAULT uuidv7(),
+    slug TEXT UNIQUE,
     name TEXT,
     description TEXT
 );
