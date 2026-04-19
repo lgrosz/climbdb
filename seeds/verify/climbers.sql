@@ -2,12 +2,8 @@
 
 BEGIN;
 
-SELECT ref, climber_id
-    FROM climber_seed_refs
-    WHERE false;
-
-SELECT has_function_privilege('climber_seed_ref(text)', 'execute');
-
-SELECT 1/COUNT(*) FROM climber_seed_ref('josh-dreher');
+SELECT 1/COUNT(*)
+    FROM climb.climbers
+    WHERE slug ='josh-dreher';
 
 ROLLBACK;

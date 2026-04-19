@@ -4,28 +4,20 @@
 
 BEGIN;
 
-CREATE TABLE sector_seed_refs (
-    ref TEXT PRIMARY KEY,
-    sector_id UUID NOT NULL REFERENCES climb.sectors(id) ON DELETE CASCADE
+INSERT INTO climb.sectors (
+    name,
+    description,
+    crag_id,
+    slug
+) VALUES (
+    'Manhattan',
+    'Comprised of the talus field below the main formation and Dire Spire.',
+    (
+        SELECT id
+        FROM climb.crags
+        WHERE slug ='emancipation'
+    ),
+    'manhattan'
 );
-
-CREATE FUNCTION sector_seed_ref(p_ref TEXT)
-RETURNS TABLE(ref TEXT, sector_id UUID) LANGUAGE sql STABLE AS $$
-    SELECT ref, sector_id
-    FROM sector_seed_refs
-    WHERE ref = p_ref;
-$$;
-
-WITH last_sector AS (
-    INSERT INTO climb.sectors(name, description, crag_id)
-    VALUES (
-        'Manhattan',
-        'Comprised of the talus field below the main formation and Dire Spire.',
-        (SELECT crag_id FROM crag_seed_ref('emancipation'))
-    )
-    RETURNING id
-)
-INSERT INTO sector_seed_refs (ref, sector_id)
-    SELECT 'manhattan', id FROM last_sector;
 
 COMMIT;
