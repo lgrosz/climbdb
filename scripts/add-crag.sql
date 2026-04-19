@@ -20,12 +20,25 @@ SELECT (
   \set region_id `psql :'DBNAME' -Atc "select id||' '||name||' '||slug from climb.regions order by name" | fzf | awk '{print $1}'`
 \endif
 
-insert into climb.crags (
-  name,
-  slug,
-  region_id
-) values (
-  nullif(:'name', ''),
-  nullif(:'slug', ''),
-  nullif(:'region_id', '')::uuid
-);
+\echo 'Preview:'
+select
+  :'name' as name,
+  nullif(:'slug','') as slug,
+  nullif(:'region_id','')::uuid as region_id;
+
+\prompt 'Insert? (y/N): ' confirm
+
+\if :confirm
+  insert into climb.crags (
+    name,
+    slug,
+    region_id
+  ) values (
+    nullif(:'name', ''),
+    nullif(:'slug', ''),
+    nullif(:'region_id', '')::uuid
+  );
+\else
+  \echo 'Canceled'
+\endif
+
