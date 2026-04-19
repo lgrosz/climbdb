@@ -8,16 +8,16 @@
 BEGIN;
 
 CREATE TABLE climb.climbs (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
     name TEXT,
     description TEXT,
     grade TEXT,
 
     -- possible "parents"
-    region_id INTEGER REFERENCES climb.regions(id),
-    crag_id INTEGER REFERENCES climb.crags(id),
-    sector_id INTEGER REFERENCES climb.sectors(id),
-    formation_id INTEGER REFERENCES climb.formations(id),
+    region_id UUID REFERENCES climb.regions(id),
+    crag_id UUID REFERENCES climb.crags(id),
+    sector_id UUID REFERENCES climb.sectors(id),
+    formation_id UUID REFERENCES climb.formations(id),
 
     -- exclusive-or parent enforcement
     CONSTRAINT at_most_one_parent CHECK ( num_nonnulls(region_id, crag_id, sector_id, formation_id) < 2 )

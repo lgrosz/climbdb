@@ -7,15 +7,15 @@ BEGIN;
 
 CREATE TABLE ascent_member_seed_refs (
     ref TEXT PRIMARY KEY,
-    ascent_id INTEGER NOT NULL,
-    climber_id INTEGER NOT NULL,
+    ascent_id UUID NOT NULL,
+    climber_id UUID NOT NULL,
     FOREIGN KEY (ascent_id, climber_id)
         REFERENCES climb.ascent_members(ascent_id, climber_id)
         ON DELETE CASCADE
 );
 
 CREATE FUNCTION ascent_member_seed_ref(p_ref TEXT)
-RETURNS TABLE(ref TEXT, ascent_id INT, climber_id INT) LANGUAGE sql STABLE AS $$
+RETURNS TABLE(ref TEXT, ascent_id UUID, climber_id UUID) LANGUAGE sql STABLE AS $$
     SELECT ref, ascent_id, climber_id
     FROM ascent_member_seed_refs
     WHERE ref = p_ref;

@@ -4,7 +4,7 @@
 BEGIN;
 
 CREATE TABLE climb.climbers (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL
 );

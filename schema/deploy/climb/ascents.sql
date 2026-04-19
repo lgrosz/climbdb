@@ -5,8 +5,8 @@
 BEGIN;
 
 CREATE TABLE climb.ascents (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    climb_id INTEGER NOT NULL REFERENCES climb.climbs(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
+    climb_id UUID NOT NULL REFERENCES climb.climbs(id) ON DELETE CASCADE,
     ascent_window DATERANGE,
     notes TEXT,
     style TEXT[] NOT NULL DEFAULT '{}',

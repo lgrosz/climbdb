@@ -6,8 +6,8 @@
 BEGIN;
 
 CREATE TABLE climb.ascent_members (
-    ascent_id INTEGER NOT NULL REFERENCES climb.ascents(id) ON DELETE CASCADE,
-    climber_id INTEGER NOT NULL REFERENCES climb.climbers(id),
+    ascent_id UUID NOT NULL REFERENCES climb.ascents(id) ON DELETE CASCADE,
+    climber_id UUID NOT NULL REFERENCES climb.climbers(id),
     role TEXT[] NOT NULL DEFAULT '{}',
     PRIMARY KEY (ascent_id, climber_id)
 );

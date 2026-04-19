@@ -6,7 +6,7 @@ SET search_path TO climb,public;
 SELECT has_table( 'sectors' );
 
 SELECT has_column( 'sectors', 'id' );
-SELECT col_type_is( 'sectors', 'id', 'integer' );
+SELECT col_type_is( 'sectors', 'id', 'uuid' );
 SELECT col_is_pk( 'sectors', 'id' );
 
 SELECT has_column( 'sectors', 'name' );
@@ -18,7 +18,7 @@ SELECT col_type_is( 'sectors', 'description', 'text' );
 SELECT col_is_null( 'sectors', 'description' );
 
 SELECT has_column( 'sectors', 'crag_id' );
-SELECT col_type_is( 'sectors', 'crag_id', 'integer' );
+SELECT col_type_is( 'sectors', 'crag_id', 'uuid' );
 SELECT col_not_null( 'sectors', 'crag_id' );
 SELECT fk_ok( 'sectors', 'crag_id', 'crags', 'id' );
 

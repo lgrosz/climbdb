@@ -6,11 +6,11 @@ BEGIN;
 
 CREATE TABLE sector_seed_refs (
     ref TEXT PRIMARY KEY,
-    sector_id INT NOT NULL REFERENCES climb.sectors(id) ON DELETE CASCADE
+    sector_id UUID NOT NULL REFERENCES climb.sectors(id) ON DELETE CASCADE
 );
 
 CREATE FUNCTION sector_seed_ref(p_ref TEXT)
-RETURNS TABLE(ref TEXT, sector_id INT) LANGUAGE sql STABLE AS $$
+RETURNS TABLE(ref TEXT, sector_id UUID) LANGUAGE sql STABLE AS $$
     SELECT ref, sector_id
     FROM sector_seed_refs
     WHERE ref = p_ref;

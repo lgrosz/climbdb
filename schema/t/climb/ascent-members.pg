@@ -7,12 +7,12 @@ SET search_path TO climb,public;
 SELECT has_table( 'ascent_members' );
 
 SELECT has_column( 'ascent_members', 'ascent_id' );
-SELECT col_type_is( 'ascent_members', 'ascent_id', 'integer' );
+SELECT col_type_is( 'ascent_members', 'ascent_id', 'uuid' );
 SELECT col_not_null( 'ascent_members', 'ascent_id' );
 SELECT fk_ok( 'ascent_members', 'ascent_id', 'ascents', 'id' );
 
 SELECT has_column( 'ascent_members', 'climber_id' );
-SELECT col_type_is( 'ascent_members', 'climber_id', 'integer' );
+SELECT col_type_is( 'ascent_members', 'climber_id', 'uuid' );
 SELECT col_not_null( 'ascent_members', 'climber_id' );
 SELECT fk_ok( 'ascent_members', 'climber_id', 'climbers', 'id' );
 

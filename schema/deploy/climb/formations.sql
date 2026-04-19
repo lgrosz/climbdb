@@ -8,15 +8,15 @@
 BEGIN;
 
 CREATE TABLE climb.formations (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
     name TEXT,
     description TEXT,
     geom geometry(Geometry, 4326),
 
     -- possible "parents"
-    region_id INTEGER REFERENCES climb.regions(id),
-    crag_id INTEGER REFERENCES climb.crags(id),
-    sector_id INTEGER REFERENCES climb.sectors(id),
+    region_id UUID REFERENCES climb.regions(id),
+    crag_id UUID REFERENCES climb.crags(id),
+    sector_id UUID REFERENCES climb.sectors(id),
 
     -- exclusive-or parent enforcement
     CONSTRAINT at_most_one_parent CHECK ( num_nonnulls(region_id, crag_id, sector_id) < 2 )

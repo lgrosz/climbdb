@@ -6,7 +6,7 @@ SET search_path TO climb,public;
 SELECT has_table( 'climbers' );
 
 SELECT has_column( 'climbers', 'id' );
-SELECT col_type_is( 'climbers', 'id', 'integer' );
+SELECT col_type_is( 'climbers', 'id', 'uuid' );
 SELECT col_is_pk( 'climbers', 'id' );
 
 SELECT has_column( 'climbers', 'first_name' );
