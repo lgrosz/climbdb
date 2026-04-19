@@ -22,7 +22,7 @@ WITH last_ascent AS (
         ascent_window,
         significance
     ) VALUES (
-        (SELECT climb_id FROM climb_seed_ref('atomic-decay')),
+        (SELECT id FROM climb.climbs WHERE slug = 'atomic-decay'),
         '[2009-06-01,2009-07-01)'::daterange,
         '{fa}'
     ) RETURNING id

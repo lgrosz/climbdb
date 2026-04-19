@@ -27,7 +27,7 @@ WITH last_ascent_member AS (
         climber_id
     ) VALUES (
         (SELECT ascent_id FROM ascent_seed_ref('atomic-decay-fa')),
-        (SELECT climber_id FROM climber_seed_ref('josh-dreher'))
+        (SELECT id FROM climb.climbers WHERE slug = 'josh-dreher')
     ) RETURNING ascent_id, climber_id
 ) INSERT INTO ascent_member_seed_refs (ref, ascent_id, climber_id)
     SELECT 'atomic-decay-fa-josh-dreher', ascent_id, climber_id FROM last_ascent_member;
