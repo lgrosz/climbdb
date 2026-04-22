@@ -17,7 +17,8 @@ SELECT (
 -- Search for region
 \if :{?region_id}
 \else
-  \set region_id `psql :'DBNAME' -Atc "select id||' '||name||' '||slug from climb.regions order by name" | fzf | awk '{print $1}'`
+  \set region_row `scripts/select.sh :'DBNAME' region`
+  \set region_id `echo :'region_row' | cut -f1`
 \endif
 
 \echo 'Preview:'

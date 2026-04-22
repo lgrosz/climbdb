@@ -5,11 +5,9 @@
 \prompt 'Parent (press enter)...' _
 
 -- Search for parent
--- TODO I desperately need a way to split into lines for readability
-\set parent `psql :'DBNAME' -Atc "select format('region %s %s %s', id, name, slug) from climb.regions union all select format('crag %s %s %s', id, name, slug) from climb.crags union all select format('sector %s %s %s', id, name, slug) from climb.sectors union all select format('formation %s %s %s', id, name, slug) from climb.formations order by 1 " | fzf`
-
-\set parent_type `echo :'parent' | awk '{print $1}'`
-\set parent_id `echo :'parent' | awk '{print $2}'`
+\set parent_row `scripts/select.sh :'DBNAME' region crag sector formation`
+\set parent_id `echo :'parent_row' | cut -f1`
+\set parent_type `echo :'parent_row' | cut -f2`
 
 \echo 'Parent type:' :parent_type
 \echo 'Parent id:' :parent_id
