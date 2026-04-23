@@ -5,15 +5,22 @@
 
 \prompt 'Geometry: ' raw_geom
 
--- Parse provided geometry
-\set geom `scripts/geom.sh :'raw_geom'`
-
-select :SHELL_EXIT_CODE != 0 as geom_invalid
+select :'raw_geom' != '' as geom_provided
 \gset
 
-\if :geom_invalid
-  \echo 'Invalid geometry format'
-  \quit
+\if :geom_provided
+  -- Parse provided geometry
+  \set geom `scripts/geom.sh :'raw_geom'`
+
+  select :SHELL_EXIT_CODE != 0 as geom_invalid
+  \gset
+
+  \if :geom_invalid
+    \echo 'Invalid geometry format'
+    \quit
+  \endif
+\else
+  \set geom ''
 \endif
 
 \prompt 'Parent (press enter)...' _
