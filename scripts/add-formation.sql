@@ -2,6 +2,7 @@
 
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
+\prompt 'Geometry: ' geom
 \prompt 'Parent (press enter)...' _
 
 -- Search for parent
@@ -27,6 +28,7 @@ select :'parent_type' != '' as parent_is_valid
 select
   :'name' as name,
   nullif(:'slug', '') as slug,
+  nullif(:'geom', '') as geom,
   nullif(:'parent_type', '') as parent_type,
   nullif(:'parent_id', '')::uuid as :parent_col;
 
@@ -36,10 +38,12 @@ select
   insert into climb.formations (
     name,
     slug,
+    geom,
     :parent_col
   ) values (
     nullif(:'name', ''),
     nullif(:'slug', ''),
+    nullif(:'geom', ''),
     nullif(:'parent_id', '')::uuid
   );
 \else
