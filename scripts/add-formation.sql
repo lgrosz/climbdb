@@ -2,7 +2,20 @@
 
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
-\prompt 'Geometry: ' geom
+
+\prompt 'Geometry: ' raw_geom
+
+-- Parse provided geometry
+\set geom `scripts/geom.sh :'raw_geom'`
+
+select :SHELL_EXIT_CODE != 0 as geom_invalid
+\gset
+
+\if :geom_invalid
+  \echo 'Invalid geometry format'
+  \quit
+\endif
+
 \prompt 'Parent (press enter)...' _
 
 -- Search for parent
