@@ -27,6 +27,9 @@ for t in "${types[@]}"; do
     formation)
       query_parts+=("select id, 'formation', name, slug from climb.formations")
       ;;
+    climb)
+      query_parts+=("select id, 'climb', name, slug from climb.climbs")
+      ;;
     *)
       echo "unknown type: $t" >&2
       exit 1
