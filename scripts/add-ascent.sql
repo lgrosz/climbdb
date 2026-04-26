@@ -24,6 +24,10 @@ SELECT (
 \prompt 'Style (comma-separated): ' style
 \prompt 'Significance (comma-separated): ' significance
 
+\echo 'Select ascent members (TAB to multi-select, ENTER to confirm)'
+
+\set climber_ids `scripts/select.sh :'DBNAME' climber -- -m | awk -F'\t' '{print $1}' | tr '\n' ','  | sed 's/,$//'`
+
 \echo 'Preview:'
 select
   :'climb_id'::uuid as climb_id,
@@ -41,13 +45,18 @@ select
 \prompt 'Insert? (y/N): ' confirm
 
 \if :confirm
+  -- Generate ascent id (UUIDv7)
+  select uuidv7()::text as ascent_id \gset
+
   insert into climb.ascents (
+    id,
     climb_id,
     ascent_window,
     notes,
     style,
     significance
   ) values (
+    :'ascent_id'::uuid,
     nullif(:'climb_id','')::uuid,
     nullif(:'ascent_window','')::daterange,
     nullif(:'notes',''),
@@ -60,6 +69,9 @@ select
       ELSE string_to_array(replace(:'significance',' ',''), ',')
     END
   );
+
+  INSERT INTO climb.ascent_members (ascent_id, climber_id)
+  SELECT :'ascent_id'::uuid, unnest(string_to_array(:'climber_ids', ','))::uuid;
 \else
   \echo 'Canceled'
 \endif
