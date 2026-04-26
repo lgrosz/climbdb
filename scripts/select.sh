@@ -4,7 +4,23 @@ set -euo pipefail
 db="$1"
 shift
 
-types=("$@")
+types=()
+fzf_args=()
+
+parsing_types=1
+
+for arg in "$@"; do
+  if [ "$arg" = "--" ]; then
+    parsing_types=0
+    continue
+  fi
+
+  if [ $parsing_types -eq 1 ]; then
+    types+=("$arg")
+  else
+    fzf_args+=("$arg")
+  fi
+done
 
 if [ ${#types[@]} -eq 0 ]; then
   echo "no types provided" >&2
@@ -30,6 +46,9 @@ for t in "${types[@]}"; do
     climb)
       query_parts+=("select id, 'climb', name, slug from climb.climbs")
       ;;
+    climber)
+      query_parts+=("select id, 'climber', last_name, first_name, slug from climb.climbers")
+      ;;
     *)
       echo "unknown type: $t" >&2
       exit 1
@@ -53,5 +72,4 @@ psql -X -F $'\t' "$db" -At <<SQL |
 $sql
 order by 2, 3;
 SQL
-fzf --delimiter=$'\t' --with-nth=2..
-
+fzf --delimiter=$'\t' --with-nth=2.. ${fzf_args:+${fzf_args[@]}}
