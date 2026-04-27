@@ -2,6 +2,7 @@
 
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
+\prompt 'Grade: ' grade
 \prompt 'Parent (press enter)...' _
 
 -- Search for parent
@@ -28,10 +29,12 @@ BEGIN;
 INSERT INTO climb.climbs (
   name,
   slug,
+  grade,
   :parent_col
 ) VALUES (
   nullif(:'name', ''),
   nullif(:'slug', ''),
+  nullif(:'grade', ''),
   nullif(:'parent_id', '')::uuid
 ) RETURNING *;
 
