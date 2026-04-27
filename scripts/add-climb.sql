@@ -23,25 +23,23 @@ select :'parent_type' != '' as parent_is_valid
 
 \set parent_col :parent_type'_id'
 
-\echo 'Preview:'
-select
-  :'name' as name,
-  nullif(:'slug', '') as slug,
-  nullif(:'parent_id', '')::uuid as :parent_col;
+BEGIN;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.climbs (
+  name,
+  slug,
+  :parent_col
+) VALUES (
+  nullif(:'name', ''),
+  nullif(:'slug', ''),
+  nullif(:'parent_id', '')::uuid
+) RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  insert into climb.climbs (
-    name,
-    slug,
-    :parent_col
-  ) values (
-    nullif(:'name', ''),
-    nullif(:'slug', ''),
-    nullif(:'parent_id', '')::uuid
-  );
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif
 

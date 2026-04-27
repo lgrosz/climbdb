@@ -21,25 +21,23 @@ SELECT (
   \set region_id `echo :'region_row' | cut -f1`
 \endif
 
-\echo 'Preview:'
-select
-  :'name' as name,
-  nullif(:'slug','') as slug,
-  nullif(:'region_id','')::uuid as region_id;
+BEGIN;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.crags (
+  name,
+  slug,
+  region_id
+) VALUES (
+  nullif(:'name', ''),
+  nullif(:'slug', ''),
+  nullif(:'region_id', '')::uuid
+) RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  insert into climb.crags (
-    name,
-    slug,
-    region_id
-  ) values (
-    nullif(:'name', ''),
-    nullif(:'slug', ''),
-    nullif(:'region_id', '')::uuid
-  );
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif
 

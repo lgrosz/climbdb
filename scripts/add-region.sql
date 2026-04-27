@@ -2,22 +2,20 @@
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
 
-\echo 'Preview:'
-select
-  :'name' as name,
-  nullif(:'slug','') as slug;
+BEGIN;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.regions (
+  name, slug
+) VALUES (
+  nullif(:'name', ''),
+  nullif(:'slug', '')
+) RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  insert into climb.regions (
-    name,
-    slug
-  ) values (
-    nullif(:'name', ''),
-    nullif(:'slug', '')
-  );
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif
 
