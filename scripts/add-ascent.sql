@@ -28,50 +28,40 @@ SELECT (
 
 \set climber_ids `scripts/select.sh :'DBNAME' climber -- -m | awk -F'\t' '{print $1}' | tr '\n' ','  | sed 's/,$//'`
 
-\echo 'Preview:'
-select
-  :'climb_id'::uuid as climb_id,
-  nullif(:'ascent_window','')::daterange as ascent_window,
-  nullif(:'notes','') as notes,
+BEGIN;
+
+SELECT uuidv7()::text AS ascent_id \gset
+
+INSERT INTO climb.ascents (
+  id,
+  climb_id,
+  ascent_window,
+  notes,
+  style,
+  significance
+) VALUES (
+  :'ascent_id'::uuid,
+  nullif(:'climb_id','')::uuid,
+  nullif(:'ascent_window','')::daterange,
+  nullif(:'notes',''),
   CASE
     WHEN nullif(:'style','') IS NULL THEN '{}'::text[]
     ELSE string_to_array(replace(:'style',' ',''), ',')
-  END as style,
+  END,
   CASE
     WHEN nullif(:'significance','') IS NULL THEN '{}'::text[]
     ELSE string_to_array(replace(:'significance',' ',''), ',')
-  END as significance;
+  END
+) RETURNING *;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.ascent_members (ascent_id, climber_id)
+SELECT :'ascent_id'::uuid, unnest(string_to_array(:'climber_ids', ','))::uuid
+RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  -- Generate ascent id (UUIDv7)
-  select uuidv7()::text as ascent_id \gset
-
-  insert into climb.ascents (
-    id,
-    climb_id,
-    ascent_window,
-    notes,
-    style,
-    significance
-  ) values (
-    :'ascent_id'::uuid,
-    nullif(:'climb_id','')::uuid,
-    nullif(:'ascent_window','')::daterange,
-    nullif(:'notes',''),
-    CASE
-      WHEN nullif(:'style','') IS NULL THEN '{}'::text[]
-      ELSE string_to_array(replace(:'style',' ',''), ',')
-    END,
-    CASE
-      WHEN nullif(:'significance','') IS NULL THEN '{}'::text[]
-      ELSE string_to_array(replace(:'significance',' ',''), ',')
-    END
-  );
-
-  INSERT INTO climb.ascent_members (ascent_id, climber_id)
-  SELECT :'ascent_id'::uuid, unnest(string_to_array(:'climber_ids', ','))::uuid;
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif

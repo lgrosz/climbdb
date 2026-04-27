@@ -23,25 +23,23 @@ SELECT (
 
 -- TODO Abort if crag id does not exist, because we it _will_ fail based on constraints
 
-\echo 'Preview:'
-select
-  :'name' as name,
-  nullif(:'slug','') as slug,
-  nullif(:'crag_id','')::uuid as crag_id;
+BEGIN;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.sectors (
+  name,
+  slug,
+  crag_id
+) VALUES (
+  nullif(:'name', ''),
+  nullif(:'slug', ''),
+  nullif(:'crag_id', '')::uuid
+) RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  insert into climb.sectors (
-    name,
-    slug,
-    crag_id
-  ) values (
-    nullif(:'name', ''),
-    nullif(:'slug', ''),
-    nullif(:'crag_id', '')::uuid
-  );
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif
 

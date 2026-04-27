@@ -3,25 +3,23 @@
 \prompt 'Last Name: ' last_name
 \prompt 'Slug: ' slug
 
-\echo 'Preview:'
-select
-  :'first_name' as first_name,
-  :'last_name' as last_name,
-  nullif(:'slug','') as slug;
+BEGIN;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.climbers (
+  first_name,
+  last_name,
+  slug
+) VALUES (
+  :'first_name',
+  :'last_name',
+  nullif(:'slug', '')
+) RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  insert into climb.climbers (
-    first_name,
-    last_name,
-    slug
-  ) values (
-    :'first_name',
-    :'last_name',
-    nullif(:'slug', '')
-  );
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif
 

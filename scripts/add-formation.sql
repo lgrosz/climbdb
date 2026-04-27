@@ -44,29 +44,25 @@ select :'parent_type' != '' as parent_is_valid
 
 \set parent_col :parent_type'_id'
 
-\echo 'Preview:'
-select
-  :'name' as name,
-  nullif(:'slug', '') as slug,
-  nullif(:'geom', '') as geom,
-  nullif(:'parent_type', '') as parent_type,
-  nullif(:'parent_id', '')::uuid as :parent_col;
+BEGIN;
 
-\prompt 'Insert? (y/N): ' confirm
+INSERT INTO climb.formations (
+  name,
+  slug,
+  geom,
+  :parent_col
+) VALUES (
+  nullif(:'name', ''),
+  nullif(:'slug', ''),
+  nullif(:'geom', ''),
+  nullif(:'parent_id', '')::uuid
+) RETURNING *;
+
+\prompt 'Commit? (y/N): ' confirm
 
 \if :confirm
-  insert into climb.formations (
-    name,
-    slug,
-    geom,
-    :parent_col
-  ) values (
-    nullif(:'name', ''),
-    nullif(:'slug', ''),
-    nullif(:'geom', ''),
-    nullif(:'parent_id', '')::uuid
-  );
+  COMMIT;
 \else
-  \echo 'Canceled'
+  ROLLBACK;
 \endif
 
