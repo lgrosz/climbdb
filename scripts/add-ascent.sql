@@ -19,7 +19,26 @@ SELECT (
   \set climb_id `echo :'climb_row' | cut -f1`
 \endif
 
-\prompt 'Ascent window (e.g. [2024-01-01,2024-01-02] or leave blank): ' ascent_window
+\prompt 'Ascent window (e.g. 2024, 2024-04, 2024-04-01, [2024-04-01,2024-06-15)): ' raw_ascent_window
+
+SELECT :'raw_ascent_window' != '' as ascent_window_provided
+\gset
+
+\if :ascent_window_provided
+  -- Parse provided daterange
+  \set ascent_window `scripts/daterange.sh :'raw_ascent_window'`
+
+  SELECT :SHELL_EXIT_CODE != 0 as ascent_window_invalid
+  \gset
+
+  \if :ascent_window_invalid
+    \echo 'Invalid ascent window'
+    \quit
+  \endif
+\else
+  \set ascent_window ''
+\endif
+
 \prompt 'Notes: ' notes
 \prompt 'Style (comma-separated): ' style
 \prompt 'Significance (comma-separated): ' significance
