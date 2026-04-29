@@ -72,4 +72,4 @@ psql -X -F $'\t' "$db" -At <<SQL |
 $sql
 order by 2, 3;
 SQL
-fzf --delimiter=$'\t' --with-nth=2.. ${fzf_args:+${fzf_args[@]}}
+fzf --delimiter=$'\t' --with-nth=2.. "${fzf_args:+"${fzf_args[@]}"}"
