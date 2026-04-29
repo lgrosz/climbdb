@@ -16,8 +16,16 @@ fi
 #   43.889046 N, 103.460229 W
 #   43.889046, -103.460229
 if echo "$trimmed" | grep -Eq '[0-9]'; then
-  lat=$(echo "$trimmed" | awk -F'[ ,]+' '{print $1}')
-  lon=$(echo "$trimmed" | awk -F'[ ,]+' '{print $2}')
+  if echo "$trimmed" | grep -q '°'; then
+    lat=$(echo "$trimmed" | sed 's/°/ /g' | awk -F'[ ,]+' '{print $1" "$2}')
+    lon=$(echo "$trimmed" | sed 's/°/ /g' | awk -F'[ ,]+' '{print $3" "$4}')
+  elif echo "$trimmed" | grep -qi '[NSEW]'; then
+    lat=$(echo "$trimmed" | awk -F'[ ,]+' '{print $1" "$2}')
+    lon=$(echo "$trimmed" | awk -F'[ ,]+' '{print $3" "$4}')
+  else
+    lat=$(echo "$trimmed" | awk -F'[ ,]+' '{print $1}')
+    lon=$(echo "$trimmed" | awk -F'[ ,]+' '{print $2}')
+  fi
 
   normalize() {
     val="$1"
