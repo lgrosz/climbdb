@@ -2,24 +2,9 @@
 
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
-\prompt 'Region: ' region
 
--- Try direct lookup
-SELECT (
-  SELECT id::text
-  FROM climb.regions
-  WHERE id::text = :'region'
-     OR slug = :'region'
-  LIMIT 1
-) AS region_id
-\gset
-
--- Search for region
-\if :{?region_id}
-\else
-  \set region_row `scripts/select.sh :'DBNAME' region -- --prompt="Select region > "`
-  \set region_id `echo :'region_row' | cut -f1`
-\endif
+\set region_row `scripts/select.sh :'DBNAME' region -- --prompt="Select region > "`
+\set region_id `echo :'region_row' | cut -f1`
 
 BEGIN;
 

@@ -1,23 +1,7 @@
 \echo 'Add a new ascent'
 
-\prompt 'Climb: ' climb
-
--- Try direct lookup
-SELECT (
-  SELECT id::text
-  FROM climb.climbs
-  WHERE id::text = :'climb'
-     OR slug = :'climb'
-  LIMIT 1
-) AS climb_id
-\gset
-
--- Search for climb
-\if :{?climb_id}
-\else
-  \set climb_row `scripts/select.sh :'DBNAME' climb -- --prompt="Select climb > "`
-  \set climb_id `echo :'climb_row' | cut -f1`
-\endif
+\set climb_row `scripts/select.sh :'DBNAME' climb -- --prompt="Select climb > "`
+\set climb_id `echo :'climb_row' | cut -f1`
 
 \prompt 'Ascent window (e.g. 2024, 2024-04, 2024-04-01, [2024-04-01,2024-06-15)): ' raw_ascent_window
 

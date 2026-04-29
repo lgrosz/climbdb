@@ -2,24 +2,9 @@
 
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
-\prompt 'Crag: ' crag
 
--- Try direct lookup
-SELECT (
-  SELECT id::text
-  FROM climb.crags
-  WHERE id::text = :'crag'
-     OR slug = :'crag'
-  LIMIT 1
-) AS crag_id
-\gset
-
--- Search for crag
-\if :{?crag_id}
-\else
-  \set crag_row `scripts/select.sh :'DBNAME' crag -- --prompt="Select crag > "`
-  \set crag_id `echo :'crag_row' | cut -f1`
-\endif
+\set crag_row `scripts/select.sh :'DBNAME' crag -- --prompt="Select crag > "`
+\set crag_id `echo :'crag_row' | cut -f1`
 
 -- TODO Abort if crag id does not exist, because we it _will_ fail based on constraints
 
