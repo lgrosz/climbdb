@@ -15,7 +15,7 @@ SELECT (
 -- Search for climb
 \if :{?climb_id}
 \else
-  \set climb_row `scripts/select.sh :'DBNAME' climb`
+  \set climb_row `scripts/select.sh :'DBNAME' climb -- --prompt="Select climb > "`
   \set climb_id `echo :'climb_row' | cut -f1`
 \endif
 
@@ -45,7 +45,7 @@ SELECT :'raw_ascent_window' != '' as ascent_window_provided
 
 \echo 'Select ascent members (TAB to multi-select, ENTER to confirm)'
 
-\set climber_ids `scripts/select.sh :'DBNAME' climber -- -m | awk -F'\t' '{print $1}' | tr '\n' ','  | sed 's/,$//'`
+\set climber_ids `scripts/select.sh :'DBNAME' climber -- -m --prompt="Select ascent members > " | awk -F'\t' '{print $1}' | tr '\n' ','  | sed 's/,$//'`
 
 BEGIN;
 
