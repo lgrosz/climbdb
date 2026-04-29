@@ -3,10 +3,9 @@
 \prompt 'Name: ' name
 \prompt 'Slug: ' slug
 \prompt 'Grade: ' grade
-\prompt 'Parent (press enter)...' _
 
 -- Search for parent
-\set parent_row `scripts/select.sh :'DBNAME' region crag sector formation`
+\set parent_row `scripts/select.sh :'DBNAME' region crag sector formation -- --prompt="Select parent > "`
 \set parent_id `echo :'parent_row' | cut -f1`
 \set parent_type `echo :'parent_row' | cut -f2`
 

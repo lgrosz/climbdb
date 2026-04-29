@@ -17,7 +17,7 @@ SELECT (
 -- Search for crag
 \if :{?crag_id}
 \else
-  \set crag_row `scripts/select.sh :'DBNAME' crag`
+  \set crag_row `scripts/select.sh :'DBNAME' crag -- --prompt="Select crag > "`
   \set crag_id `echo :'crag_row' | cut -f1`
 \endif
 
