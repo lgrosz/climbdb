@@ -45,3 +45,20 @@ jobs:
         working-directory: schema
         run: pg_prove --recurse
 
+  test-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bats
+
+      - name: Test daterange.sh
+        run: bats scripts/daterange.bats
+
+      - name: Test geom.sh
+        run: bats scripts/geom.bats
+
