@@ -19,9 +19,9 @@ SELECT has_column( 'ascents', 'ascent_window' );
 SELECT col_type_is( 'ascents', 'ascent_window', 'daterange' );
 SELECT col_is_null( 'ascents', 'ascent_window' );
 
-SELECT has_column( 'ascents', 'notes' );
-SELECT col_type_is( 'ascents', 'notes', 'text' );
-SELECT col_is_null( 'ascents', 'notes' );
+SELECT has_column( 'ascents', 'description' );
+SELECT col_type_is( 'ascents', 'description', 'text' );
+SELECT col_is_null( 'ascents', 'description' );
 
 SELECT has_column( 'ascents', 'style' );
 SELECT col_type_is( 'ascents', 'style', 'text[]' );

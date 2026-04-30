@@ -23,7 +23,7 @@ SELECT :'raw_ascent_window' != '' as ascent_window_provided
   \set ascent_window ''
 \endif
 
-\prompt 'Notes: ' notes
+\prompt 'Description: ' description
 \prompt 'Style (comma-separated): ' style
 \prompt 'Significance (comma-separated): ' significance
 
@@ -39,14 +39,14 @@ INSERT INTO climb.ascents (
   id,
   climb_id,
   ascent_window,
-  notes,
+  description,
   style,
   significance
 ) VALUES (
   :'ascent_id'::uuid,
   nullif(:'climb_id','')::uuid,
   nullif(:'ascent_window','')::daterange,
-  nullif(:'notes',''),
+  nullif(:'description',''),
   CASE
     WHEN nullif(:'style','') IS NULL THEN '{}'::text[]
     ELSE string_to_array(replace(:'style',' ',''), ',')
