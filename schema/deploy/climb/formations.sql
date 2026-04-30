@@ -24,5 +24,9 @@ CREATE TABLE climb.formations (
 );
 
 COMMENT ON TABLE climb.formations IS 'Distinct geological formations.';
+COMMENT ON COLUMN climb.formations.slug IS 'User-facing identifier that hides the internal UUID from clients. NULL means the formation is not reachable via slug-based lookup.';
+COMMENT ON COLUMN climb.formations.name IS 'NULL indicates the formation is unnamed.';
+COMMENT ON COLUMN climb.formations.geom IS 'Optional geographic location in WGS84. NULL indicates the location is not recorded.';
+COMMENT ON CONSTRAINT at_most_one_parent ON climb.formations IS 'A formation may belong to at most one parent (region, crag, or sector). A formation with no parent is valid; this is common before a crag gets well-established.';
 
 COMMIT;

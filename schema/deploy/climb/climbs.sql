@@ -25,5 +25,10 @@ CREATE TABLE climb.climbs (
 );
 
 COMMENT ON TABLE climb.climbs IS 'Describes any climbing route.';
+COMMENT ON COLUMN climb.climbs.slug IS 'User-facing identifier that hides the internal UUID from clients. NULL means the climb is not reachable via slug-based lookup.';
+COMMENT ON COLUMN climb.climbs.name IS 'NULL indicates the climb is unnamed.';
+COMMENT ON COLUMN climb.climbs.grade IS 'Placeholder TEXT type. A proper grade domain type is planned for a future version. No database-level validation is enforced; callers are responsible for format consistency.';
+-- TODO It makes sense to give a climb a location in cases like sport climbing walls, where the point would be projected on to the wall to determine its starting location. This makes sense sense for boulders. This also reduces the need for "anonymous formations"
+COMMENT ON CONSTRAINT at_most_one_parent ON climb.climbs IS 'A climb may belong to at most one parent (region, crag, sector, or formation). A climb with no parent is valid, usually for a climb where its location is not known.';
 
 COMMIT;
