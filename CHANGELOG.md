@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `select.sh` - fuzzy selection helper (requires `fzf`) used by data entry scripts.
   - `daterange.sh` - utility to parse common date input formats into PostgreSQL `DATERANGE` literals.
   - `geom.sh` - utility to parse coordinate input formats (including lat/lon with spaces) into PostGIS geometry literals.
+- `seeds/sample.sql` - minimal sample data for development and manual testing.
+- `seeds/clear.sql` - truncates all `climb` tables with `CASCADE` for resetting a development database.
 - pgTAP test suite covering table structure, column types, constraints, and foreign keys for all tables.
 - Bats test suite for `daterange.sh` and `geom.sh` scripts.
 - GitHub Actions CI pipeline running pgTAP and Bats tests.
