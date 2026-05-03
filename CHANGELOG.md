@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-05-03
+
 ### Added
 
 - `climb` PostgreSQL schema containing all database objects.
@@ -32,4 +34,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bats test suite for `daterange.sh` and `geom.sh` scripts.
 - GitHub Actions CI pipeline running pgTAP and Bats tests.
 
-[Unreleased]: https://github.com/lgrosz/climbdb/commits/main/
+[Unreleased]: https://github.com/lgrosz/climbdb/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/lgrosz/climbdb/releases/tag/v0.1.0
