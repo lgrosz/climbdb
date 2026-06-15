@@ -1,6 +1,10 @@
 \echo 'Add a new region'
 \prompt 'Name: ' name
-\prompt 'Slug: ' slug
+\set default_slug `scripts/slug.sh :'name'`
+\set slug_prompt 'Slug [' :default_slug ']: '
+\prompt :slug_prompt slug
+select coalesce(nullif(:'slug', ''), :'default_slug') as slug
+\gset
 
 BEGIN;
 

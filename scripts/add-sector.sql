@@ -1,7 +1,11 @@
 \echo 'Add a new sector'
 
 \prompt 'Name: ' name
-\prompt 'Slug: ' slug
+\set default_slug `scripts/slug.sh :'name'`
+\set slug_prompt 'Slug [' :default_slug ']: '
+\prompt :slug_prompt slug
+select coalesce(nullif(:'slug', ''), :'default_slug') as slug
+\gset
 
 \set crag_row `scripts/select.sh :'DBNAME' crag -- --prompt="Select crag > "`
 \set crag_id `echo :'crag_row' | cut -f1`
