@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `first_ascent` boolean column on `climb.ascents`, replacing the `significance` vocabulary. Existing `first-ascent` and `fa` values are carried over by the `climb/simplify-ascents` change.
+
+### Removed
+
+- `significance` column on `climb.ascents`. Use `description` and `first_ascent` columns instead.
+- `style` column on `climb.ascents`. Ambiguous with `role` on `climb.ascent_members`.
+- `role` column on `climb.ascent_members`. Ambiguous with `style` on `climb.ascents`.
+
 ## [0.1.0] - 2026-05-03
 
 ### Added
