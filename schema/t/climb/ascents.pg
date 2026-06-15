@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(20);
+SELECT plan(18);
 
 SET search_path TO climb,public;
 
@@ -23,13 +23,10 @@ SELECT has_column( 'ascents', 'description' );
 SELECT col_type_is( 'ascents', 'description', 'text' );
 SELECT col_is_null( 'ascents', 'description' );
 
-SELECT has_column( 'ascents', 'style' );
-SELECT col_type_is( 'ascents', 'style', 'text[]' );
-SELECT col_not_null( 'ascents', 'style' );
-
-SELECT has_column( 'ascents', 'significance' );
-SELECT col_type_is( 'ascents', 'significance', 'text[]' );
-SELECT col_not_null( 'ascents', 'significance' );
+SELECT has_column( 'ascents', 'first_ascent' );
+SELECT col_type_is( 'ascents', 'first_ascent', 'boolean' );
+SELECT col_not_null( 'ascents', 'first_ascent' );
+SELECT col_default_is( 'ascents', 'first_ascent', 'false' );
 
 SELECT * FROM finish();
 ROLLBACK;

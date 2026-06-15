@@ -46,8 +46,8 @@ INSERT INTO climb.climbers (slug, first_name, last_name) VALUES
     ('josh-dreher', 'Josh', 'Dreher');
 
 WITH atomic_decay_fa AS (
-    INSERT INTO climb.ascents (climb_id, ascent_window, significance)
-    SELECT id, '[2009-06-01,2009-07-01)'::daterange, '{fa}'
+    INSERT INTO climb.ascents (climb_id, ascent_window, first_ascent)
+    SELECT id, '[2009-06-01,2009-07-01)'::daterange, TRUE
     FROM climb.climbs WHERE slug = 'atomic-decay'
     RETURNING id
 )

@@ -24,12 +24,12 @@ SELECT :'raw_ascent_window' != '' as ascent_window_provided
 \endif
 
 \prompt 'Description: ' description
-\prompt 'First ascent? (y/N): ' first_ascent
+\prompt 'First ascent? (y/N): ' raw_first_ascent
 
-\if :first_ascent
-  \set significance '{first-ascent}'
+\if :raw_first_ascent
+  \set first_ascent 'true'
 \else
-  \set significance '{}'
+  \set first_ascent 'false'
 \endif
 
 \echo 'Select ascent members (TAB to multi-select, ENTER to confirm)'
@@ -45,13 +45,13 @@ INSERT INTO climb.ascents (
   climb_id,
   ascent_window,
   description,
-  significance
+  first_ascent
 ) VALUES (
   :'ascent_id'::uuid,
   nullif(:'climb_id','')::uuid,
   nullif(:'ascent_window','')::daterange,
   nullif(:'description',''),
-  :'significance'::text[]
+  :'first_ascent'::boolean
 ) RETURNING *;
 
 INSERT INTO climb.ascent_members (ascent_id, climber_id)
