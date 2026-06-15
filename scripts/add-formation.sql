@@ -1,7 +1,11 @@
 \echo 'Add a new formation'
 
 \prompt 'Name: ' name
-\prompt 'Slug: ' slug
+\set default_slug `scripts/slug.sh :'name'`
+\set slug_prompt 'Slug [' :default_slug ']: '
+\prompt :slug_prompt slug
+select coalesce(nullif(:'slug', ''), :'default_slug') as slug
+\gset
 
 \prompt 'Geometry: ' raw_geom
 
