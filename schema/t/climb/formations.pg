@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(30);
+SELECT plan(36);
 
 SET search_path TO climb,public;
 
@@ -43,6 +43,28 @@ SELECT fk_ok( 'formations', 'sector_id', 'sectors', 'id' );
 
 -- For the "at_most_one_parent" constraint
 SELECT has_check( 'formations' );
+
+SELECT has_column( 'formations', 'rank' );
+SELECT col_type_is( 'formations', 'rank', 'integer' );
+SELECT col_is_null( 'formations', 'rank' );
+
+-- For the "rank_requires_parent" constraint
+INSERT INTO climb.crags (id, name) VALUES ('00000000-0000-7000-8000-000000000002', 'test crag');
+
+SELECT throws_ok(
+    $$ INSERT INTO climb.formations (name, rank) VALUES ('unplaced', 1) $$,
+    '23514', NULL,
+    'a parentless formation cannot carry a rank'
+);
+SELECT lives_ok(
+    $$ INSERT INTO climb.formations (name) VALUES ('unplaced') $$,
+    'a parentless formation may exist without a rank'
+);
+SELECT lives_ok(
+    $$ INSERT INTO climb.formations (name, crag_id, rank)
+       VALUES ('placed', '00000000-0000-7000-8000-000000000002', 1) $$,
+    'a formation with a parent may carry a rank'
+);
 
 SELECT * FROM finish();
 ROLLBACK;

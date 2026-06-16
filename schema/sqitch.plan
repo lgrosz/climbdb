@@ -15,3 +15,4 @@ climb/ascent-members [climb climb/ascents climb/climbers] 2025-08-18T05:10:11Z L
 @v0.1.0 2026-05-03T02:36:22Z Logan Grosz <logan.grosz@gmail.com> # Release v0.1.0
 
 climb/simplify-ascents [climb climb/ascents climb/ascent-members] 2026-06-15T16:05:28Z Logan Grosz <logan.grosz@gmail.com> # Trim unused style/role and reduce significance to a first_ascent flag
+climb/rank [climb/crags climb/sectors climb/formations climb/climbs] 2026-06-16T18:26:16Z Logan Grosz <logan.grosz@gmail.com> # Adds rank column for ordering siblings within a parent

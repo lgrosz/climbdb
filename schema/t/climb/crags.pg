@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(18);
+SELECT plan(25);
 
 SET search_path TO climb,public;
 
@@ -26,6 +26,30 @@ SELECT has_column( 'crags', 'region_id' );
 SELECT col_type_is( 'crags', 'region_id', 'uuid' );
 SELECT col_is_null( 'crags', 'region_id' );
 SELECT fk_ok( 'crags', 'region_id', 'regions', 'id' );
+
+SELECT has_column( 'crags', 'rank' );
+SELECT col_type_is( 'crags', 'rank', 'integer' );
+SELECT col_is_null( 'crags', 'rank' );
+
+-- For the "rank_requires_parent" constraint
+SELECT has_check( 'crags' );
+
+INSERT INTO climb.regions (id, name) VALUES ('00000000-0000-7000-8000-000000000001', 'test region');
+
+SELECT throws_ok(
+    $$ INSERT INTO climb.crags (name, rank) VALUES ('unplaced', 1) $$,
+    '23514', NULL,
+    'a regionless crag cannot carry a rank'
+);
+SELECT lives_ok(
+    $$ INSERT INTO climb.crags (name) VALUES ('unplaced') $$,
+    'a regionless crag may exist without a rank'
+);
+SELECT lives_ok(
+    $$ INSERT INTO climb.crags (name, region_id, rank)
+       VALUES ('placed', '00000000-0000-7000-8000-000000000001', 1) $$,
+    'a crag within a region may carry a rank'
+);
 
 SELECT * FROM finish();
 ROLLBACK;
