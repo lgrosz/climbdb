@@ -13,9 +13,6 @@ select coalesce(nullif(:'slug', ''), :'default_slug') as slug
 \set parent_id `echo :'parent_row' | cut -f1`
 \set parent_type `echo :'parent_row' | cut -f2`
 
-\echo 'Parent type:' :parent_type
-\echo 'Parent id:' :parent_id
-
 select :'parent_type' != '' as parent_is_valid
 \gset
 

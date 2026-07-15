@@ -68,8 +68,40 @@ $part"
   fi
 done
 
-psql -X -F $'\t' "$db" -At <<SQL |
+# --print-query puts the typed query on the first line, ahead of any selected
+# rows, so we can fall back to it when nothing matched.
+result="$(
+  psql -X -F $'\t' "$db" -At <<SQL | fzf --delimiter=$'\t' --with-nth=3..,2,1 --print-query "${fzf_args:+"${fzf_args[@]}"}"
 $sql
 order by 2, 3;
 SQL
-fzf --delimiter=$'\t' "${fzf_args:+"${fzf_args[@]}"}"
+)" || true
+
+query="$(head -n1 <<<"$result")"
+rows="$(tail -n +2 <<<"$result")"
+
+if [ -n "$rows" ]; then
+  # Confirm each pick on stderr so it stays visible after fzf closes; stdout is
+  # reserved for the raw rows the callers parse.
+  awk -F'\t' '
+    {
+      type = $2
+      if (type == "climber") {
+        name = $4
+        if ($3 != "") name = (name != "" ? name " " $3 : $3)
+        slug = $5
+      } else {
+        name = $3
+        slug = $4
+      }
+      desc = name
+      if (slug != "") desc = (desc != "" ? desc " [" slug "]" : "[" slug "]")
+      desc = (desc != "" ? desc " (" $1 ")" : "(" $1 ")")
+      print "Selected " type ": " desc
+    }
+  ' <<<"$rows" >&2
+
+  printf '%s\n' "$rows"
+else
+  printf '%s\n' "$query"
+fi
