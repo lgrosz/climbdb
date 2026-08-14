@@ -8,7 +8,7 @@ select coalesce(nullif(:'slug', ''), :'default_slug') as slug
 \gset
 
 \set crag_row `scripts/select.sh :'DBNAME' crag -- --prompt="Select crag > "`
-\set crag_id `echo :'crag_row' | cut -f1`
+\set crag_id `echo :'crag_row' | cut -sf1`
 
 -- TODO Abort if crag id does not exist, because we it _will_ fail based on constraints
 
