@@ -8,7 +8,7 @@ select coalesce(nullif(:'slug', ''), :'default_slug') as slug
 \gset
 
 \set region_row `scripts/select.sh :'DBNAME' region -- --prompt="Select region > "`
-\set region_id `echo :'region_row' | cut -f1`
+\set region_id `echo :'region_row' | cut -sf1`
 
 BEGIN;
 

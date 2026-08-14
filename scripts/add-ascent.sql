@@ -1,7 +1,7 @@
 \echo 'Add a new ascent'
 
 \set climb_row `scripts/select.sh :'DBNAME' climb -- --prompt="Select climb > "`
-\set climb_id `echo :'climb_row' | cut -f1`
+\set climb_id `echo :'climb_row' | cut -sf1`
 
 \prompt 'Ascent window (e.g. 2024, 2024-04, 2024-04-01, [2024-04-01,2024-06-15)): ' raw_ascent_window
 
@@ -34,7 +34,7 @@ SELECT :'raw_ascent_window' != '' as ascent_window_provided
 
 \echo 'Select ascent members (TAB to multi-select, ENTER to confirm)'
 
-\set climber_ids `scripts/select.sh :'DBNAME' climber -- -m --prompt="Select ascent members > " | awk -F'\t' '{print $1}' | tr '\n' ','  | sed 's/,$//'`
+\set climber_ids `scripts/select.sh :'DBNAME' climber -- -m --prompt="Select ascent members > " | cut -sf1 | tr '\n' ','  | sed 's/,$//'`
 
 BEGIN;
 

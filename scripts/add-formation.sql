@@ -29,8 +29,8 @@ select :'raw_geom' != '' as geom_provided
 
 -- Search for parent
 \set parent_row `scripts/select.sh :'DBNAME' region crag sector -- --prompt="Select parent > "`
-\set parent_id `echo :'parent_row' | cut -f1`
-\set parent_type `echo :'parent_row' | cut -f2`
+\set parent_id `echo :'parent_row' | cut -sf1`
+\set parent_type `echo :'parent_row' | cut -sf2`
 
 select :'parent_type' != '' as parent_is_valid
 \gset

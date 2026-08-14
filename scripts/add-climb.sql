@@ -10,8 +10,8 @@ select coalesce(nullif(:'slug', ''), :'default_slug') as slug
 
 -- Search for parent
 \set parent_row `scripts/select.sh :'DBNAME' region crag sector formation -- --prompt="Select parent > "`
-\set parent_id `echo :'parent_row' | cut -f1`
-\set parent_type `echo :'parent_row' | cut -f2`
+\set parent_id `echo :'parent_row' | cut -sf1`
+\set parent_type `echo :'parent_row' | cut -sf2`
 
 select :'parent_type' != '' as parent_is_valid
 \gset
