@@ -1,4 +1,4 @@
-FROM postgres as base
+FROM postgres:18 as base
 
 RUN apt-get update \
       && apt-get install -y  \
