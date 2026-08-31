@@ -3,7 +3,7 @@ services:
     build:
       target: with-pgtap
       additional_contexts:
-        postgis: https://git.osgeo.org/gitea/postgis/postgis.git#3.6.0
+        postgis: https://git.osgeo.org/gitea/postgis/postgis.git#3.6.4
     ports:
       - "5432:5432"
     environment:
