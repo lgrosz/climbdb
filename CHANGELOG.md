@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `first_ascent` boolean column on `climb.ascents`, replacing the `significance` vocabulary. Existing `first-ascent` and `fa` values are carried over by the `climb/simplify-ascents` change.
+- `schema/schema.sql`, a generated snapshot of the current schema, and `scripts/dump-schema.sh` to regenerate it.
 
 ### Removed
 

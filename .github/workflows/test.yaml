@@ -45,6 +45,14 @@ jobs:
         working-directory: schema
         run: pg_prove --recurse
 
+      - name: Check schema snapshot is up to date
+        env:
+          # the server's pg_dump, as the runner's client may be too old for it
+          PG_DUMP: docker compose exec -T postgres pg_dump -U postgres
+        run: |
+          scripts/dump-schema.sh
+          git diff --exit-code schema/schema.sql
+
   test-scripts:
     runs-on: ubuntu-latest
     steps:
