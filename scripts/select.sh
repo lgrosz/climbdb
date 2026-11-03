@@ -33,17 +33,8 @@ query_parts=()
 # nothing downstream branches per type and mixed-type lists can be unioned.
 for t in "${types[@]}"; do
   case "$t" in
-    region)
-      query_parts+=("select id, 'region', name, slug, concat_ws(' ', name, slug, 'region', id) as display from climb.regions")
-      ;;
-    crag)
-      query_parts+=("select id, 'crag', name, slug, concat_ws(' ', name, slug, 'crag', id) as display from climb.crags")
-      ;;
-    sector)
-      query_parts+=("select id, 'sector', name, slug, concat_ws(' ', name, slug, 'sector', id) as display from climb.sectors")
-      ;;
-    formation)
-      query_parts+=("select id, 'formation', name, slug, concat_ws(' ', name, slug, 'formation', id) as display from climb.formations")
+    area)
+      query_parts+=("select id, 'area', name, slug, concat_ws(' ', name, slug, 'area', id) as display from climb.areas")
       ;;
     climb)
       query_parts+=("select id, 'climb', name, slug, concat_ws(' ', name, slug, 'climb', id) as display from climb.climbs")

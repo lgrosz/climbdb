@@ -2,7 +2,7 @@
 
 BEGIN;
 
-SELECT id, slug, name, description, grade, region_id, crag_id, sector_id, formation_id
+SELECT id, slug, name, description, grade
     FROM climb.climbs
     WHERE FALSE;
 

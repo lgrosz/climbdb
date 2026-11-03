@@ -1,0 +1,100 @@
+BEGIN;
+SELECT plan(32);
+
+SET search_path TO climb,public;
+
+SELECT has_table( 'areas' );
+
+SELECT has_column( 'areas', 'id' );
+SELECT col_type_is( 'areas', 'id', 'uuid' );
+SELECT col_is_pk( 'areas', 'id' );
+
+SELECT has_column( 'areas', 'parent_id' );
+SELECT col_type_is( 'areas', 'parent_id', 'uuid' );
+SELECT col_is_null( 'areas', 'parent_id' );
+SELECT fk_ok( 'areas', 'parent_id', 'areas', 'id' );
+
+SELECT has_column( 'areas', 'slug' );
+SELECT col_type_is( 'areas', 'slug', 'text' );
+SELECT col_is_null( 'areas', 'slug' );
+
+SELECT has_column( 'areas', 'name' );
+SELECT col_type_is( 'areas', 'name', 'text' );
+SELECT col_is_null( 'areas', 'name' );
+
+SELECT has_column( 'areas', 'description' );
+SELECT col_type_is( 'areas', 'description', 'text' );
+SELECT col_is_null( 'areas', 'description' );
+
+SELECT has_column( 'areas', 'geom' );
+SELECT col_type_is( 'areas', 'geom', 'geometry(Geometry,4326)' );
+SELECT col_is_null( 'areas', 'geom' );
+
+-- Fixtures
+INSERT INTO areas (id, parent_id, slug) VALUES
+    ('00000000-0000-0000-0000-00000000000a', NULL, 't-root-a'),
+    ('00000000-0000-0000-0000-00000000000b', '00000000-0000-0000-0000-00000000000a', 'child'),
+    ('00000000-0000-0000-0000-00000000000c', '00000000-0000-0000-0000-00000000000b', 'grandchild'),
+    ('00000000-0000-0000-0000-00000000000d', NULL, 't-root-d');
+
+-- The tree must stay acyclic
+SELECT throws_ok(
+    $$UPDATE areas SET parent_id = id WHERE slug = 't-root-a'$$,
+    '23514', NULL, 'an area cannot be its own parent'
+);
+SELECT throws_ok(
+    $$UPDATE areas SET parent_id = '00000000-0000-0000-0000-00000000000c' WHERE slug = 't-root-a'$$,
+    '23514', NULL, 'an area cannot move beneath its own descendant'
+);
+SELECT lives_ok(
+    $$UPDATE areas SET parent_id = '00000000-0000-0000-0000-00000000000d' WHERE slug = 't-root-a'$$,
+    'an area can move beneath an unrelated area'
+);
+SELECT lives_ok(
+    $$UPDATE areas SET parent_id = NULL WHERE slug = 't-root-a'$$,
+    'an area can move to the root'
+);
+
+-- Slugs are unique among siblings, and optional
+SELECT throws_ok(
+    $$INSERT INTO areas (parent_id, slug) VALUES ('00000000-0000-0000-0000-00000000000a', 'child')$$,
+    '23505', NULL, 'siblings cannot share a slug'
+);
+SELECT throws_ok(
+    $$INSERT INTO areas (slug) VALUES ('t-root-a')$$,
+    '23505', NULL, 'root areas cannot share a slug'
+);
+SELECT lives_ok(
+    $$INSERT INTO areas (parent_id, slug) VALUES ('00000000-0000-0000-0000-00000000000d', 'child')$$,
+    'different parents can reuse a slug'
+);
+SELECT lives_ok(
+    $$INSERT INTO areas (parent_id) VALUES
+        ('00000000-0000-0000-0000-00000000000a'),
+        ('00000000-0000-0000-0000-00000000000a')$$,
+    'siblings can both have no slug'
+);
+SELECT lives_ok(
+    $$INSERT INTO areas (slug) VALUES (NULL), (NULL)$$,
+    'root areas can both have no slug'
+);
+
+-- Slugs are also unique among the climbs of an area
+INSERT INTO climbs (area_id, slug) VALUES ('00000000-0000-0000-0000-00000000000a', 'line');
+INSERT INTO climbs (slug) VALUES ('t-unplaced');
+
+SELECT throws_ok(
+    $$INSERT INTO climbs (area_id, slug) VALUES ('00000000-0000-0000-0000-00000000000a', 'line')$$,
+    '23505', NULL, 'climbs in an area cannot share a slug'
+);
+SELECT throws_ok(
+    $$INSERT INTO climbs (slug) VALUES ('t-unplaced')$$,
+    '23505', NULL, 'climbs without an area cannot share a slug'
+);
+SELECT lives_ok(
+    $$INSERT INTO climbs (area_id, slug) VALUES ('00000000-0000-0000-0000-00000000000b', 'line')$$,
+    'climbs in different areas can reuse a slug'
+);
+
+SELECT * FROM finish();
+ROLLBACK;

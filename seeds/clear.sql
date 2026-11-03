@@ -5,10 +5,7 @@ TRUNCATE
     climb.ascents,
     climb.climbers,
     climb.climbs,
-    climb.formations,
-    climb.sectors,
-    climb.crags,
-    climb.regions
+    climb.areas
 RESTART IDENTITY CASCADE;
 
 COMMIT;

@@ -11,8 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `first_ascent` boolean column on `climb.ascents`, replacing the `significance` vocabulary. Existing `first-ascent` and `fa` values are carried over by the `climb/simplify-ascents` change.
 
+- `climb.areas` table, a tree of places at any scale, replacing `climb.regions`, `climb.crags`, `climb.sectors`, and `climb.formations`. Existing rows keep their ids and are carried over by the `climb/areas` change.
+- `area_id` column on `climb.climbs`, replacing its parent columns.
+- `add-area.sql` data entry script, replacing the per-table scripts.
+
+### Changed
+
+- Slugs on `climb.climbs` are unique within an area, rather than across all climbs.
+
 ### Removed
 
+- `climb.regions`, `climb.crags`, `climb.sectors`, and `climb.formations` tables. Use `climb.areas` instead.
+- `region_id`, `crag_id`, `sector_id`, and `formation_id` columns on `climb.climbs`, along with the `at_most_one_parent` constraint. Use `area_id` instead.
+- `add-region.sql`, `add-crag.sql`, `add-sector.sql`, and `add-formation.sql` scripts. Use `add-area.sql` instead.
 - `significance` column on `climb.ascents`. Use `description` and `first_ascent` columns instead.
 - `style` column on `climb.ascents`. Ambiguous with `role` on `climb.ascent_members`.
 - `role` column on `climb.ascent_members`. Ambiguous with `style` on `climb.ascents`.

@@ -1,4 +1,4 @@
-\echo 'Add a new formation'
+\echo 'Add a new area'
 
 \prompt 'Name: ' name
 \set default_slug `scripts/slug.sh :'name'`
@@ -27,29 +27,16 @@ select :'raw_geom' != '' as geom_provided
   \set geom ''
 \endif
 
--- Search for parent
-\set parent_row `scripts/select.sh :'DBNAME' region crag sector -- --prompt="Select parent > "`
+\set parent_row `scripts/select.sh :'DBNAME' area -- --prompt="Select parent > "`
 \set parent_id `echo :'parent_row' | cut -sf1`
-\set parent_type `echo :'parent_row' | cut -sf2`
-
-select :'parent_type' != '' as parent_is_valid
-\gset
-
-\if :parent_is_valid
-\else
-  -- Doesn't matter what this is because the id is going to be null
-  \set parent_type 'region'
-\endif
-
-\set parent_col :parent_type'_id'
 
 BEGIN;
 
-INSERT INTO climb.formations (
+INSERT INTO climb.areas (
   name,
   slug,
   geom,
-  :parent_col
+  parent_id
 ) VALUES (
   nullif(:'name', ''),
   nullif(:'slug', ''),
@@ -64,4 +51,3 @@ INSERT INTO climb.formations (
 \else
   ROLLBACK;
 \endif
-

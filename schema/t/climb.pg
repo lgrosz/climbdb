@@ -6,14 +6,11 @@ SELECT has_schema( 'climb' );
 SELECT tables_are(
     'climb',
     ARRAY[
+        'areas',
         'ascents',
         'ascent_members',
-        'regions',
         'climbers',
-        'climbs',
-        'crags',
-        'formations',
-        'sectors'
+        'climbs'
     ]
 );
 
